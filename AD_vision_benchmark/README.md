@@ -29,7 +29,7 @@ ollama pull llama4:16x17b
 ## Run
 
 ```bash
-python run_tests.py
+python3 run_tests.py
 ```
 
 The script processes all images in the `Dataset/` directory against each configured model.
