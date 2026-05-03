@@ -1,0 +1,52 @@
+Report name: 062521_SideCopy_1
+time used: 50.05 seconds
+Bert score: 0.8404
+RougeL score: 0.1749
+Rouge1 score: 0.3911
+Rouge2 score: 0.0957
+summary generated:
+The document images detail the activities and evolution of the SideCopy Advanced Persistent Threat (APT) group, which focuses on credential harvesting and espionage. Here's a summary based on the provided images:
+
+### Overview of SideCopy APT Group
+1. **Initial Infection Vector**:
+   - SideCopy initially used a simple infection vector to deliver a custom Remote Access Trojan (RAT) known as CetaRAT.
+
+2. **Evolution of Tactics**:
+   - The group has evolved to use multiple infection chains delivering various RATs.
+   - Infection techniques include LNK files, self-extracting RAR executables (EXEs), and MSI-based installers.
+   - The group employs a combination of custom and commodity RATs and plugins, indicating a focus on espionage.
+
+3. **Targeting Tactics**:
+   - SideCopy targets military, diplomatic, and government entities in the Indian subcontinent, similar to tactics used by APT36.
+   - They use themes like honeypots to lure victims.
+
+### Credential Harvesting
+- **KavaliRAT**:
+  - SideCopy uses KavaliRAT, which is designed to harvest credentials from browsers and email clients.
+  - The RAT can also capture screenshots and keylogging.
+
+- **KavaliRAT Plugins**:
+  - The RAT includes plugins for additional functionalities such as stealing cookies, session tokens, and other sensitive information.
+
+### Malware Variants and Plugins
+- **Malware Variants**:
+  - The group has expanded their arsenal to include multiple RATs and plugins, indicating a sophisticated and evolving threat landscape.
+
+### Coverage and Protections
+- **Cisco Secure Products**:
+  - **Cisco Secure Endpoint (formerly AMP for Endpoints)**: Prevents the execution of the malware.
+  - **Cisco Secure Email (formerly Email Security)**: Blocks malicious emails.
+  - **Cisco Secure Firewall/Secure IPS (Network Security)**: Detects malicious activity.
+  - **Cisco Secure Network Analytics (Stealthwatch)**: Analyzes network traffic for unwanted activity.
+  - **Cisco Secure Cloud Analytics (Stealthwatch Cloud)**: Provides cloud-based network traffic analysis.
+  - **Cisco Secure Malware Analytics (Threat Grid)**: Identifies malicious binaries.
+  - **Umbrella**: Blocks connections to malicious domains, IPs, and URLs.
+  - **Cisco Secure Web Appliance (Web Security Appliance)**: Prevents access to malicious websites and detects malware.
+
+### Conclusion
+- SideCopy is actively evolving its tactics, techniques, and procedures (TTPs) to maintain and enhance their espionage capabilities.
+- The threat actor is rapidly adapting to new methods, including using a variety of infection vectors and plugins, to infect their targets more effectively.
+
+### Protection Recommendations
+- Cisco provides multiple products to detect and block SideCopy's activities, including endpoint protection, email security, firewall solutions, network analytics, malware analytics, and secure web appliances.
+- Users are advised to utilize these solutions to protect against the threats posed by SideCopy. Specific actions include using Orbital Advanced Search for endpoint checks and keeping Snort Subscriber Rule Sets updated.

@@ -1,0 +1,5 @@
+CATHARINA failed to identify the actual issue shown in the screenshot. The image clearly shows the **Delegation** tab with **“Trust this user for delegation to any service (Kerberos only)”** selected, which is **Unconstrained Delegation**. That is the core AD security flaw in the ground truth.
+
+Instead, the model hallucinated a different setting on the **General** tab (“Account is sensitive”) that is not what the screenshot is about, and its explanation about Kerberoasting/RC4 is incorrect for this image and setting. This directly contradicts the visible UI and misses the primary vulnerability entirely.
+
+SCORE: 1

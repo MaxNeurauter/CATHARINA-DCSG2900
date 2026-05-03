@@ -1,0 +1,9 @@
+CATHARINA should be graded very poorly here because it evaluated the wrong security context and invented a vulnerability assessment unrelated to the provided Ground Truth.
+
+Brief reasoning:
+- Ground Truth is about the **Attribute Editor** for **arya.stark** and specifically says the **servicePrincipalName (SPN)** is correctly configured/absent, meaning **Kerberoasting risk is mitigated** for a standard user account.
+- The model instead analyzed **Advanced Security Settings for jaime.lannister**, which is a completely different screen, object, and security topic.
+- It then hallucinates multiple issues and remediation steps that are not tied to the Ground Truth at all.
+- Per the rubric, describing settings/UI not present in the relevant image context and missing the actual core finding is a **Failure**.
+
+SCORE: 1

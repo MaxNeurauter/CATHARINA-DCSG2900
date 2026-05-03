@@ -1,0 +1,7 @@
+CATHARINA should be graded very poorly here. The screenshot’s key AD issue is clearly **“Add workstations to domain” = “NT AUTHORITY\Authenticated Users”**, which matches the ground truth about allowing non-admin users to create computer objects and enabling **RBCD-related attack paths**.  
+
+Instead, the model fixated on **“Everyone”** in other rights assignments, and even claimed **“Allow log on locally” includes Everyone**, which is contradicted by the screenshot. That is a major miss of the primary vulnerability and includes an inaccurate reading of the UI. Its remediation is therefore aimed at the wrong setting and does not address the actual AD risk.  
+
+This aligns with the **Failure** category: it missed the real flaw and described a setting not actually present as claimed.  
+
+SCORE: 1

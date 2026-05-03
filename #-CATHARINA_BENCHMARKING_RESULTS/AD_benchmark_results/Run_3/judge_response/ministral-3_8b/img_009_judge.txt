@@ -1,0 +1,7 @@
+The model correctly identified the primary issue: **“Trust this user for delegation to any service (Kerberos only)” = Unconstrained Delegation** on the **sansa.stark** account. That matches the ground truth.
+
+However, its technical explanation is partly off. The ground truth specifically highlights the key risk of **unconstrained delegation storing users’ TGTs in memory**, which can be stolen after compromise and used for **privilege escalation/lateral movement**. Instead, the model drifted into **Golden Ticket/Silver Ticket** discussion, which is not the core attack path here and is somewhat misleading for this setting. It did still characterize the configuration as high risk and gave generally sound remediation: disable delegation or move to constrained delegation if necessary.
+
+So this is better than generic, but not fully precise on the real exploitation mechanism.
+
+SCORE: 4

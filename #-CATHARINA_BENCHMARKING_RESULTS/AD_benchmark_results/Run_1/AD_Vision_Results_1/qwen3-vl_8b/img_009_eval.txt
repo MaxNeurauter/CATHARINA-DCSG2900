@@ -1,0 +1,42 @@
+Image Analyzed: img_009.png
+Model Used: qwen3-vl:8b
+Time Taken: 75.48 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### 1. Observation  
+- **Delegation Setting**: The configuration selects *“Trust this user for delegation to any service (Kerberos only)”* (radio button checked).  
+- **Sub-option**: *“Use Kerberos only”* is selected (radio button checked), while *“Use any authentication protocol”* is unchecked.  
+- **Service Restrictions**: The *“Services to which this account can present delegated credentials”* table is empty (no entries specified).  
+- **Scope**: Delegation is enabled for **any service** via Kerberos, with no explicit restrictions.  
+
+
+### 2. Assessment  
+**Critically Vulnerable**  
+
+### 3. Attack Path  
+- **Attack Vector**: **Kerberoasting**.  
+- **Technical Impact**:  
+  Kerberoasting exploits the Kerberos protocol to request service tickets (TGS tickets) for user accounts. If a user account has delegation enabled (e.g., *“Trust this user for delegation to any service (Kerberos only)”*), an attacker can query the KDC (Key Distribution Center) for service tickets for that user. These tickets are encrypted with the user’s password hash. If the password is weak (e.g., short, predictable, or reused), the attacker can crack the hash (e.g., via tools like Hashcat) to extract the user’s password. This compromises the account, enabling **lateral movement**, **privilege escalation**, or **data exfiltration** across the domain.  
+
+### 4. Remediation  
+Follow these steps to fix the misconfiguration:  
+1. **Uncheck the misconfigured delegation option**:  
+   - In the *Delegation* tab, **uncheck** *“Trust this user for delegation to any service (Kerberos only)”* (radio button).  
+2. **Restrict delegation to specified services**:  
+   - Select *“Trust this user for delegation to specified services only”* (radio button).  
+   - **Populate the “Services to which this account can present delegated credentials” table** with only necessary services:  
+     - *Service Type*: Specify the service (e.g., “Microsoft Windows Remote Management”).  
+     - *User or Computer*: Enter the target (e.g., “svc-remote-desktop”).  
+     - *Port*: Set the port (e.g., `5985` for WinRM).  
+     - *Service Name*: Define the service principal name (e.g., `svc-remote-desktop`).  
+3. **Verify no unnecessary delegation**:  
+   - Ensure only **critical services** are listed (e.g., services required for legitimate remote access).  
+4. **Audit other accounts**:  
+   - Repeat this process for all user accounts with delegation enabled to *“Trust this user for delegation to any service (Kerberos only)”* or similar overly broad settings.  
+
+**Note**: If delegation is not required for the account (e.g., a standard user), select *“Do not trust this user for delegation”* to fully disable this risk.  
+
+---  
+*This configuration is critically vulnerable because enabling delegation for "any service" via Kerberos directly exposes the account to Kerberoasting, a well-documented attack vector in Active Directory.*
+==================================================

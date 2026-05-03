@@ -1,0 +1,7 @@
+CATHARINA correctly identified the core issue in the screenshot: **“Trust this user for delegation to any service (Kerberos only)”** is enabled, which is **Unconstrained Delegation**. That aligns with the ground truth.
+
+However, its **attack-path explanation is wrong**. The ground truth specifically calls out that unconstrained delegation causes **users’ TGTs to be stored in memory on the delegated system**, which can be stolen by an attacker and used for **privilege escalation**. Instead, the model focused on **Kerberoasting**, which is a different attack and not the main risk of unconstrained delegation.
+
+Remediation is mostly good: disable unconstrained delegation or move to constrained delegation if truly required. So it gets the flaw and remediation mostly right, but misses the specific technical risk that matters most.
+
+SCORE: 4

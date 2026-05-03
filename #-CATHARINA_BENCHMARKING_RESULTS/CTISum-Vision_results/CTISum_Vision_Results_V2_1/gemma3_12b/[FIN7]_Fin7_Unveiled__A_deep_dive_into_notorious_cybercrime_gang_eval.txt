@@ -1,0 +1,70 @@
+Report name: [FIN7]_Fin7_Unveiled__A_deep_dive_into_notorious_cybercrime_gang
+time used: 97.69 seconds
+Bert score: 0.8185
+RougeL score: 0.1308
+Rouge1 score: 0.3351
+Rouge2 score: 0.0464
+summary generated:
+Okay, here's a CTIS (Common Threat Information Standard) summary based on the provided images of the FIN7 Unveiled report. Due to the image quality limitations, some details might be inferred based on context.
+
+**CTIS Summary: FIN7 Unveiled Report**
+
+**1. CTIS ID:** (Assumed) FIN7_Unveiled_PRODAFT_2022-XX (The exact date would be from the report's metadata)
+
+**2. Indicator Type:**  Malware Campaign, Threat Actor Profile, Infrastructure Analysis
+
+**3. Description:**
+
+This document provides a deep dive into the FIN7 cybercrime gang, detailing their tactics, techniques, and procedures (TTPs), infrastructure, and impact.  It aims to provide actionable intelligence for defenders. Key findings highlight FIN7's re-targeting strategy, their use of various loaders and Cobalt Strike, and a comprehensive list of related infrastructure.  The report also highlights FIN7's reliance on proxy servers and their evolution over time. The final section lists key references used in compiling this report.
+
+**4. Attribution:**
+
+*   **Threat Actor:** FIN7 (Also known as "Carbanak" in some contexts). It’s described as a financially motivated cybercrime group.
+*   **Targeting:**  Primarily US-based organizations in specific sectors, including retail, healthcare, and hospitality.
+*   **Region of Operations:** Globally, with a focus on English-speaking countries.
+
+**5. Tactics, Techniques, and Procedures (TTPs):**
+
+*   **Initial Access:**  Phishing campaigns (spearphishing), exploited vulnerabilities (Microsoft Exchange - likely via ProxyShell), and potentially supply chain attacks.
+*   **Execution:** Usage of various loaders (e.g., RokRAT, Qbot, Conti), Cobalt Strike, PowerShell.
+*   **Persistence:**  Registry modifications, scheduled tasks.
+*   **Privilege Escalation:** Exploitation of vulnerabilities, potentially using credential harvesting.
+*   **Defense Evasion:**  Proxy servers, obfuscation of malware.
+*   **Credential Access:**  Credential harvesting from memory, keyloggers.
+*   **Discovery:**  Network scanning, credential dumping.
+*   **Lateral Movement:**  Remote Desktop Protocol (RDP), Pass-the-Hash, SMB.
+*   **Collection:**  Data exfiltration via encrypted channels, cloud storage.
+*   **Command and Control:**  Custom communication protocols over HTTP/HTTPS, proxy chains.
+
+**6. Malware & Tools:**
+
+*   **Loaders:** RokRAT, Qbot, Conti.
+*   **Framework:** Cobalt Strike
+*   **PowerShell:** Used for various malicious activities.
+*   **Proxy Servers:** Extensive use of proxy chains (multiple layers) to evade detection.
+*   **Custom Tools:** (Potentially) Several tools are referenced, some may be developed by FIN7.
+
+**7. Indicators:**
+
+*   **IP Addresses:**  A long list of IP addresses associated with FIN7 infrastructure is provided in the document. (See images)
+*   **Domains:** A long list of domain names used by FIN7 is provided in the document. (See images)
+*   **File Hashes (MD5/SHA256):** Several malware file hashes are detailed. (See images)
+*   **PowerShell Scripts:** Multiple PowerShell scripts used by FIN7. (See images)
+
+**8.  Relationships:**
+
+*   FIN7 is associated with other threat actors like Carbanak and Conti.
+*   The document mentions the usage of compromised experts to aid in their attacks.
+
+**9.  Confidence:**
+
+*   **High:** The report appears to be based on thorough research and analysis of FIN7 activity.
+*   **Caveats:** Due to the ongoing nature of cybercrime, information may evolve.
+
+**10.  References:**
+
+*   A list of references used in the report, including CISA advisories, Microsoft security updates, and news articles.
+
+
+
+**Note:**  A full CTIS package would include a more structured and granular breakdown of indicators and TTPs, including MITRE ATT&CK mappings. This summary is based solely on the provided images and is intended to provide a high-level overview.

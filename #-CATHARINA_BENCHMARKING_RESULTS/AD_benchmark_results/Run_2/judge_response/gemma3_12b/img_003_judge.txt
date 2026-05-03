@@ -1,0 +1,5 @@
+CATHARINA performed very poorly because it analyzed the wrong screen entirely. The screenshot shows the main **Active Directory Users and Computers** view with the default containers and users/groups listing, not a specific user account properties window. The ground truth says this view is **not directly vulnerable**, though the **lack of OUs** should be noted as an organizational weakness and recommendation.
+
+Instead, the model hallucinated settings like **“Password never expires,” “User cannot change password,”** and **“Account is sensitive”** that are not visible in the image. That directly contradicts the scoring guidance for a failure case.
+
+SCORE: 1

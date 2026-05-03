@@ -1,0 +1,10 @@
+The model performed poorly against the ground truth.
+
+- **Device inventory:** It missed key specifics clearly visible in the diagram: a single HQ switch, an **EXINDA WAN optimization appliance**, one HQ router, **two branch routers**, and **server groups at both branches**. It hallucinated elements not present, including a **firewall/ASA**, **DMZ**, and “multiple routers interconnected with various lines.”
+- **Topology identification:** Ground truth is a clear **hub-and-spoke WAN with site-to-site VPN**. The model misclassified it as a **hybrid hierarchical / partial mesh**, which is a major error.
+- **Risk accuracy:** It failed to identify the primary flaws: **SPOFs at the HQ switch, EXINDA appliance, and central router**, plus **lack of redundant WAN/ISP circuits**. Instead it gave generic risks about VLANs, broadcast domains, routing protocols, and undefined hierarchy.
+- **Recommendations:** Ground truth calls for **HA pairs/clusters for the edge router and EXINDA**, **secondary WAN links with diverse providers**, and **branch-side optimization appliances**. The model instead recommended a generic **Cisco 3-tier campus model**, VLANs, and NMS tooling, which are not appropriate to this WAN diagram.
+
+This is not just incomplete; it materially misread the architecture and invented security constructs not shown.
+
+SCORE: 1

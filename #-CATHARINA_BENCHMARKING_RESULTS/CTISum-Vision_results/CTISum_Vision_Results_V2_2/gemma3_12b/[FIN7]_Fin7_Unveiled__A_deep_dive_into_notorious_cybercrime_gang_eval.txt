@@ -1,0 +1,76 @@
+Report name: [FIN7]_Fin7_Unveiled__A_deep_dive_into_notorious_cybercrime_gang
+time used: 99.88 seconds
+Bert score: 0.8190
+RougeL score: 0.1148
+Rouge1 score: 0.3142
+Rouge2 score: 0.0384
+summary generated:
+Here's a CTIS (Cyber Threat Intelligence Summary) based on the provided document images, focusing on the key findings about FIN7.  Please note this is based *only* on the images provided; a full report would include much more detail.
+
+**CTIS Summary: FIN7 - A Deep Dive**
+
+**1. Executive Summary:**
+
+This report details a comprehensive investigation into the FIN7 cybercriminal group, a notorious and versatile actor known for targeting enterprise-level corporations.  The analysis focuses on their tactics, techniques, and procedures (TTPs), infrastructure, and potential motivations. Key findings include FIN7’s re-targeting of victims, intimidation of team members, broad geographic scope (primarily USA 16.74%), and reliance on publicly available exploits and vulnerabilities for initial access.
+
+**2. Threat Actor:**
+
+*   **Name:** FIN7
+*   **Type:** Ransomware-as-a-Service (RaaS), Data Exfiltration, Extortion
+*   **Motivation:** Financial gain through ransom payments and data sales.
+*   **Targeting:** Large Enterprises (particularly in healthcare, finance, retail, and hospitality).
+*   **Attribution:** A loosely-affiliated group of various criminal teams.
+
+**3. Tactics, Techniques, and Procedures (TTPs):**
+
+*   **Initial Access:** Exploits publicly known vulnerabilities (e.g., Microsoft Exchange), spearphishing, credential stuffing.
+*   **Lateral Movement:** Cobalt Strike, PowerShell, various loader techniques.
+*   **Data Exfiltration:**  Large-scale data theft.
+*   **Ransomware Deployment:**  Multiple ransomware strains have been utilized.
+*   **Operational Security (OPSEC):** Relatively poor, with readily identifiable infrastructure.
+*   **Victim Re-targeting:** Reusing compromised credentials and infrastructure across different victims.
+*   **Intimidation:** Used to pressure victims and maintain secrecy within the group.
+
+**4. Infrastructure:**
+
+*   **Command and Control (C2):**  Utilizes a wide range of compromised servers and loaders to obfuscate communications.  Document provides a very extensive list of C2 domains and IPs (see "References" and "Appendix").
+*   **Malware:** Multiple strains including custom malware and publicly available tools.
+*   **Tools:** Cobalt Strike, PowerShell, various loaders and reflective DLL injection techniques.
+
+**5. Geographic Scope:**
+
+*   **Primarily:** United States (16.74% of impacted organizations)
+*   **Secondary:** Global impact with targets in numerous countries.
+
+**6. Indicators of Compromise (IOCs):**
+
+*   **Domains and IPs:**  Extensive lists are provided in the "References" and "Appendix" sections of the document. This includes C2 servers, loader proxies, and Cobalt Strike infrastructure.
+*   **File Hashes:**  Numerous MD5 and SHA hashes of malware samples are provided.
+*   **PowerShell Scripts:**  Examples of malicious PowerShell scripts used in attacks.
+*   **DLLs:**  Indicators of reflective DLL injection usage.
+
+**7. Mitigation Recommendations (Inferred):**
+
+*   **Patch Management:** Prioritize patching publicly known vulnerabilities.
+*   **Multi-Factor Authentication (MFA):** Implement MFA to protect against credential stuffing and compromised credentials.
+*   **Network Segmentation:**  Limit lateral movement within the network.
+*   **Endpoint Detection and Response (EDR):** Deploy EDR solutions to detect and respond to malicious activity.
+*   **Threat Intelligence:** Utilize threat intelligence feeds to identify and block malicious infrastructure.
+
+**8. References & Further Information:**
+
+*   Links provided to external resources for more information on FIN7, Exchange exploits, Cobalt Strike, and other related topics.
+
+**9. CTIS Version History**
+
+| Version | Date       | Modification   |
+| ------- | ---------- | -------------- |
+| 1.0     | 30.07.2022 | Initial draft  |
+| 1.1     | 18.09.2022 | Draft updated for legal review |
+| 1.2     | 15.12.2022 | Amber version |
+| 1.3     | 22.12.2022 | Final Clear version |
+
+
+
+
+**Disclaimer:** This summary is based solely on the provided images. A full assessment would require access to the complete report.

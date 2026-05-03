@@ -1,0 +1,7 @@
+CATHARINA missed the primary vulnerability that is plainly visible in the screenshot: the **cleartext password “Heartsbane” is stored in samwell.tarly’s description field**. That is exactly the kind of AD exposure that can be read by broadly authenticated users and constitutes a serious credential disclosure. Instead of identifying this, it called the data “inconclusive” and even downplayed the password string as “not actionable,” which is incorrect.
+
+It did correctly note that the text exists in the description, but failed to classify it as the critical finding. It also missed the secondary issue from the ground truth that objects are being kept in the default **Users** container instead of a structured OU layout.
+
+Because it failed to recognize an obvious critical vulnerability visible in the image, this is a failure-grade assessment.
+
+SCORE: 1

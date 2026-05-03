@@ -1,0 +1,194 @@
+Image Analyzed: img_003.png
+Model Used: ministral-3:14b
+Time Taken: 128.43 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **Active Directory Security Audit Report**
+**Domain:** `winterfell.sevenkingdoms.local`
+
+---
+
+### **1. Observation**
+The screenshot displays the **Active Directory Users and Computers (ADUC)** console, specifically the **Users** container and several **Security Groups** with their descriptions. Key observations include:
+
+#### **A. User Accounts**
+- **Standard Users:**
+  - `arya.stark`, `brandon.stark`, `catelyn.stark`, `eddard.stark`, `hodor`, `jeor.mormont`, `jon.snow`, `rickon.stark`
+  - All appear to be **enabled** (no red "X" icon) and likely have **passwords** (no indication of "Password never expires" or "Account is sensitive").
+  - No visible **Service Accounts** (e.g., no `svc-*` or `app-*` accounts with high privileges).
+
+- **Service/Built-in Accounts:**
+  - `krbtgt` (Key Distribution Center Service Account) – **Critical** if misconfigured.
+  - `Guest` – Enabled by default (risky if not disabled).
+  - `Administrator` – Built-in admin account (should be renamed and disabled if unused).
+
+#### **B. Security Groups (Potential Risks)**
+- **Domain Admins (`Domain Admins`)**
+  - **Global Group**, members can perform **full administrative actions** on the domain.
+  - **Risk:** If compromised, leads to **full domain dominance** (Golden Ticket, Pass-the-Hash, etc.).
+
+- **Enterprise Admins / Schema Admins (Not Visible)**
+  - **Not shown**, but if present, they should be **least-privilege** and **not nested in Domain Admins**.
+
+- **Denied RODC Password Replication Group (`Denied RODC Password Replication Group`)**
+  - Correctly configured to **deny password replication** to Read-Only Domain Controllers (RODCs).
+  - **Secure** if no sensitive accounts (e.g., `krbtgt`) are mistakenly added.
+
+- **Allowed RODC Password Replication Group (`Allowed RODC Password Replication Group`)**
+  - Contains `arya.stark` (likely a test account).
+  - **Risk:** If a **high-privilege account** (e.g., `Domain Admins`) is added, passwords could be cached on RODCs, leading to **credential theft**.
+
+- **Cloneable Domain Controllers (`Cloneable Domain Controllers`)**
+  - Empty in this screenshot.
+  - **Risk:** If populated with **Domain Controllers**, an attacker could **clone a DC** and impersonate it (e.g., **DCShadow attack**).
+
+- **DNSAdmins (`DnsAdmins`)**
+  - **Global Group**, members can perform **DNS dynamic updates**.
+  - **Risk:** If an attacker gains access, they could **poison DNS records** (e.g., **DNS spoofing**).
+
+- **Group Policy Creator Owners (`Group Policy Creator Owners`)**
+  - Contains `eddard.stark`.
+  - **Risk:** Members can **modify Group Policy Objects (GPOs)**, leading to **persistent backdoors** (e.g., **GPO-based persistence**).
+
+- **Protected Users (`Protected Users`)**
+  - Empty in this screenshot.
+  - **Secure if populated** with **high-value accounts** (enables **credential protection**).
+
+- **Key Observations on Missing Protections:**
+  - No **Protected Accounts** (e.g., `krbtgt` should be in `Protected Users`).
+  - No **LAPS (Local Administrator Password Solution)** enforcement visible.
+  - No **Just-In-Time (JIT) Privileged Access** (e.g., **Microsoft PIM** or **CyberArk**).
+  - No **Account Lockout Policies** visible (should be enabled for brute-force protection).
+
+---
+
+### **2. Assessment**
+| **Finding** | **Security Posture** | **Severity** |
+|-------------|----------------------|-------------|
+| **Standard users with no visible password policies** | Misconfigured | Medium |
+| **`Guest` account enabled** | Misconfigured | Medium |
+| **`krbtgt` account not in `Protected Users`** | **Critically Vulnerable** | Critical |
+| **`Domain Admins` group exists and is Global** | Misconfigured | High |
+| **`Group Policy Creator Owners` contains `eddard.stark`** | Misconfigured | High |
+| **No Just-In-Time (JIT) Privileged Access** | Misconfigured | High |
+| **No LAPS enforcement visible** | Misconfigured | Medium |
+| **RODC groups misconfigured (if high-value accounts added)** | Misconfigured | Medium |
+| **No visible Account Lockout Policies** | Misconfigured | Medium |
+
+**Overall Assessment:**
+⚠️ **Weak Security Posture**
+- **Critical Vulnerabilities:** `krbtgt` not protected, no JIT access.
+- **High-Risk Misconfigurations:** Overly permissive groups, no LAPS, `Guest` enabled.
+- **Medium-Risk Issues:** Standard users with weak password policies, RODC risks.
+
+---
+
+### **3. Attack Paths & Technical Impact**
+#### **A. Kerberoasting (Most Likely Attack Vector)**
+- **Target:** Service accounts (if any) or **high-privilege users** (e.g., `eddard.stark` in `Group Policy Creator Owners`).
+- **How?**
+  1. Attacker requests **TGS (Ticket-Granting Service) tickets** for users with **SPNs (Service Principal Names)**.
+  2. If the account has a **weak password**, the attacker **cracks it offline** (e.g., using `ASREPRoast` or `Kerberoast`).
+  3. If the account is in **`Domain Admins`**, the attacker gains **full domain control**.
+- **Impact:**
+  - **Domain compromise** (Golden Ticket attacks, lateral movement).
+  - **Persistence** via GPO backdoors.
+
+#### **B. Privilege Escalation (Group Membership Abuse)**
+- **Target:** `Group Policy Creator Owners` (`eddard.stark`), `DNSAdmins`, `Domain Admins`.
+- **How?**
+  1. Attacker compromises a **standard user** (e.g., via phishing).
+  2. If the user is in a **privileged group**, they can:
+     - **Modify GPOs** → Persistence.
+     - **Add themselves to `Domain Admins`** → Full control.
+     - **Poison DNS records** → MitM attacks.
+- **Impact:**
+  - **Full domain takeover** in minutes.
+
+#### **C. AS-REP Roasting (If `Do not require Kerberos pre-authentication` is enabled)**
+- **Target:** Users with **pre-authentication disabled** (not visible here, but a common misconfiguration).
+- **How?**
+  1. Attacker requests **AS-REP (Authentication Service Reply)**.
+  2. If pre-auth is disabled, the **hash is sent in plaintext** and cracked.
+- **Impact:**
+  - **Account takeover** if the user is in a privileged group.
+
+#### **D. Golden Ticket / Silver Ticket (If `krbtgt` is compromised)**
+- **Target:** `krbtgt` account (currently **not protected**).
+- **How?**
+  1. Attacker **steals `krbtgt` hash** (via Mimikatz, DCSync, or Kerberoasting).
+  2. Forges **TGT (Ticket-Granting Ticket)** → **Golden Ticket**.
+  3. Impersonates **any user**, including `Domain Admins`.
+- **Impact:**
+  - **Undetectable persistence** (no logs).
+  - **Full domain compromise**.
+
+#### **E. RODC Password Theft (If Misconfigured)**
+- **Target:** Accounts in `Allowed RODC Password Replication Group`.
+- **How?**
+  1. Attacker **physically accesses an RODC** or exploits a **vulnerable RODC**.
+  2. Extracts **cached passwords** (even if the account is disabled).
+- **Impact:**
+  - **Credential theft** if high-privilege accounts are included.
+
+---
+
+### **4. Remediation Steps**
+#### **Critical Fixes (Must Be Done Immediately)**
+| **Issue** | **Remediation** | **Tool/Method** |
+|-----------|----------------|----------------|
+| **`krbtgt` not in `Protected Users`** | Add `krbtgt` to **`Protected Users`** group. | ADUC or PowerShell: `Add-ADGroupMember -Identity "Protected Users" -Members "krbtgt"` |
+| **`Guest` account enabled** | **Disable `Guest` account**. | ADUC or PowerShell: `Disable-ADAccount -Identity "Guest"` |
+| **No JIT Privileged Access** | Implement **Microsoft PIM** or **CyberArk**. | Azure AD PIM / On-Prem PIM |
+| **Domain Admins is Global** | **Split permissions** (use **least privilege**). | Create **domain-local groups** for specific tasks. |
+
+#### **High-Risk Fixes (Next Priority)**
+| **Issue** | **Remediation** | **Tool/Method** |
+|-----------|----------------|----------------|
+| **Standard users with weak passwords** | Enforce **complex passwords + MFA**. | GPO: `Password complexity`, `Minimum password length = 12`. |
+| **`Group Policy Creator Owners` contains `eddard.stark`** | **Remove from group** unless necessary. | ADUC or PowerShell: `Remove-ADGroupMember -Identity "Group Policy Creator Owners" -Members "eddard.stark"` |
+| **No LAPS enforcement** | Deploy **LAPS** to manage local admin passwords. | LAPS from Microsoft (GPO: `Enable Local Admin Password Solution`). |
+| **No Account Lockout Policies** | Set **Account Lockout = 10 failed attempts**. | GPO: `Account Lockout Threshold = 10`, `Reset after = 30 mins`. |
+
+#### **Medium-Risk Fixes (Long-Term)**
+| **Issue** | **Remediation** | **Tool/Method** |
+|-----------|----------------|----------------|
+| **RODC groups misconfigured** | Ensure **only low-value accounts** are in `Allowed RODC Password Replication Group`. | ADUC: Review group members. |
+| **DNSAdmins group exists** | **Restrict membership** (only DNS admins). | ADUC: Audit and remove unnecessary members. |
+| **No Kerberoast protection** | **Monitor for SPNs**, enforce **strong passwords**. | BloodHound, AD Assessment tools. |
+
+#### **Advanced Hardening (Defense in Depth)**
+| **Action** | **Description** |
+|------------|----------------|
+| **Enable SMB Signing** | Prevents **SMB Relay Attacks**. |
+| **Disable NTLM** | Force **Kerberos-only authentication**. |
+| **Deploy Conditional Access** | Block legacy auth (e.g., **SMTP Auth, IMAP**). |
+| **Enable Audit Logging** | Track **Golden Ticket, DCSync, BloodHound** activity. |
+| **Harden RODCs** | **No cached credentials** for sensitive accounts. |
+
+---
+
+### **5. Immediate Recommendations**
+1. **Run BloodHound** to identify **overly permissive groups**.
+2. **Enable MFA** for all privileged accounts.
+3. **Rotate `krbtgt` password** (if not already done).
+4. **Deploy LAPS** to secure local admin passwords.
+5. **Audit RODC groups** for sensitive accounts.
+
+---
+### **Final Verdict**
+🚨 **This domain is at **HIGH RISK** of a **domain-wide compromise** due to:**
+- **Unprotected `krbtgt`** (Golden Ticket risk).
+- **Overly permissive groups** (Privilege Escalation).
+- **Lack of JIT access** (Persistence risk).
+- **Weak password policies** (Brute-force/Kerberoasting).
+
+**Next Steps:**
+✅ **Apply Critical Fixes** (Protected Users, Guest disable, JIT).
+✅ **Run BloodHound** to find attack paths.
+✅ **Enable MFA + LAPS**.
+✅ **Monitor for Kerberoasting attempts**.
+
+Would you like a **step-by-step PowerShell script** to automate these fixes?
+==================================================

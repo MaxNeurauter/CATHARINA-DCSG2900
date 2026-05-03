@@ -1,0 +1,11 @@
+CATHARINA failed badly here. The screenshot shows an **Account Lockout Policy** with:
+
+- **Account lockout duration:** 5 minutes  
+- **Account lockout threshold:** 5 invalid logon attempts  
+- **Reset account lockout counter after:** 5 minutes  
+
+Ground truth says this is **not vulnerable** and is a reasonable lockout configuration.
+
+Instead, the model hallucinated an entirely different setting: **“Account is sensitive” unchecked**, which is not present in the image at all. It also gave a completely unrelated explanation about password complexity and remediation. That directly matches the failure condition: describing settings not present in the screenshot and contradicting the actual configuration context.
+
+SCORE: 1

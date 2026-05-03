@@ -1,0 +1,107 @@
+Report name: 2021.08.17_new_iranian_campaign_by_Siamesekitten
+time used: 116.22 seconds
+Bert score: 0.8051
+RougeL score: 0.0946
+Rouge1 score: 0.1982
+Rouge2 score: 0.0271
+summary generated:
+Okay, here's a CTIS (Cyber Threat Intelligence Summary) based on the provided images.  I'll structure it according to standard CTIS sections. **Please read the caveats at the end – there are limitations to my analysis due to the format and image quality.**
+
+**CTIS Summary: Milan APT Activity & DanBot RAT**
+
+**1. Executive Summary**
+
+This report details activity attributed to a threat actor dubbed "Milan," exhibiting characteristics consistent with a previously observed Iranian APT group, potentially APT39. The campaign involves a complex multi-stage attack utilizing custom malware ("ChipPC.exe," "MsNPngI.exe"), sophisticated C&C communication techniques (DNS tunneling, HTTP requests), and a customized version of a RAT called DanBot. The group demonstrates significant capabilities in network intrusion, persistence, and data exfiltration. They impersonate legitimate software like Defender.
+
+**2. Threat Actor**
+
+*   **Name:** Milan (attributed to a potential APT39 connection)
+*   **Likelihood:** High (based on technical indicators and behavioral patterns)
+*   **Motivation:**  Espionage, data theft, and potentially disruption.  (Specific targets not clear from the document)
+*   **Capabilities:**  Advanced network intrusion, custom malware development, DNS tunneling, HTTP communication, C&C infrastructure management, fileless persistence, and decoy techniques.
+*   **Attribution:** Likely linked to an Iranian APT group, potentially APT39, based on behavioral similarities and infrastructure.
+*   **Tactics, Techniques, and Procedures (TTPs):**  (See Section 6 - Indicators of Compromise for more specific details)
+
+**3. Malware**
+
+*   **ChipPC.exe:**  A core component of the attack, likely acting as a downloader or initial payload.
+*   **MsNPngI.exe:**  Possibly a dropper or component for further malicious activity.
+*   **DanBot RAT (WinNVC.exe):** A remote access trojan, likely used for post-exploitation activities (screen access, file transfer, system control). Its origin is traced to Tunisia.
+*   **Custom/Modified Components:**  Evidence suggests the malware has been customized from existing tools, indicating the actors possess development expertise.
+
+**4. Infrastructure**
+
+*   **C&C Servers:**
+    *   `23.95.218[.]240`
+    *   `23.94.22[.]145`
+    *   `185.243.112[.]120`
+    *   `185.243.112[.]121`
+    *   `185.243.112[.]130`
+    *   `185.243.112[.]131`
+    *   `185.243.112[.]132`
+    *   `185.243.112[.]133`
+    *   `5.5.5[.]5`
+    *   `193.239.84[.]207`
+    *   `208.91.197[.]91`
+*   **Domain Names:**
+    *   `softwaregabs[.]com`
+    *   `jobschippi[.]com`
+    *   `defenderstatus[.]com`
+    *   `dnsstatus[.]org`
+    *   `technoocet[.]com`
+    *   `wsuslink[.]com`
+    *   `audiodigi[.]com`
+
+*   **ASN (Autonomous System Numbers):**
+    *   AS36352 (AS-COLORCROSSING)
+    *   AS6276 (OVH SAS)
+    *   AS36352 (AS-COLORCROSSING)
+    *   AS9009 (M247 Ltd)
+*   **Domain Resolution:**  The group actively registers new domains for C&C and lures.
+
+**5. Campaign Details**
+
+*   **Initial Access:**  Likely through phishing emails (though specifics not detailed), leading to the download of the initial malware payload.
+*   **Lateral Movement:**  Information not detailed.
+*   **Persistence:** Likely achieved through fileless techniques and potential registry modifications (specific methods not provided).
+*   **Exfiltration:**  Data is exfiltrated using HTTP POST requests to the C&C servers.
+*   **Decoy:** Mimicry of legitimate software installers to avoid detection.
+
+**6. Indicators of Compromise (IOCs)**
+
+*   **File Hashes (SHA256):** (Refer to the last image for a comprehensive list including ChipPC.exe, MsNPngI.exe, WinNVC.exe, and associated files.)
+*   **File Names:** ChipPC.exe, MsNPngI.exe, WinNVC.exe, audiodigi.exe, etc. (See list on last image)
+*   **Domains:**  Listed above in Infrastructure.
+*   **IP Addresses:** Listed above in Infrastructure.
+*   **User Agent:**  `Copyright (C) 2019` (associated with the WinNVC.exe RAT).
+*   **ASN:** AS36352, AS6276, AS9009
+
+**7. Mitigations**
+
+*   Implement robust email filtering to prevent phishing emails.
+*   Network segmentation to limit lateral movement.
+*   Endpoint detection and response (EDR) solutions to detect malicious activity.
+*   Network monitoring to identify suspicious network traffic (DNS tunneling).
+*   Threat intelligence sharing to stay informed about emerging threats.
+*   Implement DNS monitoring and blocklists of known malicious domains.
+*   Investigate suspicious files and processes based on the listed IOCs.
+
+**8. References**
+
+*   RiskIQ reports and analyses of the domains and IPs
+*   VirusTotal submissions for the identified malware.
+
+
+
+**Caveats & Limitations:**
+
+*   **Image Quality:** Image quality can impact the accuracy of information extraction. Some details may be blurry or difficult to read.
+*   **Incomplete Information:** The document provides a snapshot but doesn't offer the complete picture. It's missing contextual details about the specific targets, the timeline of the campaign, and other important aspects.
+*   **Text Recognition Errors:** OCR (Optical Character Recognition) can produce errors when converting images to text.
+*   **No Executable Analysis:** This is a static analysis based solely on text and file names. Dynamic analysis of the malware would reveal more details about its behavior.
+*   **Attribution Confidence:** The connection to APT39 is based on similarities but not definitive proof.
+*   **Limited Context:** Without the original source, it is hard to interpret the full context of this report.
+
+
+
+Let me know if you would like me to elaborate on any section, or if you have any other questions.

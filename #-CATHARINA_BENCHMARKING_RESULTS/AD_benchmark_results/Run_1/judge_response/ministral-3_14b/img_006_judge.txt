@@ -1,0 +1,11 @@
+CATHARINA does identify the key issue that **Authenticated Users** have dangerous write permissions such as **Enable per user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**, which matches the ground truth well.
+
+However, the explanation is heavily flawed. It invents or overstates attack paths:
+- **AS-REP Roasting** is not caused by “reversibly encrypted password” permission.
+- **Golden Ticket** is unrelated to these delegated password-attribute permissions.
+- **DCShadow/DC cloning** conclusions are not supported by the core issue in the screenshot.
+- It also misreads one point: the screenshot shows **ENTERPRISE DOMAIN CONTROLLERS** for replication-related rights, not **Authenticated Users**.
+
+So while it gets the main vulnerable condition right, the technical reasoning and attack mapping are substantially inaccurate and noisy. Remediation to remove those Authenticated Users write permissions is directionally correct, but not cleanly scoped to the actual finding.
+
+SCORE: 3

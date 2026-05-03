@@ -1,0 +1,6 @@
+CATHARINA failed this assessment. The core issue in the screenshot is that the **Essos Default Domain Policy delegates custom permissions to admin groups from external forests/domains** — specifically **NORTH\Domain Admins** and **SEVENKINGDOMS\Enterprise Admins**. That breaks the forest security boundary by making Essos administration dependent on external environments.
+
+Instead, the model hallucinated a different scenario (“Restrict Access to Computer Management”), misread the visible principals, and incorrectly claimed **SYSTEM/Local System** having control is the vulnerability. In GPOs, SYSTEM having high privileges is normal; “Local System” is not even shown as a separate entry in the screenshot. The remediation is therefore fundamentally wrong for the actual issue.
+
+This matches the rubric for a severe miss: it describes settings not present and misses the primary flaw entirely.  
+SCORE: 1

@@ -1,0 +1,9 @@
+CATHARINA does identify the relevant setting: **“Account is sensitive and cannot be delegated” is unchecked**. That aligns with the ground truth.
+
+However, the explanation is flawed. The ground truth specifically says the risk is **Kerberos ticket theft/hijacking when the user logs onto a compromised server, allowing impersonation to other services**. Instead, the model pivots to **Kerberoasting, Golden Ticket, AS-REP roasting, brute-force, relay**, and other unrelated or speculative issues. It also invents extra “misconfigurations” like the account being enabled or smart card not required, which are not the core issue here.
+
+Remediation partially includes the correct fix—**check “Account is sensitive and cannot be delegated”**—but again ties it to the wrong attack explanation.
+
+So this is better than generic “misconfigured,” but it misses the **specific attack path** in the ground truth and adds a lot of incorrect noise.
+
+SCORE: 4

@@ -1,0 +1,5 @@
+CATHARINA missed the core issue. The ground truth is about a **forest security boundary violation**: external admin groups from **NORTH** and **SEVENKINGDOMS** have custom permissions on the **Default Domain Policy** in **essos.local**, meaning Essos security depends on trusted external forests. Instead, the model focused on **Authenticated Users having Read**, which is normal for GPO application/security filtering and not the main vulnerability here.
+
+It also incorrectly stated that external **Domain Admins / Enterprise Admins** having custom permissions is “expected and secure,” which directly contradicts the screenshot and ground truth. The remediation is therefore aimed at the wrong problem and misses removing cross-forest administrative permissions.
+
+SCORE: 1

@@ -1,0 +1,3 @@
+The model’s performance is a clear failure. It focused on the Attribute Editor tab and inferred the account was a normal user, but completely missed the actual AD security issue from the ground truth: delegated password reset rights for `tywin.lannister` over `jaime.lannister` and excessive `Full control` granted to `Account Operators`. Worse, it concluded the state was “Secure,” which directly contradicts the ground truth. Its remediation is generic and not relevant to the specific misdelegation/ACL problem.
+
+SCORE: 1

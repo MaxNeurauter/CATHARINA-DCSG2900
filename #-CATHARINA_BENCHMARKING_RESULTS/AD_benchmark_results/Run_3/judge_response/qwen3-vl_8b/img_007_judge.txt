@@ -1,0 +1,7 @@
+CATHARINA missed the primary flaw shown in the screenshot. The ground truth is specifically about **“Add workstations to domain” being assigned to Authenticated Users**, which enables non-admin users to create computer objects and can facilitate **RBCD abuse**.  
+
+Instead, the model focused on **“Access this computer from the network” includes Everyone**, which is visible but not the target vulnerability defined by the ground truth. That means it identified a different issue and gave remediation for the wrong setting. It did not mention the AD-specific risk of machine account creation or RBCD at all.
+
+This fits **Poor** rather than total failure because it did identify a real misconfiguration in the screenshot, but it **missed the core flaw** and provided remediation irrelevant to the intended vulnerability.
+
+SCORE: 2

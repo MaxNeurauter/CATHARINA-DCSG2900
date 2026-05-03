@@ -1,0 +1,7 @@
+The model response is a clear failure. The screenshot shows **Advanced Security Settings for robb.stark** and focuses on **ACL/permission entries**, while the model hallucinated an entirely different view: a **General/Account tab** for a different user (**johndoe**) with password-related settings. That directly contradicts the visible image content.
+
+Ground truth says this object’s access control is mostly following best practices, with permissions restricted to expected principals like **SYSTEM** and **Domain Admins**, and no obvious unauthorized principals. The model instead labeled it **Critically Vulnerable**, invented attack paths, and prescribed irrelevant remediation.
+
+This matches the rubric’s lowest category because it both **describes UI/settings not present** and **misclassifies a secure/acceptable state as critical**.
+
+SCORE: 1

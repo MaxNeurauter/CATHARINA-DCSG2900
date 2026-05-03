@@ -1,0 +1,7 @@
+The model partially identified the issue but failed to classify it correctly. The ground truth is specifically **Kerberoasting risk due to an SPN assigned to a normal user account**. CATHARINA did notice the `servicePrincipalName` on `jon.snow` and mentioned Kerberoasting as a possible attack, which is good. However, it diluted the finding by saying the configuration appears “generally secure” and treated the issue as only conditional rather than the core flaw visible in the screenshot.
+
+It also made a technical mistake by referencing extraction of the **TGT**; Kerberoasting involves requesting a **TGS service ticket** for the SPN and cracking that offline. Remediation was generic and missed the strongest fix: remove the SPN from a regular user and use a gMSA/computer account/service account with strong managed credentials.
+
+This is better than a generic “misconfigured” label, but not strong enough for a 4 because it did not clearly state the primary vulnerability as the main conclusion and included inaccurate protocol detail.
+
+SCORE: 3

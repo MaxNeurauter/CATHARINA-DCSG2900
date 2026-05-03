@@ -1,0 +1,10 @@
+CATHARINA correctly identified the core issues from the screenshot: minimum password length of 5, complexity disabled, and maximum password age of 37201 days. It also correctly classified the policy as critically vulnerable and provided generally solid remediation.
+
+However, there are notable technical problems that prevent a perfect score:
+- It says reversible encryption being disabled “prevents AS-REP Roasting,” which is incorrect. That setting is unrelated to AS-REP roasting.
+- It overcommits to Kerberoasting as the “primary threat,” while the ground truth is more generally about weak password policy and long-lived credentials, not specifically a Kerberoasting finding.
+- It slightly exaggerates impact with claims like “unrestricted access” and “domain controllers” without evidence from the screenshot.
+
+So the core finding is right and remediation is mostly good, but the attack-path explanation includes inaccuracies and unnecessary specificity.
+
+SCORE: 4

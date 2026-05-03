@@ -1,0 +1,8 @@
+The model correctly counted the **eight endpoint computers (A–H)**, but it made a major topology error by inventing a **central switch/router** that is not present. The diagram is clearly a **bus topology** with all hosts attached to a single shared backbone, not a partial star.
+
+On risk analysis, it did identify a general **single point of failure**, lack of segmentation, and lack of security boundaries, which partially aligns with the ground truth. However, it missed the key bus-specific issue that **all devices share the same collision domain**, and it framed the SPOF as a failed switch rather than the **shared backbone cable/termination**.
+
+Its recommendations are partly useful but not well matched to the actual diagram. The best-grounded recommendation should have been to **replace the bus with a star topology using an Ethernet switch**, plus structured cabling and optionally a router/firewall. Instead, it recommended adding redundant switches, LACP, partial mesh/ring, and Cisco hierarchical design, which are overbuilt and not directly responsive to this simple legacy bus network.
+
+Overall: good endpoint inventory, but a **major misclassification of topology** and some misapplied recommendations.  
+SCORE: 2

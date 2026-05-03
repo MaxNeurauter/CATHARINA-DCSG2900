@@ -1,0 +1,7 @@
+CATHARINA does notice the relevant permission: **SELF – Create/delete all child objects**, which is the core flaw from the ground truth. However, it does **not** correctly explain the real security impact: **RBCD / privilege escalation via creating child objects on the computer object**. Instead, it invents or overemphasizes other issues (e.g. ANONYMOUS LOGON read, Everyone change password, Kerberoasting, Silver/Golden tickets) as the “primary attack vector,” which is not aligned with the ground truth and drifts into speculative analysis.
+
+Remediation is mixed: it does say to remove or restrict **SELF Create/delete all child objects**, which is the correct fix, but the surrounding advice includes questionable or irrelevant recommendations such as adding deny ACEs and blocking inheritance broadly.
+
+So this is better than generic “misconfigured,” because it identifies the right permission, but it misses the specific technical attack path and adds a lot of incorrect noise.
+
+SCORE: 4

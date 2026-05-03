@@ -1,0 +1,5 @@
+CATHARINA performed very poorly against the ground truth.
+
+Reasoning: The screenshot does **not** show a directly exploitable AD misconfiguration. The correct assessment should be essentially **not vulnerable**, with a note that the environment appears to lack **Organizational Units (OUs)** and should implement them for better administration/delegation and policy structure. Instead, the model hallucinated multiple critical findings that are **not supported by the image**: password policy issues, MFA absence, account lockout issues, Domain Admins membership, Enterprise Admins implications, enabled Guest status, Kerberoasting/AS-REP risk, and “critically vulnerable” overall posture. It also inferred settings and attack paths not visible in the screenshot. This matches the failure condition: declaring a non-vulnerable view as critically vulnerable and describing unsupported settings.
+
+SCORE: 1

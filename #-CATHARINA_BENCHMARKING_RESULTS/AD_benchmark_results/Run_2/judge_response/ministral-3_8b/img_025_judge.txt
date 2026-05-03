@@ -1,0 +1,9 @@
+CATHARINA’s assessment is fundamentally wrong relative to the ground truth. It labels the ACL as misconfigured/high-risk, while the expected finding is that the object largely follows best practices and shows no unauthorized principals.
+
+The biggest error is treating **“Everyone: Change password”** as if it means anyone can reset the account password. In AD, this ACE is commonly present by default and corresponds to the extended right to **change one’s own password**, not arbitrary password reset by any user. The response builds its whole attack path on that mistaken interpretation.
+
+It also flags normal/default principals such as **Authenticated Users**, **Windows Authorization Access Group**, **Cert Publishers**, and **Terminal Server License Servers** as suspicious or misconfigured without evidence. That is an unjustified hallucinated risk assessment. The remediation is therefore incorrect and would remove legitimate/default permissions.
+
+Because it declares a secure/acceptable configuration to be dangerously vulnerable and invents attack paths contradicted by standard AD behavior, this is a failure.
+
+SCORE: 1

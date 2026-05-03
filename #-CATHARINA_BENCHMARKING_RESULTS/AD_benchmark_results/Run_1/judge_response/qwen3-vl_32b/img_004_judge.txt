@@ -1,0 +1,5 @@
+CATHARINA missed the actual vulnerability entirely. The ground truth is about the unchecked **“Account is sensitive and cannot be delegated”** setting for a high-value account, which exposes the user to **Kerberos delegation/ticket theft abuse** if they authenticate to a compromised host.  
+
+Instead, it incorrectly focused on **“Account expires: Never”**, which is not the primary issue here and even conflated account expiration with password expiration. That is both technically inaccurate and not supported by the relevant security finding in the screenshot. This is a failure to identify the core flaw.
+
+SCORE: 1

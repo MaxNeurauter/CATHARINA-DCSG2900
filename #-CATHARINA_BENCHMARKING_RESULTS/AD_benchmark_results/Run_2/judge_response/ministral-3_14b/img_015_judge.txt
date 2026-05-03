@@ -1,0 +1,5 @@
+The model correctly identified the core issue: a human user account is configured for constrained delegation and best practice is to set “Do not trust this user for delegation.” It also correctly noted that the empty service list reduces immediate exploitability and that this is not unconstrained delegation.
+
+However, it drifts into inaccurate or weak technical explanations. Mentioning Silver Ticket, Kerberoasting, and Golden Ticket here is not aligned with the ground truth and overstates/misframes the risk. The key point should have been least privilege: delegation rights on a standard human account are unnecessary and still represent a vulnerable configuration even if somewhat hardened. Remediation was correct.
+
+SCORE: 4

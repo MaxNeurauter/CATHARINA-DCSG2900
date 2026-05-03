@@ -1,0 +1,51 @@
+Image Analyzed: img_010.png
+Model Used: qwen3-vl:8b
+Time Taken: 125.98 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **Observation**  
+The user account "jon.snow" has the **`servicePrincipalName` (SPN)** attribute set to `CIFS/thewall.north.sevenkingdoms.local: HT`. While the SPN format appears malformed (e.g., `HT` is likely a typo), the presence of an SPN on a standard user account is a critical misconfiguration. In Active Directory, SPNs are intended for **computer accounts** (e.g., domain controllers or dedicated service accounts), not standard user accounts.  
+
+---
+
+### **Assessment**  
+**Misconfigured**  
+- Standard user accounts (indicated by `sAMAccountType = 805306368` for `NORMAL_USER_ACCOUNT`) should **not** have SPNs set.  
+- This misconfiguration enables attackers to exploit the account via **Kerberoasting**, a well-known attack vector targeting service accounts with SPNs.  
+
+---
+
+### **Attack Path**  
+**Kerberoasting**  
+1. Attackers request Kerberos tickets for the SPN (`CIFS/thewall.north.sevenkingdoms.local: HT`).  
+2. The Kerberos server issues a ticket (encrypted with the user’s password).  
+3. Attackers crack the ticket offline (e.g., via hashcat) to recover the user’s password.  
+4. If the password is weak (e.g., re-used across accounts), attackers can authenticate as the user to compromised services (e.g., file shares).  
+
+**Technical Impact**: Full compromise of the user’s access to domain resources if the password is weak or reused.  
+
+---
+
+### **Remediation**  
+**Remove the SPN from the user account**:  
+1. **Using PowerShell**:  
+   ```powershell  
+   Set-ADUser -Identity "jon.snow" -Replace @{servicePrincipalName=""}  
+   ```  
+   *(This clears all SPNs for the account.)*  
+
+2. **Using Active Directory Users and Computers**:  
+   - Open the user account’s properties → **Security** tab → **Advanced** → **Remove** the SPN attribute.  
+
+**Verification**:  
+- Confirm SPNs are cleared via `Get-ADUser -Identity "jon.snow" -Properties servicePrincipalName`.  
+- Ensure SPNs are only set for **computer accounts** (e.g., service accounts for file shares) to maintain compliance with best practices.  
+
+---
+
+### **Why This Matters**  
+Kerberoasting is a **critical vulnerability** in Active Directory environments. Even if the SPN is malformed (`HT`), its presence on a user account creates a pathway for attackers to exploit the account. Standard user accounts **should never have SPNs**; this is a violation of Microsoft’s security best practices.  
+
+**Key Takeaway**: Always restrict SPNs to computer accounts or dedicated service accounts to prevent Kerberoasting attacks.
+==================================================

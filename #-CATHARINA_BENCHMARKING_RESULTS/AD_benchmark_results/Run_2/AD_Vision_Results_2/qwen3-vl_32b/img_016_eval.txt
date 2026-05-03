@@ -1,0 +1,54 @@
+Image Analyzed: img_016.png
+Model Used: qwen3-vl:32b
+Time Taken: 594.34 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### 1. Observation  
+- **Enforce user logon restrictions**: Enabled  
+- **Maximum lifetime for service ticket**: 600 minutes (10 hours)  
+- **Maximum lifetime for user ticket**: 10 hours  
+- **Maximum lifetime for user ticket renewal**: 7 days  
+- **Maximum tolerance for computer clock synchronization**: 5 minutes  
+
+### 2. Assessment  
+**Misconfigured**. The excessive **10-hour service ticket lifetime** (600 minutes) is a critical security weakness. While the "Maximum tolerance for computer clock synchronization" (5 minutes) is acceptable, the long service ticket lifetime significantly expands the window for attackers to exploit Kerberos-based attacks. The "Maximum lifetime for user ticket" (10 hours) is also suboptimal but less severe than the service ticket setting.  
+
+### 3. Attack Path  
+- **Attack Vector**: **Kerberoasting**  
+- **Technical Impact**:  
+  - Service tickets (TGS) are encrypted with the service account's NTLM hash. Attackers use tools (e.g., Rubeus, Impacket) to request service tickets for service accounts and then crack the encrypted ticket offline.  
+  - A **10-hour service ticket lifetime** gives attackers **10 hours** to:  
+    1. Crack the service account’s password hash (e.g., via Hashcat).  
+    2. Use the valid service ticket to impersonate the service account and access its associated resources (e.g., databases, file shares).  
+  - **Result**: Unrestricted access to sensitive data or systems controlled by the compromised service account, potentially leading to data exfiltration, lateral movement, or privilege escalation.  
+
+### 4. Remediation  
+**Step-by-Step Fix**:  
+1. **Open Group Policy Management Console (GPMC)**:  
+   - Launch `gpmc.msc` (requires Domain Admin privileges).  
+2. **Edit the GPO**:  
+   - Locate the GPO containing the Kerberos policy (e.g., Default Domain Policy).  
+   - Right-click → **Edit**.  
+3. **Navigate to Kerberos Policy**:  
+   - Go to:  
+     `Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Kerberos Policy`.  
+4. **Modify Service Ticket Lifetime**:  
+   - Double-click **"Maximum lifetime for service ticket"**.  
+   - Set to **60 minutes** (1 hour) → **OK**.  
+5. **(Optional) Reduce User Ticket Lifetime**:  
+   - Double-click **"Maximum lifetime for user ticket"**.  
+   - Set to **60 minutes** → **OK** (reduces TGT window for attack vectors like Silver Ticket).  
+6. **Apply and Verify**:  
+   - **Save the GPO**.  
+   - Force policy update on all domain-joined systems:  
+     - Run `gpupdate /force` on DCs and clients.  
+   - **Verify** the setting in:  
+     `ADSI Edit` (check `msDS-ServiceTicketLifetime` on the domain NC) or via `Get-DomainKerberosPolicy -Identity <domain>` (PowerShell).  
+
+**Why 60 minutes?**  
+- 60 minutes aligns with Microsoft’s **best practices** (e.g., [Microsoft Docs](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/ff983847(v=ws.10))).  
+- It **reduces the attack window** to 1 hour (vs. 10 hours) while balancing operational needs (most services support 1-hour tickets).  
+
+> **Note**: If service accounts have critical business dependencies, test in a non-production environment first. Do not reduce below 30 minutes without validation to avoid application disruptions.
+==================================================

@@ -1,0 +1,52 @@
+Image Analyzed: img_010.png
+Model Used: qwen3-vl:8b
+Time Taken: 123.12 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **Observation**  
+- **sAMAccountName**: `jon.snow` (standard user account, not a service account).  
+- **sAMAccountType**: `805306368` (value corresponding to *NORMAL_USER_ACCOUNT*).  
+- **servicePrincipalName**: `CIFS/thewall.north.sevenkingdoms.local; HT` (SPN set on a normal user account, which is non-standard).  
+- Other attributes (e.g., `roomNumber`, `scriptPath`) are not set, so no additional risks.  
+
+---
+
+### **Assessment**  
+**Misconfigured**  
+The presence of a **Service Principal Name (SPN)** on a `NORMAL_USER_ACCOUNT` is a critical misconfiguration. SPNs are exclusively intended for **service accounts** (e.g., accounts used to run services like CIFS, SQL Server, or Active Directory). A normal user account should **never** have an SPN, as this violates Active Directory best practices and creates unnecessary security exposure.  
+
+---
+
+### **Attack Path**  
+**Kerberoasting**  
+- **Why?** SPNs enable Kerberos authentication for services. If an SPN exists on a non-service account, an attacker could exploit it to extract the user’s password via Kerberoasting.  
+- **Steps**:  
+  1. Target the SPN `CIFS/thewall.north.sevenkingdoms.local; HT` using tools like `Get-SPN` or `kerberoast`.  
+  2. Extract Kerberos tickets for the SPN.  
+  3. Crack the password (if weak, e.g., predictable like `jon.snow` or default passwords).  
+- **Risk**: While Kerberoasting is typically used against service accounts, the misconfiguration here makes a normal user account vulnerable to this attack vector. Even if the password is strong, the **misconfiguration itself** introduces systemic risk by exposing SPN data to unauthorized actors.  
+
+---
+
+### **Remediation**  
+1. **Remove the SPN**:  
+   - Open **Active Directory Users and Computers**.  
+   - Locate the user `jon.snow` → open properties.  
+   - Go to the **Attributes** tab → delete the `servicePrincipalName` attribute.  
+   - Click **Apply** (or **OK**) to save changes.  
+
+2. **Verify the fix**:  
+   - Recheck the account’s attributes to confirm the SPN is no longer present.  
+   - Ensure the correct service account (e.g., a dedicated CIFS service account) has the SPN assigned instead.  
+
+3. **Best Practices**:  
+   - Assign SPNs **only** to service accounts (not normal user accounts).  
+   - Enforce strong password policies for all accounts.  
+   - Regularly audit SPNs using tools like **PowerShell** or **Microsoft’s Security Compliance Manager**.  
+
+---
+
+### **Key Takeaway**  
+This misconfiguration is **not inherently critical** (if passwords are strong), but it **introduces a systemic vulnerability** by allowing attackers to target the account via SPN-based attacks like Kerberoasting. Removing the SPN from non-service accounts is a straightforward fix that aligns with Active Directory security principles.
+==================================================

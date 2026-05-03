@@ -1,0 +1,7 @@
+CATHARINA correctly noticed that **“Account is sensitive and cannot be delegated” is enabled**, which aligns with the ground truth that this is a **security best practice**, not a vulnerability.
+
+However, the model’s overall conclusion is wrong. It invents a primary risk around **“Account expiration: Never”**, incorrectly equating that with **password never expires**, which is not what the screenshot shows. It then further misattributes this to **Kerberoasting**, including incorrect technical explanation about requesting a **TGT** rather than focusing on service tickets/SPNs. Most importantly, it **misses the actual compliance/security gap** in the screenshot: **“Smart card is required for interactive logon” is unchecked**, meaning the sensitive account is still protected only by password and lacks MFA.
+
+So the tool missed the main issue from the ground truth and provided fundamentally incorrect remediation focus.
+
+SCORE: 2

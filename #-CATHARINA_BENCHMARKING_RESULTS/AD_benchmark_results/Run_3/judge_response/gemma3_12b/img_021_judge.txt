@@ -1,0 +1,5 @@
+The model failed to identify the actual vulnerability shown in the screenshot. The image clearly shows **samwell.tarly** with the description **“Samwell Tarly (Password : Heartsbane)”**, which is a critical issue because it exposes a **cleartext password in an AD attribute** commonly readable by authenticated users. It also missed the secondary hygiene issue that users/groups are left in the default **Users** container rather than proper OUs.
+
+Instead, the model hallucinated an entirely different screen (“Account Options” tab, checkbox states) that is not present in the image, and built its assessment around unrelated issues like password expiration and AS-REP roasting. That directly contradicts the visible data and matches the failure criteria.
+
+SCORE: 1

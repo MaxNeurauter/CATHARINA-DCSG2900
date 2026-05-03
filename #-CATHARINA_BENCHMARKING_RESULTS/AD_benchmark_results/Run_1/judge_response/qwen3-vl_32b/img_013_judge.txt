@@ -1,0 +1,5 @@
+CATHARINA failed to identify the actual core vulnerability. The ground truth is the dangerous **Authenticated Users** special permissions at the domain root: **Enable per user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**, which allow security downgrades on accounts.  
+
+Instead, it focused on **ANONYMOUS LOGON Read** access. While that entry is visible in the screenshot, it is not the primary issue described in the ground truth, and the model’s assessment/remediation are therefore aimed at the wrong problem. This is a miss of the main flaw, not just a lack of depth.
+
+SCORE: 2

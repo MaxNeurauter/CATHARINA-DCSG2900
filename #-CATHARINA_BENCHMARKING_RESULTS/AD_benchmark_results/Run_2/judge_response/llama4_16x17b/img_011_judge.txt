@@ -1,0 +1,3 @@
+CATHARINA failed to identify the core vulnerability that is clearly visible in the screenshot: the non-admin user **NORTH\samwell.tarly** has **Edit settings, delete, modify security** on the **StarkWallpaper** GPO. It also missed the impact that this GPO is **linked at the root of north.sevenkingdoms.local**, meaning a compromise of that user could allow malicious policy deployment broadly across the domain. Worse, it assessed the configuration as “generally secure,” which directly contradicts the image evidence.
+
+SCORE: 1

@@ -1,0 +1,77 @@
+Image Analyzed: img_022.png
+Model Used: qwen3-vl:8b
+Time Taken: 130.38 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **Observation**  
+The provided password policy settings reveal critical vulnerabilities:  
+- **Maximum password age**: Set to **37,201 days (102 years)** — **critical risk**.  
+- **Minimum password length**: **5 characters** — **insecure** (too short for robust protection).  
+- **Password complexity**: **Disabled** — **insecure** (allows weak passwords like "12345").  
+- **Enforce password history**: **24 passwords remembered** — **secure** (standard practice).  
+- **Store passwords using reversible encryption**: **Disabled** — **secure** (prevents AS-REP Roasting).  
+
+---
+
+### **Assessment**  
+**Critically Vulnerable**. The combination of an **excessively long password age** and **insecure password policies** creates severe risks:  
+1. **Password never expires**: Compromised passwords remain valid for decades, enabling persistent access.  
+2. **Weak passwords**: 5-character passwords with no complexity are vulnerable to brute-force or dictionary attacks.  
+3. **Kerberoasting vulnerability**: Attackers can crack service tickets for compromised accounts using weak passwords.  
+
+---
+
+### **Attack Path**  
+**Kerberoasting** (a password-based Kerberos attack) is the primary threat:  
+- **How it works**: An attacker requests service tickets for user accounts and cracks them using password dictionaries or brute-force tools.  
+- **Technical impact**:  
+  - Weak passwords (5 chars, no complexity) allow attackers to rapidly crack service tickets.  
+  - Passwords never expiring mean compromised accounts remain accessible for years, enabling **persistent access to network resources** (e.g., file servers, domain controllers).  
+  - Attackers gain **unrestricted access** to critical systems (e.g., domain controllers, file shares) by leveraging cracked Kerberos tickets.  
+
+---
+
+### **Remediation Steps**  
+Follow these steps to secure password policies:  
+
+1. **Open Group Policy Management** (GPM):  
+   - Navigate to `Group Policy Management Console` → `Forest` → `Domain` → `Group Policy Objects`.  
+
+2. **Edit the relevant GPO** (e.g., `Default Domain Policy`):  
+   - Right-click the GPO → `Edit`.  
+   - Go to `Computer Configuration` → `Policies` → `Windows Settings` → `Security Settings` → `Account Policies` → `Password Policy`.  
+
+3. **Fix critical settings**:  
+   - **Maximum password age**:  
+     - Set to **90 days** (or a shorter, secure value like 60 days).  
+     - *Why?* Prevents passwords from being valid indefinitely.  
+   - **Minimum password length**:  
+     - Set to **12 characters**.  
+     - *Why?* 12+ characters significantly increase brute-force difficulty.  
+   - **Password complexity**:  
+     - Set to **Enabled**.  
+     - *Why?* Enforces uppercase, lowercase, numbers, and symbols.  
+   - **Enforce password history**:  
+     - Verify it is set to **24** (standard).  
+
+4. **Verify and enforce changes**:  
+   - Click `OK` → `Apply` → `Close` the GPO editor.  
+   - Force a Group Policy refresh:  
+     - Run `gpupdate /force` on domain-joined machines.  
+
+5. **Validate**:  
+   - Check password requirements via `Control Panel` → `User Accounts` → `Change your password`.  
+   - Confirm passwords meet complexity rules and expire within 90 days.  
+
+---
+
+### **Why This Works**  
+- **Kerberoasting is mitigated** by enforcing strong passwords and short expiration cycles.  
+- **Persistent access is prevented** by ensuring passwords are changed regularly (no 102-year validity).  
+- **Attack surface is reduced** by eliminating weak password patterns.  
+
+> **Note**: If the GPO applies to specific user groups, ensure changes target the correct scope (e.g., `Domain Controllers` or `Users`), not the entire domain.  
+
+By addressing these vulnerabilities, the system becomes resilient against Kerberoasting, password brute-force attacks, and persistent access scenarios.
+==================================================

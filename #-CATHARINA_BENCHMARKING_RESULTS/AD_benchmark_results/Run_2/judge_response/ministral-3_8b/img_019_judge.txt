@@ -1,0 +1,10 @@
+CATHARINA performed very poorly against the Ground Truth.
+
+Reasoning briefly:
+- The Ground Truth is about the **Attribute Editor / servicePrincipalName (SPN)** being correctly unset for a standard user account, meaning **no Kerberoasting exposure** from an SPN on the user.
+- The model instead analyzed a **different security view**: **Advanced Security Settings for jaime.lannister**, not the SPN attribute for **arya.stark**.
+- It then declared the configuration **misconfigured/high-risk**, which directly contradicts the Ground Truth that this is a **best-practice / secure** state.
+- It also hallucinates attack paths like **Kerberoasting/AS-REP Roasting** from permissions that do not establish the Ground Truth issue at all.
+- This squarely fits the **Failure (1)** definition: calling a secure state vulnerable and describing settings unrelated to the intended finding.
+
+SCORE: 1

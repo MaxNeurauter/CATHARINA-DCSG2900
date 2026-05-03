@@ -1,0 +1,43 @@
+Image Analyzed: img_010.png
+Model Used: qwen3-vl:8b
+Time Taken: 68.52 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### 1. Observation  
+- **sAMAccountName**: `jon.snow` (standard user name).  
+- **sAMAccountType**: `805306368 = (NORMAL_USER_ACCOUNT)` (confirms this is a regular user account, not a service account or admin account).  
+- **servicePrincipalName**: `CIFS/the wall.north.sevenkingdoms.local: HT` (malformed but present on a user account).  
+- Other attributes (e.g., `roomNumber`, `scriptPath`, `secretary`, etc.) are set to `<not set>`, which is normal for non-critical user attributes.  
+
+
+### 2. Assessment  
+**Misconfigured**  
+
+A user account (e.g., `jon.snow`) **should not** have the `servicePrincipalName` attribute set. `servicePrincipalName` is intended for **service accounts** (e.g., computer objects or dedicated application accounts) to map to Kerberos service identifiers. When a user account has `servicePrincipalName`, it violates Active Directory design principles and creates an unnecessary attack surface.  
+
+
+### 3. Attack Path  
+**Kerberoasting**  
+
+- **Technical Impact**:  
+  Kerberoasting exploits the Kerberos protocol to request service tickets (TGS) for user accounts with `servicePrincipalName` set. Attackers target these accounts to crack service tickets (e.g., using hashcat or John the Ripper) to recover passwords or gain unauthorized access to resources associated with the SPN (e.g., `CIFS/...`).  
+  - In this case, the user account `jon.snow` has an SPN (`CIFS/the wall.north.sevenkingdoms.local: HT`) mapped to it. If the password for `jon.snow` is weak (e.g., reused, default, or guessable), the attacker can brute-force or crack the service ticket to compromise access to the CIFS service (e.g., file shares).  
+  - Even if the password is strong, the presence of `servicePrincipalName` on a user account is a misconfiguration that enables Kerberoasting *if* the account is used as a target (e.g., in a compromised environment or via misconfiguration).  
+
+
+### 4. Remediation  
+**Step-by-Step Fix**:  
+1. **Access the User Account**: Open the Active Directory Users and Computers (ADUC) console and navigate to the user `jon.snow`.  
+2. **Edit Attributes**:  
+   - Right-click `jon.snow` → **Properties** → Go to the **Attributes** tab (or select **Attribute Editor** from the tab bar).  
+   - Locate the `servicePrincipalName` attribute (it may appear as a list or under a "Details" section).  
+3. **Remove the Value**:  
+   - Delete the value `CIFS/the wall.north.sevenkingdoms.local: HT` (or set it to `<not set>`).  
+   - If the value is malformed (e.g., incorrect SPN format), ensure it is removed entirely.  
+4. **Apply Changes**: Click **Apply** or **OK** to save the changes.  
+5. **Verify**: Confirm the `servicePrincipalName` attribute is no longer present by checking the user’s properties.  
+
+**Why This Works**:  
+Removing `servicePrincipalName` from a user account eliminates the attack surface for Kerberoasting. User accounts should never have SPNs; only service accounts or computer objects should have them. This aligns with best practices for minimizing Kerberos-related risks.
+==================================================

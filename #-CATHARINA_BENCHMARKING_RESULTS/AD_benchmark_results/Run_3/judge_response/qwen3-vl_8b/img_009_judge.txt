@@ -1,0 +1,9 @@
+CATHARINA correctly identified the key configuration: **“Trust this user for delegation to any service (Kerberos only)”** is enabled for `sansa.stark`, which is indeed **Unconstrained Delegation** and a serious AD misconfiguration.
+
+However, the explanation of the attack path is materially wrong. It describes **Kerberoasting/TGS roasting**, which is not the core risk highlighted by this setting. The ground truth is specifically about **Unconstrained Delegation**, where a user authenticating to a service running as this account can have their **TGT cached/stored**, enabling theft and potential **privilege escalation/lateral movement** if the host/account is compromised. That is the critical technical detail, and CATHARINA missed it.
+
+Remediation is partially correct in suggesting disabling delegation if not needed, but it is incomplete and cut off, and it does not clearly steer toward safer alternatives like **constrained delegation** where applicable.
+
+So overall: right finding, wrong attack path, incomplete remediation.
+
+SCORE: 4

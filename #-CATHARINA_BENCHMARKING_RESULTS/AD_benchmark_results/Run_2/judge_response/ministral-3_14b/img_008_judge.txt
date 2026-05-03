@@ -1,0 +1,15 @@
+CATHARINA should score very low here because it only partially caught the real issue and also hallucinated multiple incorrect findings.
+
+Reasoning:
+- The ground truth is specific: **both `stannis.baratheon` and the non-admin group `AcrossTheNarrowSea` have Full control on the `KINGSLANDING` computer object**, which can lead to full admin privileges if either is compromised.
+- The model did identify **`AcrossTheNarrowSea`** as having **Full Control**, which is correct.
+- However, it **misread `stannis.baratheon`** as having only **Create/Delete all child objects**. In the screenshot, `stannis.baratheon` also has **Full control**. This means it missed a core part of the primary flaw.
+- It further introduced several unsupported or misleading claims, such as:
+  - `Everyone` permissions being the most critical path
+  - `SELF` enabling Golden Ticket attacks
+  - `Authenticated Users`, `Domain Admins`, `Enterprise Admins`, and others being “overly permissive” in ways not supported by the ground truth
+- Some remediation advice is also clearly wrong for this context, especially suggesting **Domain Admins/Enterprise Admins should not have Full Control**, which is not the issue here.
+
+So while it recognized there was a dangerous ACL misconfiguration, it **missed one of the two primary dangerous Full Control assignments** and **hallucinated several unrelated findings**. That places it below acceptable.
+
+SCORE: 2

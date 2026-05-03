@@ -1,0 +1,11 @@
+CATHARINA does notice the password disclosure for `samwell.tarly`, which is the core issue in the screenshot. However, it frames it mostly as a weak/guessable password problem rather than the more important AD exposure issue: a cleartext credential stored in the **description** attribute, which is commonly readable by authenticated users. That is the key technical risk in the ground truth.
+
+It also adds several unsupported or incorrect claims:
+- Empty `Protected Users` group is called a **critical vulnerability** — that is false.
+- It claims lack of MFA, password policy issues, and privileged group concerns that are **not evidenced by the image**.
+- It over-focuses on fictional usernames and RODC replication, which are secondary at best here.
+- It misses or underplays the other ground-truth issue: users/groups being kept in the default **Users** container instead of a proper OU structure.
+
+So this is not a total miss, because it did identify the exposed password, but the explanation and remediation are noisy, inaccurate, and not centered on the actual AD misconfiguration.
+
+SCORE: 3

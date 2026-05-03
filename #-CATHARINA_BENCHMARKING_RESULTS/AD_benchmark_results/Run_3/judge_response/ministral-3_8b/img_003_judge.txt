@@ -1,0 +1,17 @@
+CATHARINA’s assessment is far from the ground truth. The screenshot only shows the default **Users** container and some user/group objects; it does **not** provide evidence for most of the claims made.
+
+Key issues with the model response:
+- It labels the environment **“Critically Vulnerable”**, while the ground truth says this view is **overall not vulnerable**.
+- It hallucinates unsupported findings:
+  - weak/no password policy
+  - overprivileged Domain Admin membership
+  - Guest account enabled
+  - lack of Protected Users membership as an exploitable issue from this image alone
+  - service account misuse
+  - Kerberoasting / AS-REP roasting exposure
+- It infers attack paths from usernames and naming style, which is not technically justified.
+- It completely misses the main expected observation: **the lack of OUs / reliance on the default Users container**, and the recommendation to implement OUs for better delegation, policy targeting, and administrative organization.
+
+Because it contradicts the image and ground truth and invents vulnerabilities not evidenced by the screenshot, this is a clear failure.
+
+SCORE: 1

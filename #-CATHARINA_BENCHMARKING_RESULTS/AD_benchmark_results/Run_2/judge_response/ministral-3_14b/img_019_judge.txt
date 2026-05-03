@@ -1,0 +1,5 @@
+CATHARINA should score the minimum because it evaluated the wrong thing and hallucinated a critical finding. The ground truth is about the **Attribute Editor / SPN state** showing a **standard user account without an SPN**, which is **best practice** and mitigates **Kerberoasting**. Instead, the model analyzed an **ACL permissions window**, declared it **critically vulnerable**, and even recommended removing entries like **Everyone: Change password**, which is commonly normal on user objects in AD rather than inherently critical. It also introduced speculative attack paths not supported by the screenshot.
+
+This matches the rubric for **1 - Failure**: it contradicts the actual security state and bases its conclusion on an incorrect interpretation of the image/context.
+
+SCORE: 1

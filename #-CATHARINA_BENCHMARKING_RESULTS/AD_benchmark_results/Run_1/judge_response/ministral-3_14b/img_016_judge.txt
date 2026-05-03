@@ -1,0 +1,5 @@
+The model’s assessment is fundamentally wrong. The ground truth says this is a secure, balanced baseline using standard Kerberos defaults, with “Enforce user logon restrictions” enabled as the key positive control. Instead, the model labels multiple default Kerberos settings as “critically vulnerable,” which directly contradicts the image and the ground truth.
+
+It also introduces incorrect remediation, such as aggressively shortening ticket lifetimes and reducing renewal windows far below normal AD defaults, and even includes a clearly incorrect recommendation around pre-authentication (“Disable Pre-Authentication” paired with `-DoesNotRequirePreAuth:$true`), which would weaken security. This is not just vague — it hallucinates risk where none is indicated and misclassifies a secure configuration as critical.
+
+SCORE: 1

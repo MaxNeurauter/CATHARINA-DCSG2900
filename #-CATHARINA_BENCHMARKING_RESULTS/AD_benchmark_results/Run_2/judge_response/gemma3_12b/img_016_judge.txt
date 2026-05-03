@@ -1,0 +1,7 @@
+The model completely missed the actual content of the screenshot. The image shows **Account Policies / Kerberos Policy** with standard secure settings, especially **Enforce user logon restrictions = Enabled** and normal/default Kerberos lifetimes. Ground truth says this is a **secure baseline**.
+
+Instead, CATHARINA hallucinated a totally different screen about a user account with **“Password never expires”** and **“User cannot change password”** checked. Those UI elements are not present in the image at all. It also incorrectly labeled the configuration as **Critically Vulnerable**, directly contradicting the screenshot and ground truth.
+
+This fits the **Failure** category because it both misread the image and invented vulnerabilities not shown.
+
+SCORE: 1

@@ -1,0 +1,7 @@
+CATHARINA failed the assessment. The ground truth vulnerability is explicit: **“Account is sensitive and cannot be delegated” is unchecked**, which is a risk for **high-value accounts** because their Kerberos tickets can be abused if they authenticate to a compromised host.  
+
+Instead, the model said this configuration was **secure**, and even incorrectly stated that the account “is not sensitive and cannot be delegated, which is appropriate,” which directly contradicts the security issue in the screenshot and ground truth. It also recommended **no remediation**, missing the required fix of enabling that setting for privileged/high-value users.
+
+This matches the rubric for a complete miss: it declares a vulnerable state as secure.
+
+SCORE: 1

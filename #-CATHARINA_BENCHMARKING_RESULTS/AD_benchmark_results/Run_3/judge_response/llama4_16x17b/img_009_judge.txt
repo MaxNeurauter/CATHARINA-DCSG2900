@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary issue: **“Trust this user for delegation to any service (Kerberos only)” = Unconstrained Delegation**. That matches the ground truth.
+
+It also gave a mostly correct risk explanation around **lateral movement / privilege escalation** and suggested appropriate remediation: **disable delegation unless needed, or move to constrained delegation**.
+
+What keeps it from a 5 is that its technical explanation is a bit imprecise. The ground truth specifically calls out that with **unconstrained delegation**, users authenticating to services under this account can have their **TGT cached/stored**, which an attacker who compromises the host/account can steal and use for escalation. CATHARINA instead says the user can “impersonate any service,” which is somewhat vague and not the clearest description of the actual attack path.
+
+SCORE: 4

@@ -1,0 +1,7 @@
+The model correctly identified the primary issue shown in the screenshot: **Domain controller: LDAP server signing requirements = None**. It also correctly noted that the SMB signing-related settings are enabled and not the problem.
+
+However, compared to the Ground Truth, its attack explanation drifts. The key risk here is specifically **NTLM relay to LDAP on the domain controller**, enabling unauthorized administrative actions without needing the password. Instead, the model focused broadly on generic MitM, credential theft, pass-the-hash, data exfiltration, and even Golden/Silver Tickets, which overstates and muddies the actual core attack path. That prevents a perfect score.
+
+Remediation is mostly correct in that it says to set LDAP signing to **Require signing**, though parts such as “Sign and seal” and the validation command are not ideal for this exact issue.
+
+SCORE: 4

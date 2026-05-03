@@ -1,0 +1,7 @@
+CATHARINA’s assessment is fundamentally wrong. The ground truth says this Kerberos policy is a secure, standard baseline, especially noting that **Enforce user logon restrictions = Enabled** is important and that **600 minutes / 10 hours / 7 days / 5 minutes** are normal balanced defaults.  
+
+Instead, the model labels it **“Misconfigured”** and invents **“critical vulnerabilities”** from standard Kerberos ticket lifetimes. It also hallucinates attack linkage that is not supported by the screenshot, such as tying these settings directly to **Kerberoasting, AS-REP Roasting, and Silver Ticket** risk in a way that contradicts the secure baseline. Its remediation is also incorrect for this case because it recommends changing healthy default values to unusually restrictive ones.  
+
+This matches a **Failure** because it calls a secure configuration vulnerable and provides incorrect remediation.  
+
+SCORE: 1

@@ -1,0 +1,7 @@
+CATHARINA missed the core issue. The ground truth is specifically that **Authenticated Users have dangerous special rights on the domain root** — **Enable per-user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit** — which lets ordinary authenticated users weaken other accounts’ password policy/security properties.
+
+Instead, the model misinterprets the impact as **AS-REP Roasting**, which is technically wrong for these rights. It also focuses heavily on secondary/unrelated findings like anonymous read access and SELF permissions, and even speculates about objects/settings not evidenced by the screenshot. Its remediation is therefore largely off-target and does not clearly state the real fix: **remove those delegated rights for Authenticated Users at the domain root**.
+
+Because it identifies some suspicious permissions under Authenticated Users but fundamentally misses the primary flaw and attack impact, this is a poor evaluation.
+
+SCORE: 2

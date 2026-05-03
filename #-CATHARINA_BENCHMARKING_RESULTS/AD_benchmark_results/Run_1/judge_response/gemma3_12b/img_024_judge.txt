@@ -1,0 +1,7 @@
+CATHARINA failed this assessment. The screenshot is clearly the **Delegation** tab for the user **sansa.stark**, and it shows **“Do not trust this user for delegation”** selected, which matches the secure best-practice configuration in the ground truth.
+
+Instead, the model hallucinated a different tab (**General**) and a setting (**“Account is sensitive”**) that is not present in the image at all. It then incorrectly labeled the configuration as **Misconfigured** when it is actually secure.
+
+This exactly matches the failure condition: it contradicts the image data and describes UI/settings not shown.
+
+SCORE: 1

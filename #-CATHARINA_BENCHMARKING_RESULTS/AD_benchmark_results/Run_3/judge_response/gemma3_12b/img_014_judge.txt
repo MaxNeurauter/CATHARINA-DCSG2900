@@ -1,0 +1,5 @@
+The model response is a complete miss. The screenshot shows the **Delegation** tab of the **Default Domain Policy** in **essos.local**, where **external administrative groups** — `NORTH\Domain Admins` and `SEVENKINGDOMS\Enterprise Admins` — have **Custom** permissions on the GPO. The real issue is that **administrative control from external forests is retained**, breaking the **forest security boundary** and making Essos dependent on the security of those outside forests.
+
+Instead, the model hallucinated a different GPO name (“Restrict Anonymous Kerberos Delegation”), invented Kerberos/Kerberoasting issues not supported by the image, and described UI elements/settings that are not present. That fits the rubric for a **1**.
+
+SCORE: 1

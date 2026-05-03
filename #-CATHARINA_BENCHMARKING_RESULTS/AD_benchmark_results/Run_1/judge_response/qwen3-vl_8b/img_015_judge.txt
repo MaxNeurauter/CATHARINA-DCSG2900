@@ -1,0 +1,7 @@
+CATHARINA correctly read the UI state: this is **Kerberos Constrained Delegation** with an **empty allowed-services list**. However, it fundamentally misgraded the security posture by calling it **Secure**. The ground truth says this is **still vulnerable / not best practice** because this is a **standard human user account** and such accounts generally should have **“Do not trust this user for delegation”** set. Even though the empty service list reduces immediate abuse and avoids unconstrained delegation risk, granting delegation capability at all to a human user violates least privilege.
+
+It also introduced weak/incorrect reasoning by claiming this “eliminates risks like Kerberoasting or Silver Ticket exploitation,” which is not the right framing for this finding. The core issue is **unnecessary delegation rights on a user account**, not those attack classes.
+
+This is worse than merely vague: it declares a vulnerable/misconfigured state as secure and says no remediation is required.
+
+SCORE: 1

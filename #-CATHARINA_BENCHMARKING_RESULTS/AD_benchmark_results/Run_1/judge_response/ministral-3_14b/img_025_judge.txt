@@ -1,0 +1,7 @@
+CATHARINA’s assessment is the opposite of the ground truth. The screenshot shows a largely standard AD user ACL: SYSTEM, Domain Admins, Enterprise Admins, Administrators, SELF, Authenticated Users, etc. The model incorrectly treats normal/default entries as critical misconfigurations.
+
+Most importantly, it falsely claims that “Everyone: Change password” allows any authenticated user to reset the password. In AD, this ACE is commonly used for the extended right to change one’s own password, not arbitrary password reset of the account by anyone. It also speculates that “Authenticated Users: Special” likely includes write access and SPN modification without evidence from the screenshot. That is unsupported and hallucinatory. The ground truth says permissions are properly restricted with no unauthorized principals, and the model instead labels it “Critically Vulnerable” and recommends removing legitimate/default permissions.
+
+This fits the failure condition: declaring a secure/benign configuration critically vulnerable and inventing attack paths not supported by the image.
+
+SCORE: 1

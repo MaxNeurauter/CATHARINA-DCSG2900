@@ -1,0 +1,53 @@
+Image Analyzed: img_016.png
+Model Used: qwen3-vl:8b
+Time Taken: 91.23 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### 1. Observation  
+Key settings from the image:  
+- **Enforce user logon restrictions**: Enabled  
+- **Maximum lifetime for service ticket**: 600 minutes (10 hours)  
+- **Maximum lifetime for user ticket**: 10 hours  
+- **Maximum lifetime for user ticket renewal**: 7 days  
+- **Maximum tolerance for computer clock synchronization**: 5 minutes    
+
+
+### 2. Assessment  
+**Misconfigured**  
+
+### 3. Attack Path  
+**Kerberoasting** is the primary attack vector.  
+- **Technical Impact**: The extended *Maximum lifetime for service ticket* (10 hours vs. the recommended 8 hours) increases the window during which an attacker can exploit a stolen service ticket (which contains the user’s password hash). Kerberoasting involves harvesting service tickets for password hash extraction and brute-forcing. A longer lifetime provides attackers more time to crack the hash, significantly raising the risk of successful Kerberoasting. While Kerberos policies like *Maximum lifetime for user ticket* (10 hours) and *Maximum lifetime for user ticket renewal* (7 days) align with Microsoft’s defaults, the **service ticket lifetime exceeds security best practices** for critical protection.  
+
+### 4. Remediation  
+#### Step-by-Step Fix:  
+1. **Locate the GPO**:  
+   - Open **Group Policy Management Console (GPMC)**.  
+   - Navigate to the Group Policy Object (GPO) containing the Kerberos policies (e.g., under `Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Kerberos Policy`).  
+
+2. **Edit the GPO**:  
+   - Right-click the GPO and select **Edit**.  
+   - Navigate to `Account Policies > Kerberos Policy`.  
+
+3. **Adjust the Service Ticket Lifetime**:  
+   - Find the setting **“Maximum lifetime for service ticket”**.  
+   - Change the value from **600 minutes** to **480 minutes** (8 hours) to align with security best practices.  
+
+4. **Apply the Change**:  
+   - Save the GPO and link it to the appropriate Organizational Unit (OU) or domain.  
+   - Force a Group Policy update on affected machines using the command:  
+     ```cmd  
+     gpupdate /force  
+     ```  
+
+5. **Verify Compliance**:  
+   - Check the updated setting in GPMC to confirm the value is 480 minutes.  
+   - On client machines, verify the policy applies via:  
+     ```cmd  
+     gpresult /r  
+     ```  
+     (Review output for confirmation of the 8-hour service ticket lifetime.)  
+
+*Note*: The other settings (e.g., `Enforce user logon restrictions`, `Maximum tolerance for computer clock synchronization`) are configured securely and require no action. Only the **service ticket lifetime** needs adjustment.
+==================================================

@@ -1,0 +1,7 @@
+CATHARINA correctly identified the core issue: a normal user account (`jon.snow`) has an SPN set, which makes it susceptible to Kerberoasting. It also accurately explained the attack path of requesting a TGS and cracking it offline, which matches the ground truth well.
+
+Its remediation is mostly solid, especially removing the SPN and recommending gMSA/service accounts instead of standard users. However, it adds some unnecessary or speculative content not supported by the screenshot, such as Golden Ticket risk, AS-REP roasting, and extra privilege scenarios. Those don’t contradict the finding, but they dilute precision.
+
+Overall, this is better than generic and captures both the flaw and the technical consequence clearly, but it is slightly less precise than the ideal answer because of the extra speculative material.
+
+SCORE: 4

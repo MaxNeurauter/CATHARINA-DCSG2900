@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary vulnerability: the cleartext password `Heartsbane` stored in the `Description` field for `samwell.tarly`, and it accurately explained that this is readable by authenticated users by default. That matches the core ground truth very well.
+
+It also gave generally appropriate remediation: remove the password and audit for similar exposures. However, it missed the secondary issue from the ground truth: that users and groups are all being kept in the default `Users` container instead of a structured OU hierarchy. Also, part of the remediation is a bit off/awkward technically—its Group Policy suggestion about denying “Write” to Description via User Rights Assignment is not the right way to address this specific AD attribute exposure.
+
+Overall: strong identification of the main flaw, but not fully complete and not technically perfect on remediation.
+
+SCORE: 4

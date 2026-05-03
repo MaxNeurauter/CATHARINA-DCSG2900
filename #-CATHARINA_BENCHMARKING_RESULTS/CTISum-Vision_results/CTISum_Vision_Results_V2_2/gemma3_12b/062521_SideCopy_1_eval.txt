@@ -1,0 +1,66 @@
+Report name: 062521_SideCopy_1
+time used: 80.65 seconds
+Bert score: 0.8076
+RougeL score: 0.1296
+Rouge1 score: 0.3299
+Rouge2 score: 0.0532
+summary generated:
+Okay, here's a CTIS (Common Threat Information System) summary based on the provided images, focusing on the technical details and attributed threat actor. I will also include the indicators and tactics, techniques, and procedures (TTPs) as well as the affected products.
+
+**CTIS Summary: SideCopy APT Campaign**
+
+**1. Threat Actor:**
+
+*   **Name:** SideCopy (also referred to as “Mudda”)
+*   **Attribution:** Targeting military personnel and diplomatic targets in the Indian subcontinent, with strong evidence suggesting the involvement of state-sponsored actors (potentially linked to Chinese state-sponsored activity, but not definitively confirmed).
+*   **Motivation:** Espionage, data exfiltration, reconnaissance.
+
+**2. Malware & Tools:**
+
+*   **Main Payload:** CetaRAT (Custom Remote Access Tool) – A RAT with file management, command execution, and keylogging capabilities.
+*   **Secondary Malware/Tools:**
+    *   Allakore (Remote Access Trojan) – Utilized in conjunction with CetaRAT.
+    *   Lavav – Custom Keylogger
+    *   Nodachi – GoLang-based keylogger.
+    *   SideCopy uses many other RATs.
+*   **Delivery Methods:** LNK files disguised as documents, emails, and cloned websites.
+
+**3. TTPs (Tactics, Techniques, and Procedures):**
+
+*   **Initial Access:** Spear-phishing campaigns using documents (e.g., proposals, reports, circulars) and decoy documents tailored to target specific organizations and individuals.  Website cloning.
+*   **Execution:** Exploiting vulnerabilities and/or social engineering to trick victims into executing malicious LNK files.
+*   **Persistence:** Implanting malware, possibly establishing scheduled tasks.
+*   **Privilege Escalation:**  May use known vulnerabilities or exploits to elevate privileges on the targeted systems.
+*   **Defense Evasion:**  Obfuscation, use of GoLang for Nodachi, custom-built tools.
+*   **Credential Access:** Keylogging, credential dumping, and network credential retrieval.
+*   **Discovery:** System reconnaissance, process discovery.
+*   **Lateral Movement:** Possibly leveraging compromised credentials or exploiting network vulnerabilities to move laterally.
+*   **Collection:** Keylogging, stealing web browsing data, collecting system information.
+*   **Exfiltration:** Using techniques like Dropbox, Google Drive, and potentially compromised websites for data exfiltration.
+*   **Command and Control:**  Utilizing compromised websites to act as C2 servers.
+
+**4. Indicators (Examples –  Not Exhaustive):**
+
+*   **File Names:** (References to document names used in decoy documents like "SOUTH WESTERN COMMAND SENIORITY LIST")
+*   **Domains:** (Domains used for C2 servers and website cloning) - Examples from the images.
+*   **IP Addresses:** (IPs of C2 servers).
+*   **File Hashes:** (MD5, SHA256 hashes of malware samples)
+*   **Network Traffic:**  (Specific network patterns or protocols associated with C2 communication)
+*   **Registry Keys/Values:** (Registry entries related to malware persistence)
+*   **User Agent Strings:** Used in delivery checks.
+
+**5. Affected Products & Mitigation:**
+
+*   **Affected Products:** Primarily Windows systems (Windows 7, 8, 10)
+*   **Mitigation Recommendations:**
+    *   User awareness training (phishing awareness).
+    *   Strong endpoint detection and response (EDR) capabilities.
+    *   Network segmentation.
+    *   Regular patching of systems.
+    *   Email security solutions to block malicious attachments and links.
+    *   Web filtering to block malicious websites.
+    *   Implement multi-factor authentication (MFA).
+
+
+
+**Note:** The attached images contain a lot of specific technical details. A complete and exhaustive list of indicators would be quite extensive, but the provided information highlights the key elements of this threat.

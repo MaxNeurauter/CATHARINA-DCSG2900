@@ -1,0 +1,76 @@
+Report name: 062521_SideCopy_1
+time used: 89.54 seconds
+Bert score: 0.8024
+RougeL score: 0.1459
+Rouge1 score: 0.3486
+Rouge2 score: 0.0496
+summary generated:
+Okay, here's a summary of the CTIS (Cyber Threat Intelligence Service) information gleaned from the provided images, formatted for clarity. I've broken it down into categories for better understanding.
+
+**1. Overview & Threat Actor**
+
+*   **Threat Actor:** APT (Advanced Persistent Threat) – likely a state-sponsored actor targeting military and government personnel in India, Pakistan, and Afghanistan. While attribution is difficult, the focus and targeting patterns strongly suggest a connection to Indian interests.
+*   **Malware Family:** SideCopy –  The primary malware being tracked. It is a modular RAT (Remote Access Trojan) that has evolved through several iterations, demonstrating an ability to adapt and integrate new capabilities. A key component of SideCopy is CetaRAT.
+*   **Tactics, Techniques, and Procedures (TTPs):** The actor demonstrates sophisticated tactics, including:
+    *   **Custom Malware Development:** They actively create new malware variants (CetaRAT).
+    *   **Living off the Land:** Utilizing existing tools and system utilities to evade detection.
+    *   **Social Engineering:** Leveraging legitimate-looking documents (e.g., research papers, job postings, news articles, HR documents) to deliver malware.
+    *   **Modular Design:**  SideCopy’s modularity allows for easy addition of new plugins.
+    *   **Cloud Infrastructure:** Utilizing cloud services (Google Drive, Afghan Network) for data exfiltration and potentially command and control.
+    *   **Polymorphism:**  The actor is employing ways to mutate malware to avoid detection
+
+**2. Malware Components & Capabilities**
+
+*   **SideCopy:** The core RAT. Key features:
+    *   Modular design with plugins for various functions.
+    *   Stealthy execution.
+    *   Data exfiltration.
+    *   Remote control.
+*   **CetaRAT:** A custom RAT developed by the actor, likely to replace or augment SideCopy functions.
+*   **Plugins/Modules:**
+    *   **Keyloggers:** Lavav (custom) and Nodachi (Go-based) record keystrokes.
+    *   **Credential Stealers:** Extract credentials from browsers and other applications.
+    *   **Network Reconnaissance:** Gather network information.
+    *   **Exfiltration Modules:**  Upload data to cloud storage (Google Drive, Afghan Network).
+* **Golang Malware - Nodachi**: This custom-built Go-based component for reconnaissance and credential theft. It helps exfiltrate data to Google Drive.
+
+**3. Infrastructure & Delivery Methods**
+
+*   **LNK Files:** Malicious shortcuts (.lnk files) are frequently used to initiate infections.
+*   **Documents with Macros:** Malicious macros embedded in documents (Word, Excel) trigger the download and execution of malware.
+*   **Compromised Websites:**  Cloned websites and legitimate websites are used to host malicious content.
+*   **Email Campaigns:** Targeted email campaigns distribute malicious links and documents.
+*   **Fake Websites:**  The actor creates fake news websites mimicking legitimate sources to distribute malware (e.g., Afghan Network).
+
+**4. Targets & Indicators**
+
+*   **Primary Targets:**
+    *   Military personnel in India, Pakistan, and Afghanistan.
+    *   Government employees.
+    *   Diplomatic personnel.
+    *   Journalists.
+*   **Geographic Focus:** Primarily India, Pakistan, and Afghanistan.
+*   **Indicators of Compromise (IOCs) – The Document is heavily loaded with them.**  (Due to the volume, I cannot comprehensively list them here, but they include file hashes, domain names, URLs, and IP addresses that would be available in a full CTIS report.)
+
+**5.  Cisco Product Coverage & Mitigation**
+
+*   **Cisco Secure Endpoint (formerly AMP for Endpoints):** Detects and prevents the execution of malware.
+*   **Cisco Umbrella:** Blocks malicious domains, IPs, and URLs.
+*   **Cisco Secure Firewall (formerly Firepower):** Provides NGFW capabilities for inspection and control.
+*   **Cisco Secure Network Analytics:**  Provides visibility and threat intelligence.
+*   **Cisco Secure Cloud Analytics:**  Provides visibility and threat detection in cloud environments.
+*   **Cisco Secure Malware Analytics:**  Helps identify malicious samples.
+*   **Cisco Secure Hybrid Access:** (formerly Duo) Provides multi-factor authentication to enhance user security.
+
+**6. CTIS Summary and Severity**
+
+This threat represents a **high** severity due to the:
+
+*   Targeted nature of the attacks.
+*   Sophistication of the actor's TTPs.
+*   Potential for significant impact on critical infrastructure and national security.
+*   Evolving nature of the malware.
+
+
+
+Let me know if you would like me to elaborate on any specific aspect or provide more detailed information!

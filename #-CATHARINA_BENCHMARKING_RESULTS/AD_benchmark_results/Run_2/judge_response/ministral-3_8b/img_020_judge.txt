@@ -1,0 +1,14 @@
+CATHARINA gets the main point mostly right: it correctly recognizes that **“Account is sensitive and cannot be delegated” is enabled** and that this is a **secure/best-practice setting**, and it also correctly notes that **smart card is not required**, which aligns with the ground truth’s MFA gap.
+
+However, it misses some nuance and adds several unsupported or incorrect points:
+- The ground truth says this is **following a critical security best practice** but is **non-compliant on lifecycle and MFA**. CATHARINA frames it as **“Moderate Risk”** and introduces speculative issues not evidenced by the screenshot.
+- It hallucinates/overreaches with items like:
+  - **password complexity/history not shown → assume weak**
+  - **Kerberos hardening needs attention**
+  - **Account enabled** as a weakness
+  - **Account never expires is fine for service accounts**, whereas the ground truth explicitly mentions **lifecycle non-compliance**
+- It also includes technically wrong attack-path mapping, e.g. tying **“cannot be delegated”** to **Golden Ticket** and **AS-REP roasting**, which is not the correct relationship.
+
+So: correct identification of the visible good control and the missing smart-card control, but too much inaccurate speculation and weak alignment to the specific ground truth.
+
+SCORE: 4

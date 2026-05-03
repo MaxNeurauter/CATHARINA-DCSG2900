@@ -1,0 +1,7 @@
+CATHARINA correctly noticed the positive control: **“Account is sensitive and cannot be delegated” is enabled**, which matches the ground truth and is good practice.
+
+However, it **fails the core evaluation** because it labels the configuration as fully **Secure** and says **no remediation is needed**. The ground truth explicitly says this is **non-compliant** because **“Smart card is required for interactive logon” is unchecked**, meaning this sensitive account relies only on a password and lacks MFA. CATHARINA entirely misses that issue and instead over-focuses on unrelated/non-core items like DES and account expiration.
+
+This is not a total hallucination, since it did identify the delegation protection correctly, but it missed the actual remaining weakness and gave the wrong final verdict.
+
+SCORE: 2

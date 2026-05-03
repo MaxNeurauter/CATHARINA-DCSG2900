@@ -1,0 +1,7 @@
+The model correctly noticed that **“Account is sensitive and cannot be delegated” is unchecked** and identified it as a misconfiguration. It also recommends checking the box, which aligns partially with the ground truth.
+
+However, it misses the **core technical risk**: this setting is about **Kerberos delegation protection**, not MFA or generic “sensitive account policies.” The ground truth specifically says an attacker on a compromised server could **steal/hijack Kerberos tickets** when this user logs on and then **impersonate the account to other services**. The model instead gives a generic discussion of password reuse and lateral movement, which is too vague and partly incorrect for this control.
+
+So this is better than generic “vulnerable,” but it lacks the specific AD/Kerberos attack path and adds misleading remediation context about GPOs/MFA.
+
+SCORE: 3

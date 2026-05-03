@@ -1,0 +1,7 @@
+CATHARINA partially identified a real issue, but it missed the core finding from the ground truth. The screenshot shows multiple dangerous write permissions granted to **Authenticated Users**: not just **Enable per user reversibly encrypted password**, but also **Unexpire password** and **Update password not required bit**. The ground truth is specifically about overly broad write access to password-related attributes for all authenticated users, violating least privilege.
+
+The model over-focused on reversible encryption and then added inaccurate technical claims like equating this to storing passwords as **LM/NTLMv1 hashes** and implying the attacker could extract them from AD as described. That is not the core issue here and is technically misleading. Its remediation is also too narrow because it only recommends removing one permission instead of addressing all inappropriate **Authenticated Users** write permissions.
+
+So this is not a complete miss, but it does miss the primary flaw and gives partially incorrect attack-path detail.
+
+SCORE: 2

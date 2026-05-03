@@ -1,0 +1,12 @@
+CATHARINA failed badly here.
+
+Brief reasoning:
+- The screenshot is clearly showing **Account Policies / Account Lockout Policy**, with:
+  - **Account lockout duration: 5 minutes**
+  - **Account lockout threshold: 5 invalid logon attempts**
+  - **Reset account lockout counter after: 5 minutes**
+- Ground truth says this is **not vulnerable** and is a reasonable balance against password spraying while tolerating user mistakes.
+- Instead, the model hallucinated an entirely different screen about **“Account is sensitive”**, **SPNs**, and **Kerberoasting**—none of which are present in the image.
+- This matches the rubric for a **1** because it describes settings not shown and completely contradicts the actual image content.
+
+SCORE: 1

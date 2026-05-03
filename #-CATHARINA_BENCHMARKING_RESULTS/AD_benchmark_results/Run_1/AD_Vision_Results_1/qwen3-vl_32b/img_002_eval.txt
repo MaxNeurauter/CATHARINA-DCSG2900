@@ -1,0 +1,42 @@
+Image Analyzed: img_002.png
+Model Used: qwen3-vl:32b
+Time Taken: 1066.16 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### 1. Observation  
+- The computer object **WINTERFELL** is owned by **Domain Admins** (normal for computer objects).  
+- **ANONYMOUS LOGON** has **Read** access with **"Applies to" = "This object and all descendant objects"**.  
+- **Pre-Windows 2000 Compatible Access** (a legacy group) has multiple **"Special" access** permissions inherited from the domain (`DC=north,DC=sevenkingdoms,DC=local`), affecting descendant object types (e.g., InetOrgPerson, Group, User).  
+
+---
+
+### 2. Assessment  
+**Misconfigured**. While the "ANONYMOUS LOGON" **Read** access on computer objects is a default behavior in Active Directory, it is a **known vulnerability** that exposes critical information (e.g., ServicePrincipalName/SPN) to unauthenticated users. This configuration enables the **Kerberoasting** attack, which is not acceptable in a secure environment.  
+
+---
+
+### 3. Attack Path  
+- **Attack vector**: **Kerberoasting**.  
+- **Technical impact**:  
+  1. Anonymous users can **read the computer object’s attributes** (including the `ServicePrincipalName`/SPN, e.g., `HOST/WINTERFELL.NORTH.SEVENKINGDOMS.LOCAL`).  
+  2. An attacker requests a **TGS (Ticket-Granting Service) ticket** for the SPN. The KDC returns a TGS encrypted with the computer account’s **NTLM hash**.  
+  3. The attacker **cracks the hash offline** (e.g., using tools like `hashcat`). If the computer account’s password is weak (e.g., simple or reused), the attacker can **compromise the account**.  
+  4. This may lead to **unauthorized access to the computer**, **lateral movement**, or **privilege escalation** (e.g., if the computer hosts critical services).  
+
+---
+
+### 4. Remediation  
+1. **Restrict "ANONYMOUS LOGON" access**:  
+   - Open **Active Directory Users and Computers (ADUC)** > locate the `WINTERFELL` computer object.  
+   - Right-click > **Properties** > **Security** tab > **Advanced**.  
+   - Find the **ANONYMOUS LOGON** entry with **Read** access > **Modify** > set to **Deny "Read"** (or restrict to **Authenticated Users** if required for functionality).  
+2. **Test in non-production**: Ensure no critical systems break (e.g., domain joins, client authentication).  
+3. **Enforce strong passwords**:  
+   - Ensure computer accounts use **complex, unique passwords** (even though AD auto-rotates them every 30 days, weak hashes remain vulnerable).  
+   - Use **Group Policy** to enforce password complexity and length for computer accounts.  
+4. **Monitor and audit**:  
+   - Use tools like **Microsoft Advanced Threat Hunting** or **SIEM** to detect unusual TGS requests for computer account SPNs.  
+
+> ⚠️ **Note**: While "ANONYMOUS LOGON" **Read** access is a default behavior, it is a **high-risk misconfiguration** in secure environments. Mitigate by restricting access and hardening password policies.
+==================================================

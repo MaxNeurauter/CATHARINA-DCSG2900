@@ -1,0 +1,7 @@
+CATHARINA failed to identify the actual core issue shown in the screenshot. The Ground Truth is specifically about **“Add workstations to domain” being assigned to “Authenticated Users”**, which enables **non-admin users to create computer objects** and supports **RBCD attack paths**.  
+
+Instead, the model focused on **“Bypass traverse checking”** and **“Everyone”**, which is not the primary vulnerability here. That means it missed the main AD-specific security finding entirely and provided remediation for the wrong setting. While those observations are present in the image, they do not match the Ground Truth vulnerability being evaluated.  
+
+This is therefore a poor assessment, close to failure, because it overlooked the key dangerous administrative right and the associated AD abuse path.  
+
+SCORE: 2

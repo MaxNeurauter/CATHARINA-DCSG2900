@@ -1,0 +1,63 @@
+Image Analyzed: img_016.png
+Model Used: qwen3-vl:8b
+Time Taken: 128.68 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **Observation**  
+The following Kerberos-related policies are configured:  
+- **Enforce user logon restrictions**: *Enabled* (secure).  
+- **Maximum lifetime for service ticket**: *600 minutes (10 hours)* (default Windows value).  
+- **Maximum lifetime for user ticket**: *10 hours* (default Windows value).  
+- **Maximum lifetime for user ticket renewal**: *7 days* (likely redundant given the 10-hour user ticket lifetime).  
+- **Maximum tolerance for computer clock synchronization**: *5 minutes* (standard security setting).  
+
+---
+
+### **Assessment: Misconfigured**  
+The **primary issue** is the **10-hour maximum lifetime for service tickets**. This is a known security vulnerability:  
+- Service tickets (used for authenticating user accounts to services) are valid for 10 hours by default.  
+- **Kerberoasting attacks** exploit this by requesting service tickets for user accounts and then cracking the hashes to retrieve plaintext passwords.  
+- A 10-hour lifetime provides attackers with ample time to crack passwords, significantly increasing the success rate of the attack.  
+
+While other settings (e.g., user ticket lifetime and clock tolerance) are standard or secure, the **service ticket lifetime must be reduced** to mitigate Kerberoasting risks.  
+
+---
+
+### **Attack Path: Kerberoasting**  
+1. **Target Identification**: Attackers identify user accounts with valid service tickets (e.g., `host/server` or `domain\user`).  
+2. **Service Ticket Request**: The attacker sends a request for a service ticket using a tool like `Get-ADUser` or `Impacket`.  
+3. **Hash Extraction**: The attacker captures the service ticket’s hash (stored in the ticket).  
+4. **Password Cracking**: The attacker uses the hash in a brute-force or rainbow-table attack to retrieve the plaintext password.  
+5. **Leveraging Long Lifetime**: With a 10-hour service ticket lifetime, the attacker has more time to crack the password, increasing the attack’s success rate.  
+
+---
+
+### **Remediation**  
+#### **Step 1: Reduce Service Ticket Lifetime**  
+Set the **Maximum lifetime for service ticket** to a secure value (e.g., **1 hour or less**):  
+1. Open **Group Policy Management Console (GPMC)**.  
+2. Navigate to the GPO that manages Kerberos policies (typically a domain-wide or site-wide GPO).  
+3. Go to:  
+   - **Computer Configuration** > **Policies** > **Windows Settings** > **Security Settings** > **Account Policies** > **Kerberos Policy**.  
+4. Edit the **"Maximum lifetime for service ticket"** setting:  
+   - Change the value from **600 minutes** to **60 minutes** (1 hour) or less.  
+5. Save the GPO and **force a policy update** on domain controllers (`gpupdate /force`).  
+
+#### **Step 2: Verify & Monitor**  
+- Check the GPO settings to confirm the change.  
+- Monitor for Kerberoasting attempts (e.g., using SIEM tools or network traffic analysis).  
+
+#### **Additional Recommendations**  
+- **Restrict Service Accounts**: Limit the number of accounts with service tickets (e.g., avoid granting excessive permissions).  
+- **Use Hash-Salted Passwords**: Enforce strong password policies to reduce the effectiveness of hash cracking.  
+
+---
+
+### **Why This Fix Matters**  
+- **Kerberoasting** is a well-documented attack vector for Windows authentication systems.  
+- A 10-hour service ticket lifetime is a **critical misconfiguration** that undermines security.  
+- Reducing the service ticket lifetime to **≤1 hour** eliminates the large window for attackers to crack passwords, making Kerberoasting infeasible.  
+
+By implementing this change, organizations significantly reduce their risk of Kerberoasting attacks while maintaining secure authentication workflows.
+==================================================

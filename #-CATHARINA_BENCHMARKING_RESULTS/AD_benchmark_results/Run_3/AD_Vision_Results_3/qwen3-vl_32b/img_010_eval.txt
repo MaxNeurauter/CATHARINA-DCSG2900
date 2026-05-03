@@ -1,0 +1,49 @@
+Image Analyzed: img_010.png
+Model Used: qwen3-vl:32b
+Time Taken: 460.90 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### 1. Observation  
+- The user account `jon.snow` has a **Service Principal Name (SPN)** set: `CIFS/thewall.north.sevenkingdoms.local; HT`.  
+- The `sAMAccountType` is `805306368 = (NORMAL_USER_ACCOUNT)`, confirming this is a **standard user account** (not a computer account or service account).  
+- No other critical security attributes (e.g., "User cannot change password," "Password never expires," "Account is disabled") are visible in the provided attributes.  
+
+### 2. Assessment  
+**Misconfigured**.  
+- SPNs should **not** be assigned to standard user accounts (e.g., `jon.snow`). SPNs are typically used for **service accounts** (e.g., computer accounts or dedicated service accounts) to enable Kerberos authentication for services.  
+- A user account with an SPN is a **Kerberoasting attack vector** (see below). This misconfiguration exposes the account to credential theft if the password is weak or predictable.  
+
+### 3. Attack Path  
+**Attack Vector: Kerberoasting**  
+- **Technical Impact**:  
+  - An attacker can request a Kerberos **TGS (Ticket-Granting Service) ticket** for the SPN (e.g., `CIFS/thewall.north.sevenkingdoms.local`).  
+  - The TGS ticket is encrypted with the **user’s password hash** (NTLM). The attacker can extract this hash and crack it offline to obtain the account’s password.  
+  - If `jon.snow` has domain-wide access (e.g., via group membership), the attacker can escalate privileges to access sensitive resources.  
+
+### 4. Remediation  
+**Step-by-Step Fix**:  
+1. **Identify all user accounts with SPNs**:  
+   ```powershell
+   Get-ADUser -Filter * -Properties ServicePrincipalName | 
+     Where-Object { $_.ServicePrincipalName -ne $null } | 
+     Select-Object Name, ServicePrincipalName
+   ```  
+2. **Verify legitimacy of SPNs**:  
+   - Confirm if the SPN is **intentional** (e.g., for a service running on a user account). If not, remove it.  
+3. **Remove unnecessary SPNs**:  
+   ```powershell
+   Set-ADUser -Identity "jon.snow" -Remove @{ServicePrincipalName="CIFS/thewall.north.sevenkingdoms.local; HT"}
+   ```  
+4. **Enforce strong password policies for service accounts**:  
+   - If the SPN *is* required (e.g., for a service account), ensure the password is:  
+     - 12+ characters, complex (mixed case, numbers, symbols), and rotated every 30–60 days.  
+     - Store the password in a secure vault (e.g., Azure Key Vault or HashiCorp Vault).  
+5. **Audit SPN usage**:  
+   - Regularly review SPNs to ensure they are only assigned to **service accounts** (not standard user accounts).  
+
+> **Note**: If the SPN was set in error (e.g., accidentally assigned to a user instead of a computer account), removing it is the immediate fix. If the SPN is valid (e.g., for a legacy application), follow best practices for service account management.  
+
+---  
+**Final Note**: This configuration is **not critically vulnerable** (as Kerberoasting requires a weak password to be practical), but it is a **misconfiguration** that should be corrected to reduce attack surface. The image provides sufficient context for this assessment.
+==================================================

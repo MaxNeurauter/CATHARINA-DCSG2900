@@ -1,0 +1,5 @@
+CATHARINA failed the assessment. The ground truth vulnerability is explicit: **Authenticated Users** have dangerous **write permissions** over password-related attributes such as **Enable per user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**. Instead of identifying this as a misconfiguration, the model said the setup “appears to follow standard secure practices” and concluded **Secure**, which directly contradicts the image and ground truth.
+
+It vaguely mentioned “potential vulnerabilities” but did not identify the actual issue, did not explain the risk of allowing authenticated users to modify password attributes, and did not provide the correct remediation of restricting these permissions to read-only / removing inappropriate write rights.
+
+SCORE: 1

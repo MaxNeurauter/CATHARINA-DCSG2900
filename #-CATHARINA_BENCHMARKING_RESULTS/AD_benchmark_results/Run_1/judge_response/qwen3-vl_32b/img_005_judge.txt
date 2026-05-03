@@ -1,0 +1,5 @@
+CATHARINA’s assessment directly contradicts the ground truth. The screenshot shows a valid, intentional lockout policy: 5 failed attempts triggers a 5-minute lockout, which the ground truth explicitly says is not vulnerable and is appropriately balanced for normal mistakes while slowing password spraying.
+
+Instead, the model labels it “Misconfigured” and “critical,” invents a brute-force weakness, and recommends changing the settings. That is a false positive on the core issue. It did read the UI values correctly, but its security conclusion is wrong for this case.
+
+SCORE: 1

@@ -1,0 +1,5 @@
+CATHARINA failed to identify the actual issue shown in the ACL: **SELF has “Create/delete all child objects” on the computer object**, which is the core misconfiguration. It instead concluded the setup “seems to generally follow best practices” and only gave vague, generic warnings about permissions and inheritance.
+
+That directly misses the ground-truth vulnerability and the specific attack path: this permission can enable **RBCD-related abuse / privilege escalation** by allowing creation of child objects in a dangerous way. Because it effectively treats a vulnerable state as mostly acceptable and does not mention the specific flaw, this matches the lowest rating criteria.
+
+SCORE: 1

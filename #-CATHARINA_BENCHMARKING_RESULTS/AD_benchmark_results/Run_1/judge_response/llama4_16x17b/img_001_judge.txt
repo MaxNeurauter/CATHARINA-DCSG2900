@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary flaw: **LDAP server signing requirements = None**. It also correctly noted that the SMB-related signing settings shown are enabled and not the issue.
+
+However, it missed the **specific secondary risk** in the ground truth: **NTLM relay to LDAP on the Domain Controller** enabling unauthorized administrative actions. Instead, it gave a more generic **MITM/tampering/eavesdropping** explanation. The remediation is also partly flawed: it points to the wrong policy path and vaguely references enabling “Digitally sign communications (always)” for the Domain Controller rather than specifically enforcing **Domain controller: LDAP server signing requirements** via the correct security options/GPO setting.
+
+That makes this stronger than a generic “misconfigured” answer, but not technically precise enough for a top score.
+
+SCORE: 4

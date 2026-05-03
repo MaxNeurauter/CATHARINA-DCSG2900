@@ -1,0 +1,11 @@
+CATHARINA missed the **primary flaw** in the screenshot and focused on several secondary or generic privilege issues instead.
+
+- **Ground truth issue:** **Add workstations to domain = Authenticated Users**
+- **Why it matters:** This allows any authenticated user to join machines to the domain, which can be abused to create computer objects and facilitate **Resource-Based Constrained Delegation (RBCD)** attacks.
+- **Expected remediation:** Restrict this right to authorized admins only, or reduce/disable machine account quota as appropriate.
+
+Instead, the model emphasized items like **Bypass traverse checking**, **Backup Operators**, and **Everyone** on network access. While some of those may warrant review, they are **not the core vulnerability identified in the ground truth**. It also gave some questionable claims/remediation, such as implying “Access this computer from the network” means anyone can RDP, which is not accurate.
+
+Because it **failed to identify the main issue visible in the image** and provided an unrelated “critically vulnerable” narrative, this is a poor result.
+
+SCORE: 2

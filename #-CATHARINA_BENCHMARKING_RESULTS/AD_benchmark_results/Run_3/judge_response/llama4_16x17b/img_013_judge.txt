@@ -1,0 +1,5 @@
+CATHARINA failed to identify the core vulnerability shown in the screenshot. The ground truth is very specific: **Authenticated Users** have dangerous **special permissions at the domain root** allowing them to **enable reversible password encryption, unexpire passwords, and set password-not-required**. Instead of calling out these explicit rights, the model gave a generic ACL review and even suggested the configuration “appears to generally follow best practices,” which directly contradicts the critical misconfiguration visible in the image.
+
+It also hallucinated/generalized attack paths and remediation without addressing the actual issue: removing those dangerous delegated rights from **Authenticated Users** at the domain root.
+
+SCORE: 1

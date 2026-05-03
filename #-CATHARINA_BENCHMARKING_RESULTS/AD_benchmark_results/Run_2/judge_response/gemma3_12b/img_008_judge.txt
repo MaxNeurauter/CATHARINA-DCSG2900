@@ -1,0 +1,7 @@
+The model completely misread the screenshot. The image shows **Advanced Security Settings for the KINGSLANDING computer object**, specifically ACL entries where **stannis.baratheon** and **AcrossTheNarrowSea** have **Full control**. That is the core vulnerability in the ground truth.
+
+Instead, the model hallucinated a **user account General tab** and discussed **“Account is sensitive”**, password expiry, and related settings that are not present in the image at all. This is a direct contradiction of the visible UI and misses the actual high-risk AD permission misconfiguration.
+
+Per the rubric, this is a failure because it both **misses the primary flaw** and **describes settings not present in the image**.
+
+SCORE: 1

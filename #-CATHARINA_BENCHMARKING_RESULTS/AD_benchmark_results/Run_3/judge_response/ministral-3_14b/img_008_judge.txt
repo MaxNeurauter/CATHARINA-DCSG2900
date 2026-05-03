@@ -1,0 +1,7 @@
+CATHARINA identified that **AcrossTheNarrowSea** has **Full control**, which matches part of the ground truth. However, it **missed the core second principal issue**: **stannis.baratheon also has Full control**. Instead, it incorrectly reported **stannis.baratheon** as only having **Create/Delete all child objects**, which is contradicted by the screenshot.
+
+Worse, it centered the analysis on **“Everyone: Change Password”** as the *primary vulnerability*, which is not the ground-truth finding. It also introduced several unsupported or exaggerated claims, such as calling normal admin entries like **Domain Admins/Enterprise Admins** “overly permissive” and building attack paths around password change, silver tickets, golden tickets, etc., which are not the main issue shown here.
+
+So while it spotted one real excessive permission, it **missed the main vulnerability pattern** and added substantial misleading analysis.
+
+SCORE: 2

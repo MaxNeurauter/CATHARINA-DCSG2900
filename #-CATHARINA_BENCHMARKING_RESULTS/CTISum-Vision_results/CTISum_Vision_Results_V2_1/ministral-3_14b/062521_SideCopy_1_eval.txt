@@ -1,0 +1,53 @@
+Report name: 062521_SideCopy_1
+time used: 64.92 seconds
+Bert score: 0.8309
+RougeL score: 0.1589
+Rouge1 score: 0.3863
+Rouge2 score: 0.0938
+summary generated:
+### CTIS (Cisco Threat Intelligence Summary) for SideCopy APT
+
+#### Overview
+SideCopy is an Advanced Persistent Threat (APT) group that has evolved its tactics, techniques, and procedures (TTPs) over time. Initially, SideCopy used a simple infection vector to deliver a custom Remote Access Trojan (RAT), CetaRAT. The group has since diversified its infection chains and malware arsenal, incorporating multiple RATs and plugins.
+
+#### Key Tactics and Techniques
+
+1. **Infection Vectors and Malware:**
+   - **Initial Infection:** Utilizes various infection vectors such as LNK files, self-extracting RAR archives (EXEs), and MSI-based installers.
+   - **Malware Variants:** Employs a variety of custom and commodity RATs and plugins, including CetaRAT, njRAT, and others.
+   - **Credential Theft:** Focuses on credential harvesting and espionage, targeting government entities.
+
+2. **Targeting:**
+   - **Primary Targets:** Military, diplomatic, and honeypot targets, indicating a focus on government entities in the Indian subcontinent.
+   - **Themes:** Similar to APT36, SideCopy uses multiple themes in their targeting tactics.
+
+3. **Credential Access and Espionage:**
+   - **Post-Infection Plugins:** Uses a variety of plugins post-infection, indicating a focus on espionage activities.
+
+#### Indicators of Compromise (IOCs)
+The document does not provide specific IOCs, but it mentions the use of malicious websites, emails, and various types of malware files.
+
+#### Protection and Mitigation
+
+**Cisco Secure Products:**
+- **Cisco Secure Endpoint (formerly AMP for Endpoints):** Prevents the execution of malware.
+- **Cisco Secure Web Appliance:** Blocks access to malicious websites and detects malware.
+- **Cisco Secure Email:** Blocks malicious emails.
+- **Cisco Secure Firewall/Secure IPS:** Detects malicious activity.
+- **Cisco Secure Network/Cloud Analytics:** Analyzes network traffic and alerts on unwanted activity.
+- **Cisco Secure Malware Analytics:** Identifies malicious binaries.
+- **Umbrella:** Blocks connections to malicious domains, IPs, and URLs.
+- **Cisco Duo:** Provides multi-factor authentication.
+
+**Additional Protections:**
+- **Orbital Advanced Search:** Allows Cisco Secure Endpoint users to run complex OSqueries to check for infections.
+- **Snort Subscriber Rule Set:** Open-source Snort rules (SIDs 57842 - 57849) can protect against threats outlined in the report.
+
+#### Recommendations
+- **Preventive Measures:** Deploy Cisco Secure Endpoint, Secure Web Appliance, Secure Email, and Secure Firewall to prevent infections and detect malicious activities.
+- **Monitoring:** Use Cisco Secure Network/Cloud Analytics and Malware Analytics for continuous monitoring and alerting.
+- **Authentication:** Implement multi-factor authentication with Cisco Duo for added security.
+- **Regular Updates:** Ensure all systems are updated with the latest Snort rules and security patches.
+
+#### Conclusion
+SideCopy’s evolving tactics and use of multiple infection vectors and malware variants highlight the need for robust, multi-layered security solutions. Cisco’s suite of security products provides comprehensive protection against the various TTPs employed by SideCopy.

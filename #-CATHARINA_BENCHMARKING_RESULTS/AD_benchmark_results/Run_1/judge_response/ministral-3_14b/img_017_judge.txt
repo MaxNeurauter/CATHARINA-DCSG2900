@@ -1,0 +1,13 @@
+CATHARINA correctly read the visible password policy settings and acknowledged several secure aspects, but its overall conclusion diverges from the Ground Truth.
+
+Why this is not a strong match:
+- The Ground Truth says the configuration generally follows best practices.
+- It specifically notes only two nuanced concerns:
+  - 10-character minimum length is a bit dated; 14 is more modern.
+  - 90-day rotation is a legacy practice and may be counterproductive under newer guidance.
+- CATHARINA instead labels the setup as “Misconfigured,” treats 90 days as a problem because it is “excessively long,” and recommends shortening it to 60/30 days, which is the opposite of the Ground Truth/NIST-oriented interpretation.
+- It also introduces unsupported findings from the screenshot, such as lack of MFA, lack of FGPP, disabling NTLM/SMBv1/LDAP, and custom banned password configuration. Those may be good general hardening ideas, but they are not evidenced by the image and dilute the assessment.
+
+This is better than a total failure because it did recognize the visible settings and did not call an obviously secure-looking policy “critically vulnerable.” However, it missed the intended evaluation and added unsupported issues.
+
+SCORE: 2

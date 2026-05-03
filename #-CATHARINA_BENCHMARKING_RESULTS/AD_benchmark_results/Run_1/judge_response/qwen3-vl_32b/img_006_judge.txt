@@ -1,0 +1,9 @@
+CATHARINA identified a real issue visible in the screenshot: **Authenticated Users** having the **Enable per user reversibly encrypted password** permission. That aligns with part of the ground truth.
+
+However, it **missed the broader core flaw** from the ground truth: **Authenticated Users have multiple write-style permissions** on password-related attributes, specifically **Unexpire password** and **Update password not required bit** as well. The ground truth is about overly broad password-attribute modification rights in general, not just reversible encryption alone.
+
+It also adds some technical imprecision: reversible encryption is not accurately explained as “LM/NTLM hash algorithms” from which the original password can be derived. The remediation is directionally correct but incomplete because it should recommend restricting **all such write permissions** for Authenticated Users, ideally leaving them with read-only access.
+
+So this is more than generic recognition, but it does not fully capture the main issue or all risky permissions.
+
+SCORE: 4

@@ -1,0 +1,5 @@
+CATHARINA identified the core issue correctly: a normal user account (`jon.snow`) has an SPN set, which enables Kerberoasting. It also explicitly named the attack path and explained the offline cracking risk, which matches the ground truth well.
+
+Minor issue: the remediation is a bit too absolute. Saying user accounts should “never” have SPNs is slightly overbroad, since traditional service accounts can be user objects; the better remediation is to move the SPN off a standard user and onto a proper service account/gMSA if legitimately needed. Still, for this screenshot and ground truth, the analysis is technically strong.
+
+SCORE: 5

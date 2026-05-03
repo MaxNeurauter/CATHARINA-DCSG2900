@@ -1,0 +1,7 @@
+CATHARINA’s response is fundamentally wrong. The ground truth says this is a secure, balanced Kerberos baseline, and the screenshot matches standard default/best-practice values: Enforce user logon restrictions enabled, 600-minute service ticket lifetime, 10-hour user ticket lifetime, 7-day renewal, and 5-minute clock skew tolerance.  
+
+Instead, it labels the configuration “Misconfigured,” invents a primary flaw around the 600-minute service ticket lifetime, and incorrectly ties that setting to Kerberoasting risk. Kerberoasting is primarily mitigated through strong service account passwords, gMSA use, and reducing privileged SPN exposure—not by treating the default 10-hour service ticket lifetime as a critical vulnerability. Its remediation to reduce service tickets to 1 hour or less is not aligned with the ground truth and is poor advice for this case.  
+
+This is a clear failure because it marks a secure configuration as vulnerable and provides incorrect remediation.  
+
+SCORE: 1

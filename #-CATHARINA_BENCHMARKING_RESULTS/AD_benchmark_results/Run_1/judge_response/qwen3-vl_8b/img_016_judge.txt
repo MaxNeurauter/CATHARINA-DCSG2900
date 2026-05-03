@@ -1,0 +1,5 @@
+CATHARINA’s assessment is incorrect. The ground truth says this is a secure, balanced Kerberos baseline, and the screenshot matches standard/default Kerberos policy values: Enforce user logon restrictions enabled, service ticket lifetime 600 minutes, user ticket lifetime 10 hours, renewal 7 days, and clock skew 5 minutes.
+
+The model falsely labels the configuration as “Misconfigured,” invents Kerberoasting risk tied to a 10-hour/600-minute service ticket lifetime, and recommends changing it to 480 minutes, which is not supported by the ground truth. This is a clear false positive on a secure configuration.
+
+SCORE: 1

@@ -1,0 +1,74 @@
+Report name: 360Netlab-EwDoor
+time used: 77.50 seconds
+Bert score: 0.7601
+RougeL score: 0.1104
+Rouge1 score: 0.2420
+Rouge2 score: 0.0000
+summary generated:
+### CTIS Summary
+
+**Threat Actor: Ewdoor**
+
+**Overview:**
+Ewdoor is a malware family that has been active since at least October 2021. The malware is associated with a campaign that involves multiple stages of infection, including downloader scripts and payloads.
+
+**Key Indicators of Compromise (IOCs):**
+
+**IP Addresses:**
+- 185[.]10.68.20
+- 212[.]193.30.209
+
+**Domains:**
+- rtmxvd.iunno.se
+- ekgmua.zapto.org
+- hhqnyy.zapto.org
+- besthatsite.mooo.com
+- a.rtmxvdio.net
+- a.hatbowlu3hf.ru
+- a.hatbowlrtx.su
+- b.rtmxvdio.net
+- b.hatbowlu3hf.ru
+- b.hatbowlrtx.su
+
+**Ports:**
+- 53, 443, 13433
+
+**Downloader URLs:**
+- http://185[.]10.68.20:1234/ew-new.sh
+- http://185[.]10.68.20:1234/ew.sh
+- http://185[.]10.68.20:1234/prod/mips
+- http://185[.]10.68.20:1234/prod/x86_64
+- http://185[.]10.68.20:1234/ramdisk.img.gz
+- http://212[.]193.30.209/61501e55/mips
+- http://212[.]193.30.209/859b6cfa.sh
+
+**Sample MD5 Hashes:**
+- 007c28d9a0ccfb10c478689fd63e0de0
+- 128331f1c808ee385375dd54d0609ebc
+- 46c18a8e93a863053952985a39bd7d63
+- 4f0841ac08a27d8b3d56cbd03fb68ad8
+- 5c4390e1668856cc772499a72f935d6
+- 62bc8899a353921ac685cabb63de97b3
+- 67ccb3cf1f4f57f5a0ded4d20bc91d73
+- 7d4937e27d0fd75dd6159ffe53ebb505
+- 84b3df62ed45bea57d0dd85e80f0dc07
+- 8794d23cad330de803294a2a1adb128b
+- abaed830fe09e92ee434236d3db01e08
+- b81ade4f18c2df58adef301f401e8a02
+- ca6eb890853434ab9a0f8cdbab0965ea
+- ddf96434bdb7b449ddcc925e6a5b3095
+- eef0035f971622cc5f48e164ca28a95f
+- fbbacfb20e487265c7fdb3081771f26
+
+**Behavior and Tactics:**
+- The malware uses a multi-stage downloader to deliver payloads.
+- The campaign involves the use of scripts (ew-new.sh, ew.sh) and direct downloads of MIPS and x86_64 binaries.
+- The malware is capable of running on both MIPS and x86_64 architectures.
+- The attacker uses a variety of domains and IP addresses to host the malicious files, likely to evade detection and takedowns.
+
+**Recommendations:**
+- Monitor network traffic for connections to the listed IP addresses and domains.
+- Ensure that all systems are updated with the latest security patches.
+- Implement network intrusion detection systems (IDS) and intrusion prevention systems (IPS) to detect and block malicious traffic.
+- Regularly audit and review network logs for suspicious activities.
+- Educate end-users about phishing and social engineering tactics to prevent initial compromise.

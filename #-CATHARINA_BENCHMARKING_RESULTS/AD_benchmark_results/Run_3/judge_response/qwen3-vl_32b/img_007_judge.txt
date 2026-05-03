@@ -1,0 +1,11 @@
+CATHARINA missed the core AD issue identified in the ground truth. The important finding is **“Add workstations to domain = Authenticated Users”**, which allows non-admin users to create computer accounts and can enable **RBCD attack paths**. Instead, the model focused on **Everyone** being present in “Access this computer from the network” and “Bypass traverse checking,” treating those as the primary vulnerability.
+
+That is a significant miss because:
+- It did **not identify the primary flaw** from the screenshot/ground truth.
+- It explicitly said **“Add workstations to domain” appears within expected ranges**, which contradicts the ground truth.
+- It invented/overstated attack consequences like anonymous access and directory traversal abuse as the main issue, rather than the AD delegation abuse path.
+- Remediation is therefore aimed at the wrong settings.
+
+This fits **1 (Failure)** because it misses the critical vulnerability and effectively labels the true vulnerable setting as acceptable.
+
+SCORE: 1

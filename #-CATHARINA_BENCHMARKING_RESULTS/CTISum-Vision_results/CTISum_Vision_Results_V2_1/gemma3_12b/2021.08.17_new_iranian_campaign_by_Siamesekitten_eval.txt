@@ -1,0 +1,88 @@
+Report name: 2021.08.17_new_iranian_campaign_by_Siamesekitten
+time used: 103.20 seconds
+Bert score: 0.8087
+RougeL score: 0.0982
+Rouge1 score: 0.1965
+Rouge2 score: 0.0305
+summary generated:
+Okay, here's a CTIS (Cyber Threat Intelligence Summary) based on the provided images, breaking down the key findings. I will structure it according to common CTIS sections.
+
+**CTIS: DanBot RAT & Related Infrastructure**
+
+**1. Executive Summary**
+
+This report details a campaign utilizing the DanBot RAT (Remote Access Trojan), linked to a threat actor previously associated with Iranian APT groups, specifically APT39. The campaign involves a sophisticated blend of lures, custom communication protocols (DNS tunneling), and encryption techniques to evade detection and maintain persistence. The RAT enables remote control, data theft, and potentially, further malicious activity on compromised systems. The infrastructure used is designed to be dynamic and resistant to disruption, utilizing domain generation algorithms (DGAs) and rapid domain registration.
+
+**2. Threat Actor & Attribution**
+
+*   **Name:** DanBot Campaign - Potentially linked to APT39 (also known as Cozy Bear, APT39, or Advanced Persistent Threat 39)
+*   **Attribution:** The threat actor exhibits tactics, techniques, and procedures (TTPs) associated with APT39, particularly in the use of custom malware and infrastructure. However, definitive attribution is challenging due to obfuscation techniques. The similarity in tool usage and infrastructure patterns suggest a strong connection, but a formal, public attribution is not possible.
+*   **Motivation:** Primarily espionage and data theft. The exact targets are not explicitly stated in this extract, but based on previous APT39 activity, likely government entities, defense contractors, or organizations involved in critical infrastructure.
+
+**3. Malware Analysis – DanBot RAT**
+
+*   **Name:** DanBot RAT (versions exist: WinNC.exe and UltraVNC.exe)
+*   **Type:** Remote Access Trojan (RAT)
+*   **Functionality:**
+    *   Remote Desktop Access: Allows attackers to remotely control victims' desktops, including screen access, keyboard, internet access, and system management.
+    *   Data Exfiltration: Capable of stealing sensitive information from infected machines.
+    *   Command and Control: Provides a channel for attackers to issue commands and receive data from compromised systems.
+*   **Technical Details:**
+    *   Custom Communication:  Uses a combination of HTTP/HTTPS and DNS tunneling for command and control.
+    *   Encryption: Employs encryption to protect communication and data.
+    *   Dynamic Infrastructure: Relies on a DGA to constantly generate new domains, making it difficult to block.
+    *   Backdoor Implementation:  In some cases, a backdoor may be implanted via a TXT file.
+*   **Hashes:** (Refer to the final page of the document for a list of associated hashes).
+
+**4. Indicators of Compromise (IOCs)**
+
+*   **Domains:**
+    *   `softwareagobs[.]com`
+    *   `jobschipp[.]com`
+    *   `defenderstatus[.]com`
+    *   `dnsstatus[.]org`
+    *   `technoocet[.]com`
+    *   `ms1defenderlive[.]com`
+    *   `wsuslink[.]com`
+    *   `23.95.218[.]140`
+    *   `23.94.22[.]145`
+    *   `185.243.112[.]120`
+    *   `185.243.21[.]132`
+    *   `193.239.84[.]207`
+    *   `208.91.197[.]91`
+*   **IP Addresses:** (Refer to the Domain list, many are associated IPs)
+*   **Files:** (Refer to the final page for file names and associated hashes)
+*   **URLs:** (Not explicitly listed, but command and control traffic will likely involve URLs within the domains listed above.)
+*   **User Agent:** Associated with the infrastructure.
+
+**5. Tactics, Techniques, and Procedures (TTPs)**
+
+*   **Luring/Initial Access:**  Uses fake websites and lures, likely targeted email campaigns with malicious attachments (e.g., decoy documents like PDFs or Excel files).
+*   **Command and Control (C2):**  Uses dynamic domains generated via DGA, and utilizes DNS tunneling to bypass firewalls and network monitoring.
+*   **Persistence:** Employs backdoors and potentially other techniques to maintain access to compromised systems.
+*   **Defense Evasion:**  Uses encryption and obfuscation to evade detection by antivirus software and intrusion detection systems.
+
+**6. Mitigations & Recommendations**
+
+*   **Network Monitoring:** Implement robust network monitoring to detect unusual DNS traffic and communication patterns.
+*   **DGA Detection:**  Monitor for dynamic DNS resolution and unusual domain registration patterns.
+*   **Endpoint Detection and Response (EDR):** Deploy EDR solutions to detect and respond to malicious activity on endpoints.
+*   **User Awareness:** Train users to recognize and avoid phishing emails and malicious attachments.
+*   **Firewall Rules:**  Block access to known malicious domains and IP addresses.
+*   **Antivirus:** Ensure that antivirus software is up-to-date and properly configured.
+*   **Incident Response Plan:** Establish an incident response plan to quickly and effectively respond to potential compromises.
+
+**7. Reporting References**
+
+*   ClearSky Cyber Security Report (as referenced within the document)
+*   VirusTotal submissions:  May-June campaign.
+*   RiskIQ and other threat intelligence platforms.
+
+**Important Notes:**
+
+*   **Dynamic Nature:** The infrastructure described is likely constantly evolving, so IOCs may become obsolete quickly. Continuous monitoring and threat intelligence updates are crucial.
+*   **Attribution Challenges:** While there's strong indication of APT39 involvement, definitive attribution remains complex.
+
+
+
+Let me know if you would like any of the sections expanded or clarified.

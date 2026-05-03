@@ -1,0 +1,5 @@
+CATHARINA failed this assessment. The core issue in the screenshot is explicitly that **NORTH\samwell.tarly**, a non-admin user, has **“Edit settings, delete, modify security”** on the **StarkWallpaper** GPO. Since that GPO is **linked at the domain root** (`north.sevenkingdoms.local`), compromise of that user enables malicious GPO changes affecting broadly scoped domain users/computers.
+
+Instead, the model said the configuration appears **“Secure”**, focused on **Authenticated Users** read/security filtering, and stated there were **no obvious attack paths**. That directly contradicts the image and misses the primary vulnerability entirely.
+
+SCORE: 1

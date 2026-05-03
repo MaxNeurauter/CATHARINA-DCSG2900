@@ -1,0 +1,11 @@
+CATHARINA’s assessment is the opposite of the Ground Truth. The screenshot shows a fairly standard AD user ACL with expected principals like SYSTEM, Domain Admins, Administrators, SELF, Authenticated Users, and other built-in groups. It incorrectly treats normal/default entries as critical misconfigurations.
+
+Major errors:
+- It claims **Everyone: Change password** means anyone can reset the account password. That is incorrect; this commonly refers to the ability to **change** a password under normal rules, not arbitrary password reset rights.
+- It hallucinates that **Authenticated Users: Special** likely includes dangerous rights like **WriteDACL** or SPN modification without evidence from the screenshot.
+- It frames **SELF** on descendants and **Terminal Server License Servers** as privilege escalation paths with no support.
+- Its remediation is not just unnecessary but partly wrong; e.g. `Set-ADAccountControl -DoesNotRequirePreAuth:$true` would actually **enable** AS-REP roastability, not mitigate it.
+
+Because it labels a secure/best-practice-aligned ACL as “Critically Vulnerable” and invents attack paths not supported by the image, this is a clear failure.
+
+SCORE: 1

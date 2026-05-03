@@ -1,0 +1,5 @@
+CATHARINA missed the actual core issue shown in the screenshot. The ground truth is that **stannis.baratheon** and **AcrossTheNarrowSea** have **Full control** on the **KINGSLANDING** computer object, which is a serious delegation flaw because a non-admin user/group can fully control that AD object.
+
+Instead, the model focused on **Enterprise Admins** having Full control, which is not the primary vulnerability here and is not what the screenshot is testing. It also gave remediation to remove Enterprise Admins, which is not the correct fix for this finding. So it failed to identify the real dangerous ACEs and provided remediation for the wrong problem.
+
+SCORE: 1

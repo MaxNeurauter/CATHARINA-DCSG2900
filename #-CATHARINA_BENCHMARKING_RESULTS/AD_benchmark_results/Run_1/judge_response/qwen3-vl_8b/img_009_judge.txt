@@ -1,0 +1,9 @@
+CATHARINA correctly identified the key setting in the screenshot: **“Trust this user for delegation to any service (Kerberos only)”**, which is **Unconstrained Delegation** and is indeed highly dangerous.
+
+However, its **attack path is wrong**. The ground truth risk is that **users’ TGTs can be cached on the delegated system/account context**, enabling **ticket theft and privilege escalation** if that system/account is compromised. CATHARINA instead framed this primarily as **Kerberoasting**, which is a different AD attack and not the main issue caused by unconstrained delegation. That is a significant technical miss.
+
+Remediation is partly acceptable because it recommends disabling unconstrained delegation or moving to constrained delegation, but it adds some questionable specificity from the UI/table that doesn’t align cleanly with the actual issue.
+
+Overall: **right flaw, wrong exploitation explanation**.
+
+SCORE: 4

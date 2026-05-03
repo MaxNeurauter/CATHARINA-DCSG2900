@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary issue: the plaintext password “Heartsbane” exposed in `samwell.tarly`’s description field. That aligns with the core ground truth and it properly explains that this creates immediate credential disclosure risk.
+
+However, it missed an important secondary point from the ground truth: that users and groups are all being kept in the default **Users** container instead of a structured OU hierarchy. It also introduced several unsupported or speculative findings from the screenshot alone, such as lack of password complexity, password expiration, MFA, enabled default accounts, Protected Users membership concerns, and AS-REP roasting risk. Some of these are not inferable from the image and weaken the accuracy of the assessment.
+
+So overall: strong on the main flaw, but too much speculation and missed the OU/container issue.
+
+SCORE: 4

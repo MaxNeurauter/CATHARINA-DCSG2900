@@ -1,0 +1,11 @@
+CATHARINA correctly identified the core issue: **Authenticated Users have dangerous write permissions** such as **Enable per user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**. That aligns well with the ground truth.
+
+However, it loses points for introducing several **incorrect or exaggerated side findings/attack paths**:
+- **AS-REP Roasting** is not the right consequence of reversible password-related permissions here.
+- **Enterprise Domain Controllers** replication rights are largely expected in AD and not the main flaw.
+- **Cloneable Domain Controllers**, **CREATOR OWNER**, and the **Everyone deny rule** are distractions from the actual issue.
+- It overstates some normal/default permissions as vulnerabilities.
+
+Remediation for removing the dangerous **Authenticated Users** permissions is good and matches the ground truth’s least-privilege recommendation, but the answer is diluted by inaccurate technical claims.
+
+SCORE: 4

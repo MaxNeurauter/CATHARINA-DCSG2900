@@ -1,0 +1,7 @@
+CATHARINA missed the primary vulnerability shown in the screenshot. The ground truth is specifically that the non-admin group **AcrossTheNarrowSea** and the user **stannis.baratheon** both have **Full control** over the **KINGSLANDING** computer object, which is a direct privilege escalation path.
+
+Instead, the model focused on **Everyone = Change password**, which is visible but not the core flaw identified by the ground truth. It also built much of its attack path around password reset/account takeover, which is not the main issue here. While it did recognize the configuration as misconfigured, its remediation is aimed at removing the wrong ACE and ignores the dangerous **Full control** assignments to the user and non-admin group.
+
+This is not a total hallucination because the “Everyone / Change password” entry does appear in the image, but it misses the central security finding and provides incorrect remediation for this specific case.
+
+SCORE: 2

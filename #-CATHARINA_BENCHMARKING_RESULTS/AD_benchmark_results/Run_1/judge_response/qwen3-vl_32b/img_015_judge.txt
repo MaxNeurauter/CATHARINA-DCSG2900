@@ -1,0 +1,5 @@
+CATHARINA correctly recognized the key state: this is not secure best practice because a normal user account is configured for delegation at all, even though it is constrained delegation with an empty service list. It also correctly notes that “Do not trust this user for delegation” is the preferred setting.
+
+However, its attack explanation is weaker than the ground truth. The ground truth emphasizes that this is a hardened-but-still-vulnerable configuration because delegation rights on a human user violate least privilege, while the empty list removes the unconstrained/TGT theft risk. CATHARINA instead frames the main danger mostly as “if services are added later,” which is a bit too hypothetical and less aligned with the actual assessment focus. Remediation is good and technically sound.
+
+SCORE: 4

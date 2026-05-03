@@ -1,0 +1,5 @@
+The model missed the primary, obvious vulnerability visible in the screenshot: the **description field for `samwell.tarly` contains a cleartext password (`Password : Heartsbane`)**. That is the core finding in the ground truth and is directly readable from the image. Instead, it incorrectly declared the image “inconclusive” and focused on unrelated possibilities like AS-REP roasting and SPNs. It also failed to note the secondary issue that users/groups are left in the default **Users** container rather than a proper OU structure.
+
+Because it failed to identify a clearly visible critical issue and effectively dismissed the evidence present in the image, this is a failure under the rubric.
+
+SCORE: 1

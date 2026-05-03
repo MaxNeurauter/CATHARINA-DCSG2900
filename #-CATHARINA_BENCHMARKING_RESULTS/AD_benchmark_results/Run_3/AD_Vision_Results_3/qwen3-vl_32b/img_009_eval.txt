@@ -1,0 +1,36 @@
+Image Analyzed: img_009.png
+Model Used: qwen3-vl:32b
+Time Taken: 602.56 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### Observation  
+- The user account **"sansa.stark"** has the **"Trust this user for delegation to any service (Kerberos only)"** option selected in the Delegation tab.  
+- The "Do not trust this user for delegation" and "Trust this user for delegation to specified services only" options are **not selected**.  
+- The "Use Kerberos only" and "Use any authentication protocol" sub-options are irrelevant since "specified services only" is not selected.  
+
+### Assessment  
+**Critically Vulnerable**.  
+Unconstrained delegation (enabling "delegation to any service") on a user account is a severe misconfiguration. It allows attackers to exploit the user’s Kerberos credentials to impersonate them across the domain, leading to unbounded lateral movement.  
+
+### Attack Path  
+- **Attack Vector**: **Unconstrained Delegation**.  
+- **Technical Impact**: An attacker who compromises a service (e.g., a web application, print server, or any service the user interacts with) can **capture the user’s Kerberos Ticket-Granting Ticket (TGT)**. Since the user is trusted for delegation to *any service*, the attacker can then:  
+  1. Request a service ticket for *any domain service* (e.g., SQL Server, file shares, or other critical resources).  
+  2. Impersonate the user to access all resources they have permissions to.  
+  This results in **full lateral movement**, data exfiltration, or privilege escalation within the domain.  
+
+### Remediation  
+1. **Open Active Directory Users and Computers** (ADUC).  
+2. **Right-click** the user account `sansa.stark` → **Properties**.  
+3. **Select the "Delegation" tab**.  
+4. **Change the setting to**:  
+   - **"Do not trust this user for delegation"** (if no delegation is required).  
+   *OR*  
+   - **"Trust this user for delegation to specified services only"** (if delegation is *absolutely necessary*):  
+     - Click **"Add..."** to specify **only the required services** (e.g., specific servers or SPNs).  
+     - *Do not leave this blank*—unconstrained delegation is the default if services are not specified.  
+5. **Click "OK"** to apply changes.  
+
+> **Critical Note**: Unconstrained delegation should **never** be enabled for user accounts. Use constrained delegation (with explicit service lists) only if required for legacy applications, and validate all changes.
+==================================================

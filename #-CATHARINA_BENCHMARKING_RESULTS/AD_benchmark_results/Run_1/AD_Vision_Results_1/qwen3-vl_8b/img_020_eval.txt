@@ -1,0 +1,48 @@
+Image Analyzed: img_020.png
+Model Used: qwen3-vl:8b
+Time Taken: 201.14 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+根据图中内容，分析存在的攻击向量如下：
+
+### 核心配置分析：
+1. **"Account is sensitive and cannot be delegated"（账户敏感且不可委派）**  
+   - **状态：已勾选**  
+   - **含义**：该设置阻止账户被委派（即无法将服务请求转发至其他域或资源），有效防御了 **Delegation Attack（委派攻击）** 和 **Silver Ticket（银票攻击）**。  
+   - **结论**：此配置**无攻击向量**，是安全加固措施。
+
+2. **"Use only Kerberos DES encryption types"（仅使用 Kerberos DES 加密类型）**  
+   - **状态：未勾选**  
+   - **含义**：默认启用更强的加密（如 AES），而非弱加密的 DES。  
+   - **结论**：此配置**无攻击向量**，反而提升安全性。
+
+3. **"Account expiration: Never"（账户过期时间：永不）**  
+   - **状态：已设置为 "Never"**  
+   - **含义**：表示账户密码**永不到期**（即 "Password never expires" 功能启用）。  
+   - **关键风险**：  
+     - 如果账户是**服务账户**或**高权限账户**，攻击者可利用此配置执行 **Kerberoasting（Kerberos 票据轰炸攻击）**。  
+     - Kerberoasting 攻击者通过工具（如 `Get-ADUser` 或 `kerberoast`）请求目标账户的 TGT（Ticket Granting Ticket），利用密码永不过期的特性，获取服务票据（Service Ticket），进而横向移动或提权。
+
+---
+
+### 攻击向量结论：
+- **存在攻击向量：Kerberoasting（Kerberos 票据轰炸攻击）**  
+  - **原因**：账户密码永不过期（"Account expiration: Never"），使攻击者能长期利用 Kerberos 协议漏洞获取服务票据。  
+  - **风险场景**：若账户为域内高权限服务账户（如 `svc_account`），攻击者可结合 Kerberoasting 突破域边界，窃取敏感数据或提权。
+
+---
+
+### 安全建议：
+1. **限制账户永不过期**：  
+   - 对高权限账户，建议设置合理的密码过期策略（如 90 天），避免 "Password never expires" 的配置。  
+2. **强化 Kerberos 安全**：  
+   - 确保系统使用 AES 加密（图中已启用），并禁用弱加密（如 DES）。  
+3. **最小权限原则**：  
+   - 为服务账户分配必要权限，避免高权限账户暴露于 Kerberoasting 攻击。
+
+---
+
+### 总结：
+图中配置的核心风险在于 **"Account expiration: Never" 导致密码永不过期**，使账户暴露于 **Kerberoasting 攻击**。尽管委派限制和加密设置有效防护了其他攻击向量，但 Kerberoasting 是当前环境中的关键威胁。需立即调整账户过期策略以降低风险。
+==================================================

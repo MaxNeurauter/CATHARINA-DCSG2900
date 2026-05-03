@@ -1,0 +1,7 @@
+CATHARINA missed the actual issue shown in the screenshot. The image is on the **Delegation** tab and shows **“Trust this user for delegation to specified services only”** with **“Use Kerberos only”** selected, and the allowed services list is empty. That means the account is configured for **Kerberos Constrained Delegation**, not “Account is sensitive.” The model hallucinated a different setting that is not present in the image.
+
+Ground truth says this is **hardened but still vulnerable/misconfigured** because a **standard human user account** should generally have **no delegation rights at all**; best practice is **“Do not trust this user for delegation.”** CATHARINA failed to identify that and gave unrelated remediation.
+
+This matches a failure condition: it describes settings not present in the image and misses the core flaw.
+
+SCORE: 1

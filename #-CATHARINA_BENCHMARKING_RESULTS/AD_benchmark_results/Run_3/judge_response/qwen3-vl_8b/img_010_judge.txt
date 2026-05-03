@@ -1,0 +1,9 @@
+The model response is strongly aligned with the ground truth. It correctly identifies that `jon.snow` is a normal user account with an SPN set, explicitly names **Kerberoasting**, and explains the offline cracking risk. That matches the core flaw and attack path well.
+
+Minor issues keep it from being perfect:
+- It overstates that SPNs are intended for computer accounts “not standard user accounts”; in practice, SPNs can also legitimately exist on dedicated service accounts, which it mentions later but somewhat inconsistently.
+- The remediation is a bit imperfect: clearing SPNs is directionally correct, but the GUI path given is questionable/inexact for editing the attribute, and the PowerShell example is not the cleanest way to remove SPNs.
+- It speculates the SPN may be malformed (`HT` typo), which is not necessary to the finding.
+
+Still, it correctly identifies the primary vulnerability, the specific attack path, and provides mostly correct remediation.  
+SCORE: 4

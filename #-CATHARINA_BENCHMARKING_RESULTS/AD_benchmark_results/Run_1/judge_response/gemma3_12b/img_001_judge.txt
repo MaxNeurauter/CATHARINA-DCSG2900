@@ -1,0 +1,3 @@
+The model completely missed the actual finding in the screenshot. The image clearly shows **Domain controller: LDAP server signing requirements = None**, which is the core vulnerability. Instead, it hallucinated a different UI (“User Attribute Editor” and “Account is sensitive”) that is not present in the image at all. It also provided unrelated and technically incorrect reasoning about password policy behavior tied to that checkbox. This matches the failure condition: it describes settings not present in the screenshot and misses a critical AD security flaw.
+
+SCORE: 1

@@ -1,0 +1,5 @@
+CATHARINA’s response is a clear mismatch with the screenshot and the ground truth. The image shows a **domain password policy** with **complexity enabled**, **password history = 10**, **minimum length = 10**, and standard age settings. Ground truth says this is **generally aligned with best practices**, with only minor observations: 10-character minimum is somewhat dated, and forced 90-day rotation is now considered legacy guidance.
+
+Instead, the model hallucinated an entirely different interface (“User Account” properties), claimed **complexity is unchecked**, and assessed the configuration as misconfigured/weak. That directly contradicts the visible settings in the screenshot. This fits the failure condition because it both **describes UI/settings not present** and **invents a vulnerability contradicted by the image**.
+
+SCORE: 1

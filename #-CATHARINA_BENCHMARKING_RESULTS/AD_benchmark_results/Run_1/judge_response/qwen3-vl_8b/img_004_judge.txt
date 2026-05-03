@@ -1,0 +1,9 @@
+CATHARINA correctly identified the primary issue: **“Account is sensitive and cannot be delegated” is unchecked**. That aligns with the ground truth.
+
+However, its explanation is only partially accurate. The ground truth risk is specifically that **if this high-value user logs onto a compromised server, their Kerberos tickets can be stolen/hijacked and used to impersonate them elsewhere**. CATHARINA instead frames this mostly as the account being able to perform delegation and repeatedly calls it **“unconstrained delegation,”** which is too strong/inaccurate for this checkbox alone. It also includes a clearly wrong reference to **CVE-2019-0708**, which is unrelated.  
+
+Remediation is mostly correct: **check the box for high-value targets**. The extra recommendation around constrained delegation is not harmful, but it drifts from the specific issue.
+
+Overall: right flaw, imperfect attack-path explanation, with some incorrect technical detail.  
+
+SCORE: 4

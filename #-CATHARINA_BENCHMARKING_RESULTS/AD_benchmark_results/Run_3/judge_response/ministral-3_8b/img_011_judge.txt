@@ -1,0 +1,5 @@
+CATHARINA identified the main issue fairly well: a non-admin user (`NORTH\samwell.tarly`, though it slightly misstated formatting as `samwelltarly`) has full control over the GPO, and it correctly noted the GPO is linked at the domain level so abuse could impact all domain-joined systems in scope. It also described a realistic attack path: modifying the GPO to deploy malware, weaken security, or create privileged access.
+
+However, it undercalled the severity. The ground truth says this is a **critical vulnerability**, but the model concluded **“Not Critically Vulnerable”**, which is a significant miss. It also added some questionable or unnecessary remediation/auditing details that are not technically precise for this finding. Still, it did not miss the core flaw.
+
+SCORE: 4

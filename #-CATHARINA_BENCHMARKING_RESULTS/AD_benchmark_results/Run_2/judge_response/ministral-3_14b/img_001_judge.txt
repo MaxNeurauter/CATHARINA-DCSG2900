@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary issue: **Domain controller LDAP server signing requirements = None**. It also correctly noted that SMB signing is enabled and not the problem here, which matches the ground truth.
+
+It earns high marks because it explicitly mentions **NTLM relay** as the key attack path, which is the core secondary risk in the ground truth. The remediation to set LDAP signing to **Require signing** is also correct.
+
+However, it loses a small amount for mixing in some less accurate or overly broad claims, such as **forged LDAP responses**, **Kerberos authentication bypass**, **Require signing and sealing** in this UI context, and a questionable PowerShell verification step using **LmCompatibilityLevel**, which is not the right setting for LDAP signing. These inaccuracies prevent a perfect score.
+
+SCORE: 4

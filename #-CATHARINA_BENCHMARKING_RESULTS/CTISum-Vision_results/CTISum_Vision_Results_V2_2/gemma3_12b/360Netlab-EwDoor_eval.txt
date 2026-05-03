@@ -1,0 +1,76 @@
+Report name: 360Netlab-EwDoor
+time used: 98.17 seconds
+Bert score: 0.7983
+RougeL score: 0.0967
+Rouge1 score: 0.2198
+Rouge2 score: 0.0264
+summary generated:
+Okay, here's a comprehensive CTIS (Comprehensive Threat Intelligence Summary) based on the provided document images. This is broken down into sections covering various aspects of the analyzed malware, Ewdoor.
+
+**I. Executive Summary**
+
+Ewdoor is a sophisticated Linux backdoor, seemingly designed for targeted attacks and lateral movement. It uses several techniques to avoid detection, including modification of the ELF header, employing custom encryption and decryption routines,  and simulating seemingly benign system processes.  It’s notable for its author's deep understanding of the Linux kernel, evident in the manipulation of the ELF header and its ability to circumvent standard security measures. The recent versions exhibit a move towards more direct communication with the C2 server, after performing decryption.
+
+**II. Technical Details**
+
+*   **Malware Name:** Ewdoor
+*   **Malware Type:** Linux Backdoor
+*   **Target Platform:** Linux (Specifically, 64-bit architecture)
+*   **Programming Language:** Primarily C
+*   **Encryption/Obfuscation:**  Custom encryption/decryption routines are employed using symmetric keys (likely derived or embedded within the malware). Public key cryptography (using mbedtls library) is present, used for key exchange and decryption.
+*   **Persistence:** Not explicitly mentioned but the nature of the command execution suggests it likely establishes persistence through system startup scripts or a modified user account.
+*   **Communication Protocol:**
+    *   **Initial Connection:** TCP
+    *   **Encryption:** TLS (with a bug in version 0.12)
+    *   **C2 Server Communication:** Custom encrypted communication post-TLS handshake.
+*   **Functionality:**
+    *   Command Execution: Executes commands received from the C2 server.
+    *   File Download & Execution: Downloads and executes files from the C2 server.
+    *   Self-Update: Can update its own code.
+    *   Network Scanning: Likely capabilities to scan for other hosts on the network (implied by the command set).
+
+**III. Indicators of Compromise (IOCs)**
+
+*   **Network IOCs:**
+    *   **C2 Servers (Observed in the last 16 versions):** (Note: These are from a specific timeframe and could be dynamically changing)
+        *   185.10.68.29
+        *   62.77.156.103
+    *   **Ports:** 53, 443, 217, 50940
+*   **File Hashes (Sample based):**
+    *   097c29d649ccf13c478689fdfc36ed
+    *   8d646789c
+    *   fbc646789c
+*   **Strings/Text:**
+    *   “The Magical MysteryTourIsComingToTakeYouAway!” (A Beatles reference, potentially used as a key)
+    *   “хoлoднo в дoмe нaнa в тyкpикa мoм дpoвнeн нa дoгтepия” (Russian text - "It's cold in the house, dad in a jacket, mom drowns her daughter in the stove!")
+    *  “HELLO 0.12 0.12”
+*   **Registry Keys/System Settings:**  (Not directly observed in these images, but potential indicators of persistence mechanisms)
+*   **ELF Header Modification:**  Manipulated ELF headers to avoid detection. (Specific offset values mentioned)
+
+**IV. Behavior Analysis**
+
+*   **ELF Header Manipulation:**  The author modified the ELF header, potentially to adjust entry point or other metadata, making it more difficult for signature-based detection.
+*   **Encryption Routine:** Decryption routines are implemented to obfuscate commands and data transmitted.
+*   **TLS Bug (Version 0.12):** A known bug existed in version 0.12 during the TLS handshake, indicating potential weaknesses and vulnerabilities. The "resolving and connect first" method to establish a connection with C2 was flawed.
+*   **Command Verification:**  The malware verifies received instructions using a signature check, indicating an attempt to prevent unauthorized modification of its operation.
+*   **Key Derivation:** It seems like the encrypted keys are derived from a known string "The Magical MysteryTourIsComingToTakeYouAway!” and a secondary string from the Russian translation.
+
+**V. Mitigation and Recommendations**
+
+*   **Network Monitoring:** Monitor network traffic for connections to the identified C2 servers and associated ports.
+*   **Signature Updates:** Update signature-based detection systems with signatures for Ewdoor variants.
+*   **Behavioral Analysis:** Implement behavioral analysis tools to detect suspicious process activity and network communication patterns.
+*   **Vulnerability Scanning:** Scan Linux systems for potential vulnerabilities that could be exploited for Ewdoor infection.
+*   **User Awareness:** Educate users about phishing and other social engineering techniques that could be used to deliver the malware.
+*   **Incident Response:** Develop and test incident response plans to address Ewdoor infections promptly.
+
+**VI. Attribution (Limited)**
+
+*   **Author Skillset:**  Demonstrates a high level of expertise in Linux system administration, kernel manipulation, and cryptography.
+*   **Possible Motivation:**  Likely used for targeted attacks. The use of Russian text suggests potential connection to Russian-speaking threat actors. The Beatles reference is a curious and potentially a signature of the author.
+
+**VII. Conclusion**
+
+Ewdoor represents a significant threat due to its sophistication and ability to evade detection.  Continuous monitoring, proactive threat hunting, and a layered defense strategy are crucial for mitigating the risks posed by this malware. The ongoing evolution of Ewdoor, particularly with new C2 server addresses and encryption techniques, requires constant vigilance.
+
+**Disclaimer:** This CTIS is based solely on the provided document images. A full assessment would require a live malware sample for dynamic analysis.

@@ -1,0 +1,7 @@
+CATHARINA correctly read the visible entries, especially the presence of **NORTH\Domain Admins** and **SEVENKINGDOMS\Enterprise Admins** with **Custom** permissions on the **Default Domain Policy**. However, it completely missed the **core security issue** from the ground truth: **external forest administrative groups retain privileged access in essos.local, breaking the forest security boundary and making Essos dependent on the security of those external forests**.
+
+Instead, it focused on **Authenticated Users = Read**, which is not the main finding and is normal/expected in many GPO contexts. Its remediation is therefore largely aimed at the wrong problem, and even recommends removing Authenticated Users, which is not the key fix here. It does mention that compromise of Domain Admins/Enterprise Admins could be dangerous, but it does not connect this to the **cross-forest trust boundary violation**.
+
+This is not a total failure because it noticed the external admin groups and classified the setup as risky, but it missed the primary flaw and gave misdirected remediation.
+
+SCORE: 2

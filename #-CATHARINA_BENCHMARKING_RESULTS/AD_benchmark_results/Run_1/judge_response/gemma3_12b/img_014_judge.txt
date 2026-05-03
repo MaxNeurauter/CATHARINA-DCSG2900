@@ -1,0 +1,5 @@
+CATHARINA’s response is a clear miss. The screenshot shows the **Delegation** tab of the **Default Domain Policy** in `essos.local`, where **external administrative groups** — `NORTH\Domain Admins` and `SEVENKINGDOMS\Enterprise Admins` — have **Custom** permissions on a GPO in another forest. The ground truth issue is that **administrative privileges from external forests are retained inside this forest**, breaking the **forest security boundary** and making `essos.local` dependent on the security of those external environments.
+
+Instead, the model hallucinated a different screen/state entirely: it talked about **Security Filtering**, **Denied Authenticated Users**, and **Applied Domain Users**, none of which are shown. That directly contradicts the visible image data and misses the core AD trust / cross-forest admin delegation risk.
+
+SCORE: 1

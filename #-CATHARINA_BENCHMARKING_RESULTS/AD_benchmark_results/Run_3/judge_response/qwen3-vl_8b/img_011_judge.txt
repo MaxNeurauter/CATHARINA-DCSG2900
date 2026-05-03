@@ -1,0 +1,11 @@
+CATHARINA identified the main issue correctly: non-admin users have full control over the GPO, including `NORTH\samwell.tarly`, which matches the ground truth. It also recognized the privilege-escalation risk via malicious GPO modification.
+
+However, it missed some important precision:
+- The ground truth specifically emphasizes that the GPO is linked at the root of `north.sevenkingdoms.local`, so changes affect all users and computers in scope. CATHARINA did not clearly state this domain-wide blast radius.
+- It introduced `NORTH\vagrant` as an example alongside Samwell; while present in the screenshot, the ground truth centers on Samwell specifically.
+- It overemphasized secondary points like security filtering and “Enforced,” which are not the core vulnerability here.
+- The remediation is mostly good, but recommending “Enforce the GPO” is unnecessary and potentially misleading for this finding.
+
+Overall: correct core finding, decent attack path, but not as technically exact or tightly aligned to the true impact/remediation as it should be.
+
+SCORE: 4

@@ -1,0 +1,5 @@
+CATHARINA failed to identify the actual issue shown in the screenshot. The image clearly shows the **Delegation** tab with **“Trust this user for delegation to any service (Kerberos only)”** selected, which is **Unconstrained Delegation**. That is the core vulnerability in the ground truth.
+
+Instead, the model hallucinated a different setting on the **Account** tab (“Account is sensitive” unchecked), which is not what the image is showing. It also provided an unrelated attack path about Kerberoasting and monitoring, and the remediation is for the wrong issue. This matches the failure condition because it describes settings not present in the provided image and misses a critical vulnerability.
+
+SCORE: 1

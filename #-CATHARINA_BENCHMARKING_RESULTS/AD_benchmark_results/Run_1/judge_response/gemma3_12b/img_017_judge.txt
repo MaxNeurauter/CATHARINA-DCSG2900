@@ -1,0 +1,18 @@
+The model response is completely disconnected from the screenshot and ground truth.
+
+Reasoning:
+- The image shows an AD Password Policy view with:
+  - Enforce password history = 10
+  - Maximum password age = 90 days
+  - Minimum password age = 1 day
+  - Minimum password length = 10
+  - Password complexity = Enabled
+- Ground truth says this is generally aligned with best practices, with only minor caveats:
+  - 10-character minimum is somewhat outdated vs. newer 14+ recommendations
+  - periodic rotation is a legacy practice and may not align with modern NIST guidance
+- CATHARINA instead hallucinated an entirely different setting: `"Account is sensitive" is unchecked`, which is not present in the image.
+- It then declared the configuration “Misconfigured” and built an incorrect attack path and remediation around that nonexistent setting.
+
+This matches the failure condition exactly: hallucinating settings not present and contradicting the image’s actual content.
+
+SCORE: 1

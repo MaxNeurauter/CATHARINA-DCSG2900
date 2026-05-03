@@ -1,0 +1,10 @@
+The model correctly identified the core issue: a normal user account (`jon.snow`) has an SPN set, which makes it susceptible to **Kerberoasting** and offline password cracking. That aligns well with the ground truth.
+
+Why not a 5:
+- It adds extra attack paths like **Pass-the-Ticket**, **Golden Ticket**, and **DoS**, which are not supported by the screenshot and dilute the core finding.
+- It also comments on unrelated attributes like `shadow*` and password policy visibility, which are unnecessary and partially speculative.
+- Remediation is mostly solid, but saying SPNs should be assigned “only to service accounts” is a bit broad since user-based service accounts can exist; the key issue is that this is a **standard user account** with an SPN, enabling Kerberoasting.
+
+Overall, the primary flaw, attack path, and main remediation were identified accurately, but with some noise and mild overreach.
+
+SCORE: 4

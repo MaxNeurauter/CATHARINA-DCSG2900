@@ -1,0 +1,7 @@
+CATHARINA partially recognized that excessive permissions are dangerous, but it failed to identify the specific core flaw shown in the image: **the user `stannis.baratheon` and the non-admin group `AcrossTheNarrowSea` both have `Full control` over the `KINGSLANDING` computer object**. That is the key issue in the ground truth.
+
+It stayed generic, speculated about `Authenticated Users` and `SELF`, and did not clearly state that compromise of either principal would effectively grant administrative control over that computer object. The remediation was also generic rather than specifically removing those improper `Full control` ACEs.
+
+This is not a total failure because it did notice broad/full-control permissions as risky, but it missed the exact vulnerable principals and the precise impact.
+
+SCORE: 3

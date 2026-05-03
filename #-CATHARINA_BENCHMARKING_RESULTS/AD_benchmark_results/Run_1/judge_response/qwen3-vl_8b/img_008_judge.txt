@@ -1,0 +1,5 @@
+CATHARINA missed the primary vulnerability shown in the screenshot. The ground truth is explicit: **AcrossTheNarrowSea** (a non-admin group) and **stannis.baratheon** (a user) both have **Full control** on the **KINGSLANDING** computer object. That is the core issue because compromise of either principal grants effective full administrative control over that object.
+
+Instead, the model focused on **Pre-Windows 2000 Compatible Access**, which is not the main finding here. It also ignored the clearly visible dangerous ACEs and proposed remediation that is not appropriate for the actual issue. This is a major miss of the central AD ACL misconfiguration.
+
+SCORE: 1

@@ -1,0 +1,7 @@
+The model does notice the relevant issue: **Authenticated Users** have dangerous write permissions such as **Enable per-user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**, which aligns with the ground truth.
+
+However, it **misidentifies the primary flaw** by calling the **Deny Delete for Everyone** the “most critical issue,” which is not the core vulnerability in the screenshot. It also adds speculative attack paths like **Kerberoasting/AS-REP roasting** that are not grounded in the image. Some remediation is also off, especially suggesting replacing with **Domain Users instead of Authenticated Users**, whereas the ground truth says these users should ideally have **read-only** access.
+
+So this is better than generic recognition, but it misses the central finding and over-focuses on unrelated issues.
+
+SCORE: 2

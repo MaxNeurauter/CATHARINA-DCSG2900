@@ -1,0 +1,7 @@
+CATHARINA’s response matches the ground truth very well. It correctly identifies the selected setting as **“Trust this user for delegation to any service (Kerberos only)”**, names it as **Unconstrained Delegation**, and explains the key security consequence: **a user’s TGT can be captured/stored and abused for impersonation, lateral movement, and privilege escalation**.  
+
+Its remediation is also strong and technically appropriate: disable delegation unless needed, or move to **constrained delegation** if absolutely necessary.  
+
+Minor issue: it says an attacker can “capture the user’s Kerberos TGT” from a compromised service, which is broadly correct, though the ground truth more specifically emphasizes that TGTs are stored in memory on the delegated system. That is not a meaningful miss. Overall this is precise, aligned, and does not hallucinate unsupported details.
+
+SCORE: 5

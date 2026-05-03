@@ -1,0 +1,5 @@
+CATHARINA correctly noticed the relevant setting is unchecked and marked it as a misconfiguration. However, it missed the core technical risk from the ground truth: this setting is about preventing delegation abuse and protecting Kerberos tickets for high-value users on compromised hosts. Instead, it incorrectly focused on Kerberoasting, which is not the main issue here. It also added weak/inaccurate remediation like “Key Version policies,” which is not the proper fix for this finding.
+
+Because it identified the right checkbox but explained the wrong attack path, this is only partially correct.
+
+SCORE: 3

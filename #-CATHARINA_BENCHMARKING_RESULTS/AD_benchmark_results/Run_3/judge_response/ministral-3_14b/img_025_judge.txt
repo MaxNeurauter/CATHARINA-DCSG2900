@@ -1,0 +1,5 @@
+CATHARINA’s assessment is the opposite of the ground truth. The screenshot shows a fairly standard AD user ACL: entries like **Everyone: Change password** and **SELF: Change password** are normal for user objects and do **not** mean any user can reset the account password arbitrarily. It also wrongly assumes **Authenticated Users: Special** implies dangerous write access, which is not supported by the image. 
+
+The tool hallucinates a critical vulnerability, invents attack paths not evidenced by the screenshot, and even recommends incorrect remediation such as removing standard ACEs and adding deny rules. Since the ground truth says the object follows best practices and no unauthorized principals are present, this is a clear failure.
+
+SCORE: 1

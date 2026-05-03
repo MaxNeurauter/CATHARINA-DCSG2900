@@ -1,0 +1,57 @@
+Image Analyzed: img_014.png
+Model Used: qwen3-vl:8b
+Time Taken: 136.54 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### Observation  
+The image displays the **Permissions tab** for the **Default Domain Policy GPO** (Group Policy Object) in the `north.sevenkingdoms.local` domain. Key settings include:  
+- **`Authenticated Users`**: Granted "Read (from Security Filtering)" permissions (standard for read access to the GPO).  
+- **`Domain Admins (NORTH\Domain Admins)`**: Granted "Custom" permissions (expected for domain administrators to manage domain-level GPOs).  
+- **`Enterprise Admins (SEVENKINGDOMS\Enterprise Admins)`**: Granted "Custom" permissions (unexpected for a domain-level GPO).  
+- **`ENTERPRISE DOMAIN CONTROLLERS`**: Granted "Read" permissions (standard for domain controllers to apply GPOs).  
+
+---
+
+### Assessment  
+**Misconfigured**  
+The presence of the **`Enterprise Admins`** group with "Custom" permissions on a **domain-level GPO** is a misconfiguration. By design, **domain-level GPOs (like "Default Domain Policy") should only be managed by `Domain Admins`**, not `Enterprise Admins` (a forest-wide group). Enterprise Admins are intended for forest-wide policies (e.g., `Default Domain Policy` in an enterprise context is not a forest-wide policy). This violates security best practices, as it grants unnecessary access to a domain-specific GPO, risking unauthorized modifications.  
+
+---
+
+### Attack Path  
+**Privilege Escalation**  
+An attacker who compromises an `Enterprise Admin` account (e.g., via credential theft or phishing) could **modify the Default Domain Policy GPO** to:  
+- Add malicious permissions (e.g., granting a non-admin user `Domain Admin` access).  
+- Inject malicious scripts or policies (e.g., `PowerShell` execution rights) that grant lateral movement or persistence.  
+This violates the principle of least privilege, as `Enterprise Admins` should not manage domain-specific policies.  
+
+**Technical Impact**:  
+- **Unauthorized GPO modifications**: Attackers can enforce policies that elevate privileges (e.g., via `GPO`-based `Domain Admin` grants).  
+- **Lateral movement**: Malicious GPOs can propagate across the domain (e.g., via `Security Filtering`), enabling attacker escalation to `Domain Admin` privileges.  
+
+---
+
+### Remediation  
+To fix this misconfiguration, **remove the `Enterprise Admins` group from the GPO permissions list**:  
+
+1. **Open Group Policy Management Console (GPMC)**:  
+   - Navigate to `north.sevenkingdoms.local` → `Group Policy Objects` → `Default Domain Policy`.  
+
+2. **Edit Permissions**:  
+   - Right-click `Default Domain Policy` → **Permissions** → **Advanced**.  
+   - Select `Enterprise Admins (SEVENKINGDOMS\Enterprise Admins)` in the **Group or user names** list.  
+   - Click **Remove** → **OK**.  
+
+3. **Verify Permissions**:  
+   - Ensure only `Domain Admins` (and `Domain Controllers`, if needed) retain access.  
+   - Confirm **"Edit"** and **"Apply"** permissions are granted only to authorized groups.  
+
+4. **Apply Changes**:  
+   - Click **Apply** → **OK**.  
+   - Test permissions via **Group Policy Management Editor** to validate GPO access control.  
+
+**Note**: Always review permissions for other GPOs (e.g., `Default Domain Policy`) to ensure no unintended `Enterprise Admins` access exists.  
+
+This fix aligns with **least-privilege principles** and prevents unauthorized GPO manipulation by `Enterprise Admins`.
+==================================================

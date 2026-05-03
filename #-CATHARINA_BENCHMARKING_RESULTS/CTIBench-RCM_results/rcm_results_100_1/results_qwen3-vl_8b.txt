@@ -1,0 +1,245 @@
+model tested: qwen3-vl:8b
+total questions: 100
+correct answers: 54
+correct percentage: 54.00%
+total time used: 20814.14s
+time per question: 208.14s
+--------------------------------------------------
+WRONG ANSWERS LIST:
+
+Description: IBM OpenPages with Watson 8.3 and 9.0 could provide weaker than expected security in a OpenPages environment using Native authentication. If OpenPages is using Native authentication an attacker with access to the OpenPages database could through a series of specially crafted steps could exploit this weakness and gain unauthorized access to other OpenPages accounts. IBM X-Force ID: 262594.
+Expected: CWE-257 | LLM Answered: The CVE describes a vulnerability where attackers with database access can exploit Native authentication in IBM OpenPages to gain unauthorized access to other accounts through crafted steps. This indicates a failure to properly protect authentication credentials or session data, allowing attackers to extract or manipulate sensitive information (e.g., user credentials) from the database. The core issue is the exposure of authentication-related data via an unprotected channel (the database), enabling credential compromise and unauthorized access. While CWE-502 (Authentication Bypass by Session Fixation) is sometimes associated with authentication flaws, this scenario specifically involves **database access leading to credential exposure**, which aligns with CWE-200 (Information Exposure Through an Unprotected Channel). The vulnerability directly enables attackers to access sensitive authentication data (e.g., passwords or tokens) stored in the database, violating confidentiality and facilitating account takeover.
+
+200
+--------------------
+Description: Out-of-bounds Write vulnerabilities in svc1td_vld_plh_ap of libsthmbc.so prior to SMR Feb-2024 Release 1 allows local attackers to trigger buffer overflow.
+Expected: CWE-787 | LLM Answered: The CVE description specifies an "Out-of-bounds Write" vulnerability that allows local attackers to trigger a buffer overflow. This directly corresponds to CWE-120, which covers buffer overflows where data is written beyond the allocated buffer boundaries, leading to memory corruption or arbitrary code execution. While the vulnerability is specifically an out-of-bounds write (a subset of buffer overflows), CWE-120 is the standard and most appropriate mapping for buffer overflow issues, as it encompasses both read and write scenarios without requiring specific details about the buffer type (e.g., stack or heap). The description explicitly references "buffer overflow," aligning with CWE-120's definition.
+
+120
+--------------------
+Description: There is a local privilege escalation vulnerability of ZTE's ZXCLOUD iRAI.Attackers with regular user privileges can create a fake process, and to escalate local privileges.
+Expected: CWE-269 | LLM Answered: nan
+--------------------
+Description: An information disclosure flaw was found in ansible-core due to a failure to respect the ANSIBLE_NO_LOG configuration in some scenarios. Information is still included in the output in certain tasks, such as loop items. Depending on the task, this issue may include sensitive information, such as decrypted secret values.
+Expected: CWE-116 | LLM Answered: The vulnerability involves the disclosure of sensitive information (e.g., decrypted secrets) through Ansible's output due to improper handling of the `ANSIBLE_NO_LOG` configuration. This occurs when the application fails to suppress logging of sensitive data in specific scenarios (e.g., loop items), resulting in unauthorized exposure of information. The core issue is the unintended leakage of confidential data via logs, which aligns with the definition of information exposure. While other CWEs like CWE-326 (Insecure Storage) or CWE-502 (Insufficiently Protected Credentials) might seem relevant, they focus on storage or credential-specific risks. Here, the flaw is fundamentally about the exposure of sensitive information through an insecure logging channel, making CWE-200 the most precise match.  
+
+CWE-200
+--------------------
+Description: EDK2 is susceptible to a vulnerability in the Tcg2MeasurePeImage() function, allowing a user to trigger a heap buffer overflow via a local network. Successful exploitation of this vulnerability may result in a compromise of confidentiality, integrity, and/or availability.
+Expected: CWE-119 | LLM Answered: nan
+--------------------
+Description: Nginx-UI is a web interface to manage Nginx configurations. It is vulnerable to arbitrary command execution by abusing the configuration settings. The `Home > Preference` page exposes a list of system settings such as `Run Mode`, `Jwt Secret`, `Node Secret` and `Terminal Start Command`. While the UI doesn't allow users to modify the `Terminal Start Command` setting, it is possible to do so by sending a request to the API. This issue may lead to authenticated remote code execution, privilege escalation, and information disclosure. This vulnerability has been patched in version 2.0.0.beta.9.
+Expected: CWE-77 | LLM Answered: nan
+--------------------
+Description: An origin validation vulnerability in the Trend Micro Apex One security agent could allow a local attacker to escalate privileges on affected installations.  Please note: an attacker must first obtain the ability to execute low-privileged code on the target system in order to exploit this vulnerability.  This vulnerability is similar to, but not identical to, CVE-2023-47194.
+Expected: CWE-346 | LLM Answered: nan
+--------------------
+Description: Exposure of Sensitive Information to an Unauthorized Actor vulnerability in WPMU DEV Defender Security – Malware Scanner, Login Security & Firewall.This issue affects Defender Security – Malware Scanner, Login Security & Firewall: from n/a through 4.1.0.
+Expected: CWE-532 | LLM Answered: The CVE describes a vulnerability where sensitive information is disclosed to unauthorized actors due to improper access controls or data handling within the WPMU DEV Defender Security plugins. This directly aligns with **CWE-200 (Information Exposure)**, which encompasses the unauthorized disclosure of sensitive data (e.g., credentials, personal information, or system details) to actors who should not have access. The description explicitly states "Exposure of Sensitive Information to an Unauthorized Actor," matching CWE-200's core definition. While other CWEs (e.g., CWE-203 for unprotected resources) might be tangentially related, the primary and most precise mapping is CWE-200, as the vulnerability centers on the *exposure* itself rather than a specific mechanism like misconfigured APIs or insecure storage.  
+
+CWE-200
+--------------------
+Description: A vulnerability was found in code-projects Online Faculty Clearance 1.0. It has been declared as critical. Affected by this vulnerability is an unknown functionality of the file /production/designee_view_status.php of the component HTTP POST Request Handler. The manipulation of the argument haydi leads to sql injection. The attack can be launched remotely. The exploit has been disclosed to the public and may be used. The associated identifier of this vulnerability is VDB-250567.
+Expected: CWE-89 | LLM Answered: nan
+--------------------
+Description: Versions of the package network before 0.7.0 are vulnerable to Arbitrary Command Injection due to use of the child_process exec function without input sanitization. If (attacker-controlled) user input is given to the mac_address_for function of the package, it is possible for the attacker to execute arbitrary commands on the operating system that this package is being run on.
+Expected: CWE-77 | LLM Answered: nan
+--------------------
+Description: A vulnerability classified as problematic has been found in EFS Easy File Sharing FTP 3.6. This affects an unknown part of the component Login. The manipulation of the argument password leads to denial of service. It is possible to initiate the attack remotely. The exploit has been disclosed to the public and may be used. The associated identifier of this vulnerability is VDB-251559.
+Expected: CWE-404 | LLM Answered: The vulnerability involves the manipulation of the `password` argument in the Login component, leading to a denial of service (DoS) through remote exploitation. This indicates that the application fails to properly validate or handle input, causing excessive resource consumption (e.g., memory exhaustion or processing delays) when processing maliciously crafted passwords. This aligns with **CWE-400: Uncontrolled Resource Consumption**, as the attacker exploits input validation flaws to deplete system resources, resulting in service disruption. While other CWEs like CWE-798 (Hard-coded Credentials) or CWE-120 (Buffer Overflow) might seem relevant, the description specifically highlights resource exhaustion via input manipulation rather than credential misuse or memory corruption. The public exploit and remote capability further confirm this as a resource consumption issue.
+
+CWE-400
+--------------------
+Description: Ursa is a cryptographic library for use with blockchains. A weakness in the Hyperledger AnonCreds specification that is not mitigated in the Ursa and AnonCreds implementations is that the Issuer does not publish a key correctness proof demonstrating that a generated private key is sufficient to meet the unlinkability guarantees of AnonCreds. The Ursa and AnonCreds CL-Signatures implementations always generate a sufficient private key. A malicious issuer could in theory create a custom CL Signature implementation (derived from the Ursa or AnonCreds CL-Signatures implementations) that uses weakened private keys such that presentations from holders could be shared by verifiers to the issuer who could determine the holder to which the credential was issued. This vulnerability could impact holders of AnonCreds credentials implemented using the CL-signature scheme in the Ursa and AnonCreds implementations of CL Signatures. The ursa project has has moved to end-of-life status and no fix is expected.
+Expected: CWE-829 | LLM Answered: The CVE describes a failure in the AnonCreds implementation where the Issuer does not provide a key correctness proof to verify that generated private keys satisfy the unlinkability guarantees required by the protocol. This omission allows malicious actors to create weakened private keys, enabling credential linkage between holders and issuers. The core issue is the absence of cryptographic verification ensuring keys meet their intended privacy properties, directly violating the protocol's fundamental security requirement. This aligns with CWE-327 ("Insufficient Verification of Cryptographic Key Correctness"), as the vulnerability stems from failing to validate that keys conform to the cryptographic specifications necessary for unlinkability. While other CWEs like 326 (key strength) or 209 (credential protection) might seem relevant, the specific failure here is the *correctness* of keys for privacy guarantees, not their strength or general protection. The CVE explicitly states the weakness is the lack of proof for key correctness, making CWE-327 the precise match.
+
+327
+--------------------
+Description: Qualys Jenkins Plugin for WAS prior to version and including 2.0.11 was identified to be affected by a security flaw, which was missing a permission check while performing a connectivity check to Qualys Cloud Services. This allowed any user with login access to configure or edit jobs to utilize the plugin and configure potential a rouge endpoint via which it was possible to control response for certain request which could be injected with XXE payloads leading to XXE while processing the response data
+Expected: CWE-611 | LLM Answered: The CVE describes a flaw where the Qualys Jenkins Plugin lacked permission checks during connectivity configuration, allowing unauthorized users (with login access) to set up a rogue endpoint. This endpoint could inject XXE payloads, leading to XML External Entity processing vulnerabilities. The core issue is the absence of proper authorization controls for sensitive plugin configuration, enabling attackers to manipulate the system's behavior. While XXE (CWE-117) is the *consequence*, the root cause is the failure to enforce access restrictions, which directly enables the exploitation. This aligns with **CWE-284 (Improper Access Control)**, as the vulnerability stems from insufficient permission checks allowing unauthorized configuration of critical functionality.
+
+CWE-284
+--------------------
+Description: swftools 0.9.2 was discovered to contain a Stack Buffer Underflow via the function dict_foreach_keyvalue at swftools/lib/q.c.
+Expected: CWE-787 | LLM Answered: The CVE description indicates a vulnerability where the software reads beyond the beginning of a buffer (underflow) on the stack, specifically in the `dict_foreach_keyvalue` function. This is a classic example of improper buffer validation leading to unauthorized memory access. The appropriate CWE is CWE-134: Buffer Underflow, as it directly addresses the weakness of reading past the start of a buffer without sufficient bounds checking. While the vulnerability occurs on the stack, CWE-134 encompasses both stack and heap-based underflows, making it the precise match. CWE-121 (Stack-based Buffer Overflow) is incorrect because it pertains to overflows (writing beyond the buffer), not underflows.
+
+134
+--------------------
+Description: In the Linux kernel, the following vulnerability has been resolved:  netfilter: nfnetlink_osf: fix possible bogus match in nf_osf_find()  nf_osf_find() incorrectly returns true on mismatch, this leads to copying uninitialized memory area in nft_osf which can be used to leak stale kernel stack data to userspace.
+Expected: CWE-908 | LLM Answered: nan
+--------------------
+Description: In the Linux kernel, the following vulnerability has been resolved:  i2c: validate user data in compat ioctl  Wrong user data may cause warning in i2c_transfer(), ex: zero msgs. Userspace should not be able to trigger warnings, so this patch adds validation checks for user data in compact ioctl to prevent reported warnings
+Expected: CWE-754 | LLM Answered: The vulnerability involves the Linux kernel's i2c subsystem failing to validate user-supplied data in the `compat_ioctl` interface. Specifically, it does not check for invalid parameters (e.g., zero message count) before passing them to `i2c_transfer()`, which can trigger warnings. This stems from insufficient validation of input from untrusted userspace, allowing malicious input to cause unintended behavior (warnings) that could potentially lead to further issues like denial-of-service or information leakage. The patch resolves this by adding explicit validation checks to ensure user data meets expected constraints.
+
+The appropriate CWE is **CWE-20: Improper Input Validation**. This is because the core issue is the absence of validation for user-provided data (the number of messages in the i2c transfer), which violates the principle of validating all inputs from external sources. Without such checks, the kernel processes invalid data, leading to warnings and potential system instability. This aligns directly with CWE-20, which covers flaws where input is not properly checked for validity before being used.
+
+CWE-20
+--------------------
+Description: In mp3 decoder, there is a possible out of bounds write due to a race condition. This could lead to remote escalation of privilege with no additional execution privileges needed. User interaction is needed for exploitation. Patch ID: ALPS08441369; Issue ID: ALPS08441369.
+Expected: CWE-787 | LLM Answered: nan
+--------------------
+Description: D-Link Go-RT-AC750 GORTAC750_A1_FW_v101b03 contains a stack-based buffer overflow via the function genacgi_main. This vulnerability allows attackers to enable telnet service via a specially crafted payload.
+Expected: CWE-787 | LLM Answered: The vulnerability described is a stack-based buffer overflow in the `genacgi_main` function, where an attacker can send a specially crafted payload to overflow a stack buffer. This directly aligns with CWE-121, as it involves writing beyond the allocated bounds of a stack-based buffer, potentially corrupting adjacent memory and enabling arbitrary code execution (e.g., enabling telnet service). While the consequence (enabling telnet) may relate to other weaknesses (e.g., CWE-200 for insecure service configuration), the core technical flaw is the buffer overflow itself, which is precisely defined by CWE-121.  
+
+CWE-121
+--------------------
+Description: IBM Operational Decision Manager 8.10.3, 8.10.4, 8.10.5.1, 8.11, 8.11.0.1, 8.11.1 and 8.12.0.1 is susceptible to remote code execution attack via JNDI injection when passing an unchecked argument to a certain API. IBM X-Force ID: 279145.
+Expected: CWE-74 | LLM Answered: The CVE describes a vulnerability where an unchecked user-supplied argument to an API allows JNDI injection, enabling remote code execution. JNDI injection occurs when malicious input is used to manipulate the JNDI lookup string, leading to arbitrary code execution. This directly aligns with **CWE-77 (Improper Neutralization of Special Characters in a JNDI Lookup String)**, as the root cause is the failure to properly sanitize or validate input passed to JNDI operations, allowing attackers to inject malicious strings that trigger remote code execution. While the impact is RCE (CWE-434), the core vulnerability is the JNDI injection flaw itself, which is explicitly categorized under CWE-77.  
+
+77
+--------------------
+Description: Micronaut Framework is a modern, JVM-based, full stack Java framework designed for building modular, easily testable JVM applications with support for Java, Kotlin and the Groovy language. Enabled but unsecured management endpoints are susceptible to drive-by localhost attacks. While not typical of a production application, these attacks may have more impact on a development environment where such endpoints may be flipped on without much thought. A malicious/compromised website can make HTTP requests to `localhost`. Normally, such requests would trigger a CORS preflight check which would prevent the request; however, some requests are "simple" and do not require a preflight check. These endpoints, if enabled and not secured, are vulnerable to being triggered. Production environments typically disable unused endpoints and secure/restrict access to needed endpoints. A more likely victim is the developer in their local development host, who has enabled endpoints without security for the sake of easing development. This issue has been addressed in version 3.8.3. Users are advised to upgrade.
+Expected: CWE-610 | LLM Answered: The CVE describes unsecured management endpoints in Micronaut Framework that can be triggered via HTTP requests to `localhost`, enabling drive-by attacks. The core issue is the absence of authentication or authorization mechanisms for these endpoints, allowing unauthorized access (e.g., from a compromised website) to execute operations on the local host. While CORS preflight checks typically block such requests, "simple" requests bypass this, exploiting the lack of access control. This aligns with **CWE-284 (Improper Access Control)**, as the vulnerability stems from failing to restrict access to sensitive management endpoints, permitting unauthorized actors to trigger them without proper authorization. The context (development environments enabling endpoints without security) further emphasizes the failure to enforce access controls, making it a classic case of improper access control rather than data exposure or injection flaws.
+
+CWE-284
+--------------------
+Description: A vulnerability was found in FreeFloat FTP Server 1.0 and classified as problematic. Affected by this issue is some unknown functionality of the component SIZE Command Handler. The manipulation leads to denial of service. The attack may be launched remotely. The exploit has been disclosed to the public and may be used. VDB-250718 is the identifier assigned to this vulnerability.
+Expected: CWE-404 | LLM Answered: nan
+--------------------
+Description: XWiki Platform is a generic wiki platform offering runtime services for applications built on top of it. A user able to attach a file to a page can post a malformed TAR file by manipulating file modification times headers, which when parsed by Tika, could cause a denial of service issue via CPU consumption. This vulnerability has been patched in XWiki 14.10.18, 15.5.3 and 15.8 RC1.
+Expected: CWE-400 | LLM Answered: nan
+--------------------
+Description: Memory corruption while running NPU, when NETWORK_UNLOAD and (NETWORK_UNLOAD or NETWORK_EXECUTE_V2) commands are submitted at the same time.
+Expected: CWE-416 | LLM Answered: The CVE describes a scenario where concurrent execution of specific commands (NETWORK_UNLOAD and NETWORK_EXECUTE_V2) leads to memory corruption due to improper synchronization of shared resources. This is a classic race condition where the system fails to enforce correct ordering or mutual exclusion during critical operations, allowing conflicting memory accesses to occur. While memory corruption (CWE-120) is a symptom, the root cause is the race condition itself, which violates the principle of atomicity in concurrent operations. CWE-362 specifically addresses race conditions that can lead to security vulnerabilities, such as memory corruption, by failing to handle timing issues in shared resource access.  
+
+CWE-362
+--------------------
+Description: Hyperledger Aries Cloud Agent Python (ACA-Py) is a foundation for building decentralized identity applications and services running in non-mobile environments. When verifying W3C Format Verifiable Credentials using JSON-LD with Linked Data Proofs (LDP-VCs), the result of verifying the presentation `document.proof` was not factored into the final `verified` value (`true`/`false`) on the presentation record. The flaw enables holders of W3C Format Verifiable Credentials using JSON-LD with Linked Data Proofs (LDPs) to present incorrectly constructed proofs, and allows malicious verifiers to save and replay a presentation from such holders as their own. This vulnerability has been present since version 0.7.0 and fixed in version 0.10.5.
+Expected: CWE-347 | LLM Answered: nan
+--------------------
+Description: Dell BIOS contains a Signed to Unsigned Conversion Error vulnerability. A local authenticated malicious user with admin privileges could potentially exploit this vulnerability, leading to denial of service.
+Expected: CWE-681 | LLM Answered: The CVE describes a vulnerability where a signed integer value is incorrectly converted to an unsigned integer, leading to an integer overflow or wraparound. This conversion error causes the system to misinterpret the value (e.g., a negative signed integer becoming a large positive unsigned value), potentially triggering a denial of service. This aligns with **CWE-20 (Integer Overflow or Wraparound)**, as the core issue is the improper handling of integer types during conversion, resulting in unexpected behavior and system instability. The specific mechanism of signed-to-unsigned conversion is a well-known trigger for integer overflow vulnerabilities.
+
+CWE-20
+--------------------
+Description: A stack based buffer overflow exists in Delta Electronics Delta Industrial Automation DOPSoft when parsing the wLogTitlesTimeLen field of a DPS file. A remote, unauthenticated attacker can exploit this vulnerability by enticing a user to open a specially crafted DPS file to achieve remote code execution.
+Expected: CWE-120 | LLM Answered: The CVE describes a stack-based buffer overflow vulnerability in the parsing of the `wLogTitlesTimeLen` field within a DPS file. This occurs when the application writes data beyond the bounds of a stack-allocated buffer during file processing. The attacker exploits this by crafting a malicious DPS file to trigger the overflow, leading to remote code execution.  
+
+**CWE Mapping Justification**:  
+- The core issue is a **stack-based buffer overflow**, which directly aligns with **CWE-121** (Stack-based Buffer Overflow).  
+- CWE-121 specifically covers vulnerabilities where data written to a stack buffer exceeds its allocated size, causing memory corruption and potential code execution.  
+- While CWE-119 (Buffer Overflow) is a broader category, the CVE explicitly specifies "stack-based," making CWE-121 the precise match. The context of file parsing (DPS file handling) is a common trigger for this weakness but does not alter the fundamental flaw.  
+
+CWE-121
+--------------------
+Description: In Engineer Mode, there is a possible out of bounds write due to a missing bounds check. This could lead to local escalation of privilege with System execution privileges needed. User interaction is not needed for exploitation. Patch ID: ALPS08282249; Issue ID: ALPS08282249.
+Expected: CWE-787 | LLM Answered: The CVE description describes an out-of-bounds write caused by a missing bounds check in Engineer Mode, leading to local privilege escalation. This is a classic buffer overflow vulnerability where the software fails to validate input within allocated memory boundaries, allowing malicious data to overwrite adjacent memory. The root cause is the absence of proper bounds checking, which directly aligns with **CWE-121 (Buffer Overflow)**. While the consequence (privilege escalation) is significant, the core weakness is the uncontrolled memory write due to insufficient bounds validation. This is distinct from broader categories like CWE-119 (Improper Restriction of Operations within Bounds), as buffer overflows specifically involve memory buffer manipulation. The vulnerability's nature—missing bounds checks leading to memory corruption—firmly places it under CWE-121.
+
+CWE-121
+--------------------
+Description: In video decoder, there is a possible out of bounds read due to improper input validation. This could lead to local denial of service with no additional execution privileges needed
+Expected: CWE-125 | LLM Answered: The vulnerability described is an out of bounds read, which occurs when input data exceeds predefined boundaries, leading to memory corruption or security issues. The description explicitly states "improper input validation" as the cause, but the core issue is the failure to properly define or enforce boundaries for the input data. This directly aligns with CWE-120: **Missing or Insufficiently Defined Boundary Conditions**.
+
+CWE-120 specifically addresses weaknesses where the software does not adequately define or check the boundaries of data (e.g., buffer sizes, array indices), resulting in vulnerabilities like out of bounds reads. While improper input validation (CWE-119) is a broader root cause, the specific manifestation here—out of bounds read—is a direct consequence of boundary condition errors, making CWE-120 the most precise and appropriate mapping.
+
+Justification:  
+- The vulnerability is an out of bounds read, a well-known symptom of boundary condition issues.  
+- The description emphasizes "improper input validation," which often stems from missing boundary checks.  
+- CWE-120 is the standard classification for such flaws in the Common Weakness Enumeration (CWE) taxonomy, whereas CWE-119 is a higher-level root cause that encompasses multiple vulnerabilities (including boundary issues).  
+
+Thus, the appropriate CWE is **CWE-120**.  
+
+CWE-120
+--------------------
+Description: The WP VR WordPress plugin before 8.3.15 does not authorisation and CSRF in a function hooked to admin_init, allowing unauthenticated users to downgrade the plugin, thus leading to Reflected or Stored XSS, as previous versions have such vulnerabilities.
+Expected: CWE-79 | LLM Answered: The vulnerability described involves unauthenticated users being able to downgrade the plugin, which directly stems from **missing authorization checks**. Specifically, the function hooked to `admin_init` (typically intended for authenticated users) lacks proper access control, allowing unauthenticated users to trigger the downgrade action. 
+
+- **CWE-284 (Improper Access Control)** is the most appropriate mapping because:
+  - The core issue is that the software fails to restrict access to the downgrade functionality in a way consistent with security policies (e.g., requiring authentication).
+  - Without authorization checks, unauthenticated users can bypass intended security boundaries and perform privileged actions (downgrading the plugin).
+  - While the description also mentions missing CSRF protection (CWE-352), the downgrade capability is primarily enabled by the lack of authorization. CSRF would be relevant if the function were protected by authorization but vulnerable to CSRF attacks, but here the unauthenticated access is the root cause.
+
+**Why not CWE-352?**  
+- CSRF (CWE-352) involves unauthorized requests from authenticated users (e.g., via forged requests). Here, the vulnerability explicitly involves **unauthenticated users**, so authorization is the primary failure mode. CSRF would not explain how unauthenticated users access the function.
+
+**Conclusion:**  
+The root cause is **CWE-284 (Improper Access Control)**, as the absence of authorization allows unauthenticated users to execute the downgrade. This aligns with the CVE description and standard security practices.  
+
+**Final Answer:**  
+CWE-284 (Improper Access Control)
+--------------------
+Description: A vulnerability was found in Tenda W9 1.0.0.7(4456) and classified as critical. This issue affects the function formQosManage_user of the component httpd. The manipulation of the argument ssidIndex leads to stack-based buffer overflow. The attack may be initiated remotely. The exploit has been disclosed to the public and may be used. The identifier VDB-250709 was assigned to this vulnerability. NOTE: The vendor was contacted early about this disclosure but did not respond in any way.
+Expected: CWE-787 | LLM Answered: The CVE description describes a stack-based buffer overflow caused by improper handling of the `ssidIndex` argument in the `formQosManage_user` function. This is a classic memory corruption vulnerability where an attacker can write beyond the bounds of a stack-based buffer, potentially leading to arbitrary code execution or system compromise. The specific mention of "stack-based buffer overflow" directly aligns with CWE-121, which categorizes this as a fundamental flaw in buffer handling on the stack. While CWE-119 (Buffer Overflow) is a broader category, CWE-121 precisely specifies the stack-based nature of the issue, making it the most accurate match. The remote exploitability and public disclosure further confirm it as a critical weakness rooted in buffer overflow mechanics.
+
+CWE-121
+--------------------
+Description: In Apache Kylin version 2.0.0 to 4.0.3, there is a Server Config web interface that displays the content of file 'kylin.properties', that may contain serverside credentials. When the kylin service runs over HTTP (or other plain text protocol), it is possible for network sniffers to hijack the HTTP payload and get access to the content of kylin.properties and potentially the containing credentials.  To avoid this threat, users are recommended to     *  Always turn on HTTPS so that network payload is encrypted.    *  Avoid putting credentials in kylin.properties, or at least not in plain text.   *  Use network firewalls to protect the serverside such that it is not accessible to external attackers.    *  Upgrade to version Apache Kylin 4.0.4, which filters out the sensitive content that goes to the Server Config web interface.
+Expected: CWE-522 | LLM Answered: The CVE describes a vulnerability where sensitive credentials in `kylin.properties` are exposed via an HTTP-based web interface, allowing network sniffers to capture the data in plain text. The core issue is the transmission of sensitive information (credentials) over an unencrypted channel (HTTP), which violates confidentiality principles. While the presence of credentials in a configuration file might suggest CWE-799 (Hard-coded Credentials), the primary flaw here is the **unencrypted transmission** of sensitive data, not its storage. The recommendations explicitly focus on encrypting the channel (HTTPS) and mitigating exposure during transmission, aligning with CWE-312. This CWE specifically addresses the exposure of sensitive data in cleartext over networks, which is the direct cause of the vulnerability described.
+
+CWE-312
+--------------------
+Description: Dell PowerScale OneFS versions 9.0.0.x through 9.6.0.x contains a missing authentication for critical function vulnerability. A low privileged local malicious user could potentially exploit this vulnerability to gain elevated access.
+Expected: CWE-306 | LLM Answered: The CVE describes a vulnerability where critical functions lack proper authentication, allowing low-privilege local users to escalate privileges. This directly aligns with CWE-284 ("Missing Authentication for Critical Function"), as the absence of authentication for a critical operation enables unauthorized access and privilege escalation. The vulnerability specifically targets functions requiring elevated access, confirming the "critical function" aspect of CWE-284. While CWE-789 ("Missing Authentication for Function") is related, it is broader and less specific to *critical* functions, making CWE-284 the precise match.  
+
+284
+--------------------
+Description: The Debug Log Manager WordPress plugin before 2.3.0 contains a Directory listing vulnerability was discovered, which allows you to download the debug log without authorization and gain access to sensitive data
+Expected: CWE-862 | LLM Answered: The vulnerability described involves unauthorized access to sensitive data (the debug log) via a directory listing, which exposes confidential information without proper authorization. This directly aligns with CWE-400: Unrestricted Access to Sensitive or Critical Information, as the flaw permits attackers to bypass access controls and retrieve sensitive data (the debug log) that should be restricted. While directory listing mechanisms may be involved, the core issue is the lack of authorization for sensitive data access, making CWE-400 the precise match rather than broader categories like CWE-200 (Information Exposure).  
+
+CWE-400
+--------------------
+Description: Vyper is a Pythonic Smart Contract Language for the EVM. There is an error in the stack management when compiling the `IR` for `sha3_64`. Concretely, the `height` variable is miscalculated. The vulnerability can't be triggered without writing the `IR` by hand (that is, it cannot be triggered from regular vyper code). `sha3_64` is used for retrieval in mappings. No flow that would cache the `key` was found so the issue shouldn't be possible to trigger when compiling the compiler-generated `IR`. This issue isn't triggered during normal compilation of vyper code so the impact is low. At the time of publication there is no patch available.
+Expected: CWE-327 | LLM Answered: nan
+--------------------
+Description: In Spring Cloud Contract, versions 4.1.x prior to 4.1.1, versions 4.0.x prior to 4.0.5, and versions 3.1.x prior to 3.1.10, test execution is vulnerable to local information disclosure via temporary directory created with unsafe permissions through the shaded com.google.guava:guava dependency in the org.springframework.cloud:spring-cloud-contract-shade dependency.
+Expected: CWE-732 | LLM Answered: nan
+--------------------
+Description: Exposure of sensitive information in exceptions in ClichHouse's clickhouse-r2dbc, com.clickhouse:clickhouse-jdbc, and com.clickhouse:clickhouse-client versions less than 0.4.6 allows unauthorized users to gain access to client certificate passwords via client exception logs. This occurs when 'sslkey' is specified and an exception, such as a ClickHouseException or SQLException, is thrown during database operations; the certificate password is then included in the logged exception message.
+Expected: CWE-209 | LLM Answered: The CVE describes a vulnerability where sensitive information (client certificate passwords) is exposed in exception logs when exceptions occur during database operations. This occurs because the exception messages include the password when `sslkey` is specified, allowing unauthorized users to access it via logs.  
+
+**Mapping to CWE**:  
+The core issue is the **exposure of sensitive information (passwords) to unauthorized actors** through exception logs. This aligns directly with **CWE-200: Exposure of Sensitive Information to an Unauthorized Actor**, as the vulnerability involves leaking confidential credentials (client certificate passwords) via logs, which can be accessed by anyone with log access (e.g., system administrators, attackers).  
+
+**Justification**:  
+- CWE-200 specifically covers scenarios where sensitive data (like credentials) is disclosed to unauthorized parties.  
+- The CVE explicitly states that the password is included in exception logs, making it accessible to unauthorized users.  
+- While other CWEs (e.g., CWE-502 for insufficiently protected credentials) might seem relevant, the primary flaw here is the **uncontrolled exposure** of sensitive data in logs, not the storage or transmission of credentials. CWE-200 is the most precise match for this logging-based exposure.  
+
+200
+--------------------
+Description: A vulnerability classified as problematic was found in Munsoft Easy Archive Recovery 2.0. This vulnerability affects unknown code of the component Registration Key Handler. The manipulation leads to denial of service. An attack has to be approached locally. The exploit has been disclosed to the public and may be used. The identifier of this vulnerability is VDB-252676. NOTE: The vendor was contacted early about this disclosure but did not respond in any way.
+Expected: CWE-404 | LLM Answered: The CVE describes a denial of service (DoS) vulnerability in the Registration Key Handler component, where local manipulation of unknown code leads to service disruption. While the specific mechanism (e.g., buffer overflow, resource exhaustion) is not explicitly stated, the core issue is the intentional disruption of service via local exploitation. This aligns with **CWE-400 (Other DoS)**, as it represents a general denial of service condition not covered by more specific CWEs like CWE-120 (Buffer Overflow) or CWE-78 (Improper Neutralization). The vulnerability's nature—manipulation leading to service interruption without detailed technical specifics—falls under the umbrella of "Other DoS," which encompasses DoS scenarios not explicitly categorized elsewhere.  
+
+CWE-400
+--------------------
+Description: The WordPress Button Plugin MaxButtons plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the plugin's shortcode(s) in all versions up to, and including 9.7.6 due to insufficient input sanitization and output escaping on user supplied attributes. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. NOTE: This vulnerability was partially fixed in version 9.7.6.
+Expected: CWE-79 | LLM Answered: nan
+--------------------
+Description: The MachineSense application programmable interface (API) is improperly protected and can be accessed without authentication. A remote attacker could retrieve and modify sensitive information without any authentication.
+Expected: CWE-306 | LLM Answered: The CVE description indicates that the MachineSense API lacks authentication, allowing remote attackers to access and modify sensitive information without authorization. This directly corresponds to **CWE-302: Insufficient Authentication**, as the vulnerability stems from the absence of required authentication mechanisms for sensitive resources. The issue is not about flawed authentication implementation (e.g., CWE-287) but rather the complete omission of authentication, enabling unauthorized access and data manipulation. While CWE-200 (Exposure of Sensitive Information) describes the consequence, the root cause is the missing authentication, making CWE-302 the precise mapping.  
+
+CWE-302
+--------------------
+Description: An unsafe reflection vulnerability was identified in GitHub Enterprise Server that could lead to reflection injection. This vulnerability could lead to the execution of user-controlled methods and remote code execution. To exploit this bug, an actor would need to be logged into an account on the GHES instance with the organization owner role. This vulnerability affected all versions of GitHub Enterprise Server prior to 3.12 and was fixed in versions 3.8.13, 3.9.8, 3.10.5, and 3.11.3. This vulnerability was reported via the GitHub Bug Bounty program.
+Expected: CWE-470 | LLM Answered: The CVE describes an unsafe reflection vulnerability where improper use of the reflection API allows attackers to execute user-controlled methods and achieve remote code execution. This directly aligns with **CWE-798 (Use of Reflection API Without Proper Validation)**, as the vulnerability stems from failing to validate or restrict inputs to the reflection API, enabling malicious method invocation. The description explicitly mentions "reflection injection" and "execution of user-controlled methods," which are core characteristics of CWE-798. While other CWEs (e.g., CWE-20 for exception handling) might be tangentially related, the primary root cause is the unsafe reflection usage, making CWE-798 the most precise match.  
+
+CWE-798
+--------------------
+Description: The POPS! Rebel application 5.0 for Android, in POPS! Rebel Bluetooth Glucose Monitoring System, sends unencrypted glucose measurements over BLE.
+Expected: CWE-319 | LLM Answered: The CVE describes the transmission of sensitive health data (glucose measurements) over Bluetooth Low Energy (BLE) without encryption. This directly corresponds to **CWE-312: Cleartext Network Traffic**, as the vulnerability involves sending sensitive information over an unencrypted network channel (BLE), exposing it to potential eavesdropping or interception. While the data is sensitive (aligning with CWE-200), the core issue is the lack of encryption during transmission, which is explicitly covered by CWE-312. No more specific Bluetooth-related CWE exists for this scenario, as BLE is treated as a network protocol under this category.
+
+CWE-312
+--------------------
+Description: A stack based buffer overflow exists in Delta Electronics Delta Industrial Automation DOPSoft when parsing the InitialMacroLen field of a DPS file. A remote, unauthenticated attacker can exploit this vulnerability by enticing a user to open a specially crafted DPS file to achieve remote code execution.
+Expected: CWE-120 | LLM Answered: The CVE description describes a stack-based buffer overflow vulnerability in the parsing of the `InitialMacroLen` field within a DPS file. This occurs when the application fails to properly validate or restrict the size of data written to a stack-based buffer during file processing. The attacker exploits this by crafting a malicious DPS file to trigger the overflow, leading to remote code execution. 
+
+The core weakness is the **uncontrolled writing to a stack-based buffer**, which directly aligns with **CWE-121 (Stack-based Buffer Overflow)**. This CWE specifically covers vulnerabilities where data written to a stack buffer exceeds its allocated size, causing overflows that can corrupt the stack and enable arbitrary code execution. The description explicitly identifies the overflow as stack-based and confirms exploitation via a crafted file, matching CWE-121's criteria. While other CWEs (e.g., CWE-78 for injection flaws) might be tangentially related, the primary and most precise mapping is to CWE-121, as the root cause is the buffer overflow itself.
+
+CWE-121
+--------------------
+Description: There is an illegal memory access vulnerability of ZTE's ZXCLOUD iRAI product.When the vulnerability is exploited by an attacker with the common user permission, the physical machine will be crashed.
+Expected: CWE-863 | LLM Answered: The CVE description describes an illegal memory access vulnerability that causes a physical machine crash when exploited by a common user. This indicates a memory corruption issue where the application accesses memory locations it should not, leading to a crash. The core problem is unauthorized memory access violating bounds or integrity, which is a hallmark of buffer overflow or similar memory corruption flaws. While the description does not explicitly mention buffers, "illegal memory access" is a direct manifestation of CWE-119 (Improper Restriction of Operations within the Bounds of a Memory Buffer), as it encompasses violations like buffer overflows, heap overflows, or stack smashing that cause crashes. The crash outcome aligns with the symptom of memory corruption, and the common user exploitation suggests a low-privilege vulnerability where memory access is improperly constrained. Other CWEs like CWE-120 (Improper Memory Management) are too broad, while CWE-119 specifically targets the bounds violation aspect.  
+
+CWE-119
+--------------------
+Description: The Lana Shortcodes WordPress plugin before 1.2.0 does not validate and escape some of its shortcode attributes before outputting them back in a page/post where the shortcode is embed, which allows users with the contributor role and above to perform Stored Cross-Site Scripting attacks.
+Expected: CWE-79 | LLM Answered: nan
+--------------------
+Description: An Exposure of Resource to Wrong Sphere vulnerability in the Packet Forwarding Engine (PFE) of Juniper Networks Junos OS on MX Series allows an unauthenticated, network-based attacker to bypass the intended access restrictions.  In an Abstracted Fabric (AF) scenario if routing-instances (RI) are configured, specific valid traffic destined to the device can bypass the configured lo0 firewall filters as it's received in the wrong RI context.  This issue affects Juniper Networks Junos OS on MX Series:      *  All versions earlier than 20.4R3-S9;   *  21.2 versions earlier than 21.2R3-S3;   *  21.4 versions earlier than 21.4R3-S5;   *  22.1 versions earlier than 22.1R3;   *  22.2 versions earlier than 22.2R3;   *  22.3 versions earlier than 22.3R2.
+Expected: CWE-668 | LLM Answered: The vulnerability involves an unauthenticated attacker bypassing intended access restrictions (firewall filters) by exploiting improper handling of routing-instance contexts. This occurs when traffic is processed in an unintended routing instance (RI) context, allowing it to bypass security policies designed for specific RIs. The core issue is a failure to enforce proper access controls over resources (firewall filters), enabling unauthorized access to protected resources within the wrong security domain (sphere). This aligns with CWE-284 ("Improper Access Control"), as the system does not restrict access to resources based on context, violating the principle of least privilege and allowing unauthorized resource exposure.
+
+CWE-284
+--------------------
+Description: A vulnerability was found in openBI up to 1.0.8 and classified as critical. This issue affects the function dlfile of the file /application/websocket/controller/Setting.php. The manipulation of the argument phpPath leads to os command injection. The attack may be initiated remotely. The exploit has been disclosed to the public and may be used. The identifier VDB-252473 was assigned to this vulnerability.
+Expected: CWE-78 | LLM Answered: nan
+--------------------

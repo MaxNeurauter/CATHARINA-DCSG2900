@@ -1,0 +1,5 @@
+CATHARINA observed some relevant facts: it noticed the GPO is linked at the domain level and that non-default principals like `NORTH\samwell.tarly` have `Edit settings, delete, modify security`. However, it failed the core task because it did not clearly identify this as the primary vulnerability: a non-administrative user having full control over a domain-linked GPO, which enables domain-wide malicious policy deployment.
+
+Worse, it introduced unrelated attack paths like Kerberoasting and AS-REP Roasting, which are not supported by the screenshot, and then concluded the configuration was `Secure`, directly contradicting the image and ground truth. Per the rubric, calling a critically vulnerable state secure is a failure.
+
+SCORE: 1

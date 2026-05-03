@@ -1,0 +1,5 @@
+CATHARINA should score very low because it missed the actual core issue shown in the screenshot. The ground truth is specific: **Authenticated Users** have dangerous domain-root special permissions to **enable reversible encryption**, **unexpire passwords**, and **set password-not-required**, which allows any authenticated user to weaken other accounts' password security.  
+
+Instead, the model gave a vague ACL review and focused on items like **Replicating Directory Changes** and generic least-privilege concerns. It did not clearly identify the real vulnerability, did not explain the password-downgrade abuse path, and its remediation was generic rather than targeted to removing those exact ACEs from Authenticated Users. This matches **Poor (2)** rather than 1, because it did at least recognize there may be overly permissive permissions, but it missed the primary flaw.
+
+SCORE: 2

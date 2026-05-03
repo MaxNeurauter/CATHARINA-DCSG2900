@@ -1,0 +1,5 @@
+CATHARINA missed the primary finding. The ground truth is very specific: **Authenticated Users** have dangerous write permissions over password-related attributes, including **Enable per user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**. That is the core AD misconfiguration and clearly makes the setup vulnerable.
+
+Instead, the model focused on less relevant permissions like **Replicating Directory Changes** and **Validated Write to Computer Attributes**, and even concluded that it was hard to determine whether the configuration was insecure. That is a significant miss. While it did generally mention least privilege and over-permissive ACLs, it failed to identify the actual risky ACEs shown in the screenshot and did not give the correct remediation: removing those write permissions from **Authenticated Users** so they retain read-only access only.
+
+SCORE: 2

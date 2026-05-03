@@ -1,0 +1,149 @@
+Image Analyzed: img_021.png
+Model Used: ministral-3:14b
+Time Taken: 97.17 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **Observation**
+The provided screenshot from **Active Directory Users and Computers (ADUC)** in the `north.sevenkingdoms.local` domain reveals the following key details:
+
+#### **1. Security Groups (Domain Local & Global)**
+- **AcrossTheSea** (Domain Local) – No description.
+- **Allowed RODC Password Replication Group** – Members can have passwords replicated to Read-Only Domain Controllers (RODCs).
+- **Denied RODC Password Replication Group** – Members **cannot** have passwords replicated to RODCs.
+- **Cert Publishers** – Permitted to publish certificates to the directory.
+- **DNSAdmins** – Can perform dynamic DNS updates on behalf of other clients (e.g., DHCP servers).
+- **Domain Admins** – High-privilege group (designated administrators).
+- **Domain Computers** – All workstations/servers in the domain.
+- **Domain Controllers** – All domain controllers.
+- **Domain Guests** – All domain guests.
+- **Domain Users** – All domain users.
+- **Group Policy Creator Owners** – Can modify Group Policy for the domain.
+- **Key Admins** – Can perform administrative actions on key objects.
+- **Protected Users** – Afforded additional protections against authentication security threats (e.g., Kerberos attacks).
+- **RAS and IAS Servers** – Servers that can access remote access properties of users.
+- **Read-only Domain Controllers** – Read-only domain controllers.
+- **Night Watch** (Global) – No description (potentially a custom group).
+
+#### **2. Users (Potentially Sensitive Accounts)**
+- **Administrator** – Built-in admin account (should be secured).
+- **Guest** – Built-in guest account (should be disabled if unused).
+- **krbtgt** – Kerberos service account (critical for Kerberoasting attacks).
+- **sql_svc** – Likely a service account (should follow least privilege).
+- **vagrant** – Generic user (possibly a test/dev account).
+- **Hodor, jeor.mormont, jon.snow, robb.stark, sansa.stark, arya.stark, brandon.stark, catelyn.stark, eddard.stark, rickon.stark, samwell.tarly** – Likely test users (but some may be active).
+
+#### **3. Notable Observations**
+- **No "Protected Users" group memberships** (empty or missing).
+- **No indication of "Account is sensitive" or "Password never expires" flags** (but this cannot be confirmed without additional details).
+- **No visible use of "Managed Service Accounts" (gMSA) or "Virtual Accounts"** for service accounts like `sql_svc`.
+- **No visible use of "Just-In-Time (JIT) Privileged Access"** for Domain Admins.
+
+---
+
+### **Assessment**
+| **Finding** | **Security Posture** | **Risk Level** |
+|-------------|----------------------|----------------|
+| **Unrestricted Domain Admins** | Misconfigured | High |
+| **Guest account exists** | Misconfigured | Medium |
+| **krbtgt account visible** | Critically Vulnerable (if weak password) | Critical |
+| **No Protected Users group usage** | Misconfigured | High |
+| **No visible least-privilege enforcement for service accounts** | Misconfigured | Medium |
+| **No JIT Privileged Access for admins** | Misconfigured | High |
+| **No visible use of gMSA/virtual accounts** | Misconfigured | Medium |
+
+---
+
+### **Attack Paths & Technical Impact**
+#### **1. Kerberoasting (Critical)**
+- **Attack Vector**: If `krbtgt` has a weak password, attackers can request Service Principal Names (SPNs) for any user (e.g., `sql_svc`) and perform offline AS-REP roasting.
+- **Impact**:
+  - Brute-force the hash to obtain plaintext credentials.
+  - Lateral movement to domain controllers if `sql_svc` has high privileges.
+  - Persistence via Golden Ticket attacks if `krbtgt` is compromised.
+
+#### **2. Privilege Escalation (High)**
+- **Attack Vector**: If `Domain Admins` or `Group Policy Creator Owners` are misused (e.g., via Pass-the-Hash or stolen credentials), attackers gain full domain control.
+- **Impact**:
+  - Full domain takeover.
+  - Installation of backdoors (e.g., via Group Policy).
+
+#### **3. AS-REP Roasting (Medium-High)**
+- **Attack Vector**: If users (e.g., `jeor.mormont`, `arya.stark`) are not marked as **"Account is sensitive and cannot be delegated"**, their Kerberos tickets can be roasted.
+- **Impact**:
+  - Credential harvesting for lateral movement.
+
+#### **4. Silver Ticket Attacks (High)**
+- **Attack Vector**: If an attacker compromises a service account (e.g., `sql_svc`) and obtains its NTLM hash, they can forge Kerberos tickets for any service.
+- **Impact**:
+  - Undetectable lateral movement.
+  - Data exfiltration from databases.
+
+#### **5. Guest Account Abuse (Medium)**
+- **Attack Vector**: If the `Guest` account is enabled, attackers can use it for reconnaissance or pivoting.
+- **Impact**:
+  - Limited but useful for initial access.
+
+---
+
+### **Remediation Steps**
+#### **1. Secure the `krbtgt` Account (Critical)**
+   - **Step 1**: Change the `krbtgt` password immediately.
+   - **Step 2**: Enforce a **complex, long password** (30+ chars) and rotate it every **90 days**.
+   - **Step 3**: Monitor for **Kerberoasting attempts** using tools like **Microsoft Defender for Identity** or **BloodHound**.
+
+#### **2. Enable "Protected Users" Group (High)**
+   - **Step 1**: Move **all admin accounts, service accounts (`sql_svc`), and high-value users** into the **Protected Users** group.
+   - **Step 2**: This enables:
+     - **Kerberos delegation restrictions**.
+     - **NTLM blocking**.
+     - **Smart card authentication enforcement**.
+
+#### **3. Implement Least Privilege for Service Accounts (Medium)**
+   - **Step 1**: Convert `sql_svc` to a **gMSA (Group Managed Service Account)** or **Virtual Account**.
+   - **Step 2**: Restrict permissions to **only necessary databases/services**.
+   - **Step 3**: Use **Just-In-Time (JIT) Privileged Access** for admin accounts (e.g., **Microsoft PIM** or **CyberArk**).
+
+#### **4. Disable or Restrict the Guest Account (Medium)**
+   - **Step 1**: Disable the **Guest account** if unused.
+   - **Step 2**: If required, restrict it to **specific IP ranges** via **GPO**.
+
+#### **5. Enable "Account is sensitive and cannot be delegated" (High)**
+   - **Step 1**: For **all admin and service accounts**, enable:
+     ```
+     User Account Control → "Account is sensitive and cannot be delegated"
+     ```
+   - **Step 2**: This prevents **AS-REP roasting** and **unconstrained delegation**.
+
+#### **6. Monitor for Suspicious Activity (Ongoing)**
+   - **Step 1**: Deploy **Microsoft Sentinel** or **ELK Stack** for **Kerberoasting detection**.
+   - **Step 2**: Use **BloodHound** to identify **overprivileged accounts**.
+   - **Step 3**: Enable **Audit Policies** for:
+     - **4769 (Kerberos Service Ticket Requests)**
+     - **4624 (Successful Logins)**
+     - **4648 (Logon with Explicit Credentials)**
+
+#### **7. Implement Just-In-Time (JIT) Admin Access (High)**
+   - **Step 1**: Use **Microsoft PIM** or **BeyondTrust** to **temporarily elevate** admin rights.
+   - **Step 2**: Require **MFA** for all admin logins.
+
+#### **8. Review Group Memberships (Medium)**
+   - **Step 1**: Audit **Domain Admins**, **DNSAdmins**, and **Group Policy Creator Owners**.
+   - **Step 2**: Remove **unused or non-human accounts** (e.g., old test users).
+
+---
+### **Final Recommendation**
+This domain exhibits **multiple critical misconfigurations**, particularly around:
+✅ **Kerberoasting vulnerability** (`krbtgt` exposure)
+✅ **Lack of Protected Users enforcement**
+✅ **No least-privilege for service accounts**
+✅ **No JIT admin access**
+
+**Immediate Actions Required**:
+1. **Change `krbtgt` password** and monitor for Kerberoasting.
+2. **Enable Protected Users** for all admins and service accounts.
+3. **Convert `sql_svc` to a gMSA** and restrict permissions.
+4. **Disable the Guest account** if unused.
+
+Would you like a **detailed BloodHound query** to identify additional attack paths?
+==================================================

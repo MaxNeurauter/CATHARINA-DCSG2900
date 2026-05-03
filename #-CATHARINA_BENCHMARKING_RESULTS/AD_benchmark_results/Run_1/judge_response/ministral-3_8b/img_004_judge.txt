@@ -1,0 +1,12 @@
+CATHARINA does notice the relevant setting: **“Account is sensitive and cannot be delegated” is unchecked**, which is the core issue from the ground truth. It also recommends checking that box, so it partially lands on the right finding.
+
+However, the explanation is significantly off:
+- It makes several unsupported claims from the screenshot, including discussion of **Kerberos pre-auth**, **password policy**, **smart card enforcement**, and especially **account expiry** as a security issue.
+- It misstates the attack path. The ground truth is specifically about **Kerberos delegation / ticket theft on a compromised server**, where a high-value user logging into a compromised host can have their Kerberos tickets abused.  
+- Instead, the model talks about **Golden Ticket attacks**, **AS-REP Roasting**, brute force, and other unrelated items. Golden Ticket is not the relevant secondary risk here.
+- It weakens the severity by saying **“if privileged”**, while the ground truth says this should be checked for **all high value targets**.
+- It also includes incorrect remediation like suggesting **“Never”** for account expiry as more secure, which is not appropriate here.
+
+So this is better than generic “misconfigured” because it did identify the key unchecked box, but it fails to explain the correct attack path and introduces multiple inaccurate or hallucinated issues.
+
+SCORE: 3

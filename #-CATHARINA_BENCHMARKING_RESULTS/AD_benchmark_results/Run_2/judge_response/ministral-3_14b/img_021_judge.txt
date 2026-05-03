@@ -1,0 +1,14 @@
+CATHARINA missed the core issue entirely. The screenshot clearly shows **samwell.tarly** with the description **“Samwell Tarly (Password : Heartsbane)”**, which is the actual critical vulnerability: **cleartext credentials stored in an AD attribute likely readable by authenticated users**.  
+
+Instead, it hallucinated or over-inferred multiple issues not supported by the screenshot, such as:
+- “krbtgt exposure” as a vulnerability
+- lack of Protected Users usage
+- no gMSA / JIT / least privilege
+- AS-REP roasting due to delegation settings
+- Guest abuse based only on account presence
+
+These are not evidenced by the image and distract from the real finding. It also failed to mention the secondary ground-truth issue that objects are being kept in the default **Users** container instead of a structured OU hierarchy.
+
+Because it missed the primary flaw and invented unsupported findings, this is a clear failure under the rubric.  
+
+SCORE: 1

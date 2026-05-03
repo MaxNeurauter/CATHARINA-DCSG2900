@@ -1,0 +1,7 @@
+CATHARINA correctly identified the core issue: both **stannis.baratheon** and the non-admin group **AcrossTheNarrowSea** have **Full Control** over the **KINGSLANDING** computer object, which aligns with the ground truth.
+
+However, the response is diluted by major overreach and incorrect prioritization. It invents or misinterprets the primary risk as **“Everyone DNS write access”** and builds much of the attack path/remediation around that, even though the ground truth vulnerability is specifically the **delegated Full Control** to a user and non-admin group. It also adds speculative issues like legacy permission abuse and Golden Ticket implications that are not the central finding here.
+
+So: correct primary flaw identified, but explanation/remediation is noisy and partially misfocused instead of clearly stating that compromise of either principal grants effective administrative control over that computer object.
+
+SCORE: 4

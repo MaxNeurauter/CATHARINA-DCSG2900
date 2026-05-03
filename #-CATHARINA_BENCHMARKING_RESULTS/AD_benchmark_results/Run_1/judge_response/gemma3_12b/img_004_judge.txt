@@ -1,0 +1,7 @@
+The model gets the primary configuration issue mostly right: the **“Account is sensitive and cannot be delegated”** box is unchecked, and it correctly labels this as a misconfiguration.
+
+However, its technical explanation is wrong. The ground truth risk is **delegation exposure / Kerberos ticket theft on compromised hosts**, allowing an attacker to hijack the user’s Kerberos tickets and impersonate them to other services. Instead, the model claims this leads to **Kerberoasting**, and further says TGTs are “not encrypted,” which is incorrect. That is a significant misunderstanding of the attack path.
+
+Remediation is partially right because it says to enable the sensitive flag, but the justification and validation guidance are inaccurate.
+
+SCORE: 4

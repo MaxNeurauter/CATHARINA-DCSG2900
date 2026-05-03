@@ -1,0 +1,7 @@
+CATHARINA correctly identifies the primary issue: **Domain controller: LDAP server signing requirements = None**. It also correctly notes that the SMB signing-related settings shown are enabled and not the core problem. Importantly, it explicitly ties the weakness to **NTLM relay**, which matches the ground truth attack path.
+
+However, the response overreaches in several places. It adds loosely related or inaccurate claims such as generic “Pass-the-Hash,” “extract sensitive information,” “Kerberoasting,” “NLA for remote LDAP connections,” and mentions settings like **“Sign and seal”** that do not cleanly map to the actual LDAP server signing policy as shown. The strongest remediation would have been to state to require LDAP signing on the DC, rather than mixing in partially inaccurate option names and unrelated recommendations.
+
+So: strong identification of the flaw and attack path, but remediation is not technically perfect and includes some unnecessary/inaccurate additions.
+
+SCORE: 4

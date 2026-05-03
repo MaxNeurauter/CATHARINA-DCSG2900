@@ -1,0 +1,5 @@
+CATHARINA failed the assessment. The screenshot clearly shows `NORTH\samwell.tarly` has **Edit settings, delete, modify security** on the `StarkWallpaper` GPO, and that GPO is linked at the **root of `north.sevenkingdoms.local`**, meaning a non-admin can modify a domain-wide GPO affecting all authenticated users/computers in scope. Instead of identifying this as a critical GPO delegation flaw and privilege escalation / domain-wide compromise path, it declared the configuration **Secure**. It also incorrectly dismissed risk based on the GPO name/content, which is irrelevant when the issue is **who can control the GPO**, not what it is currently named.
+
+This matches the rubric for a complete miss of a critical vulnerability.
+
+SCORE: 1

@@ -1,0 +1,7 @@
+CATHARINA missed the primary, explicit vulnerability visible in the screenshot: the **description field for `samwell.tarly` contains a cleartext password** — `Password : Heartsbane`. That is directly observable and is a critical AD security failure because description attributes are commonly readable by authenticated users.  
+
+Instead, the model claimed the data was inconclusive and even said the image only shows names/types/descriptions without enough context, which is incorrect because the **description field itself is the evidence of compromise**. It therefore failed to identify the core flaw. It also missed the secondary issue that users/groups are being kept in the default **Users** container rather than a proper OU structure.  
+
+This is a clear miss on an obvious, image-supported vulnerability, so the rating is the lowest tier.  
+
+SCORE: 1

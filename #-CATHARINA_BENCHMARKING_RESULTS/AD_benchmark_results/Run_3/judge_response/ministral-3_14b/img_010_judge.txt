@@ -1,0 +1,5 @@
+CATHARINA correctly identified the core issue: a normal user account (`jon.snow`) has an SPN, which enables **Kerberoasting**. It also explained the main risk accurately: offline cracking of the service ticket / password. Remediation to remove the SPN or move the service to a proper service account/gMSA is solid.
+
+However, the response is diluted by extra speculation not supported by the screenshot, such as delegation issues, Protected Users, Golden/Silver Ticket discussion, and calling out “secure configurations” that are not really relevant. It even includes a technical inaccuracy in the Kerberoasting flow by mentioning requesting a **TGT** instead of the relevant **TGS service ticket**. Still, the primary finding is clearly recognized and the main remediation is appropriate.
+
+SCORE: 4

@@ -1,0 +1,124 @@
+Image Analyzed: img_011.png
+Model Used: ministral-3:14b
+Time Taken: 76.62 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **1. Observation**
+The image shows a **Group Policy Object (GPO)** named **"StarkWallpaper"** in **Active Directory (AD)** for the domain **north.sevenkingdoms.local**. Below are the key details extracted:
+
+#### **General Details:**
+- **Domain:** `north.sevenkingdoms.local`
+- **Owner:** `NORTH\vagrant`
+- **Created/Modified:** `4/11/2026`
+- **GPO Status:** **Enabled**
+- **Security Filtering:** Applies to **`NT AUTHORITY\Authenticated Users`** (all authenticated users in the domain).
+
+#### **Delegation (Permissions):**
+The following groups/users have **full control** (Edit settings, delete, modify security):
+- `NORTH\Domain Admins`
+- `NORTH\samwell.tarly`
+- `NORTH\vagrant`
+- `NT AUTHORITY\SYSTEM`
+- `SEVENKINGDOMS\Enterprise Admins`
+
+Additionally:
+- `NT AUTHORITY\ENTERPRISE DOMAIN CONTROLLERS` has **no explicit permissions** (inherited).
+- `NT AUTHORITY\Authenticated Users` has **only "Read"** permission (from Security Filtering).
+
+#### **Links:**
+- The GPO is **linked to the `north` OU** but is **not enforced**.
+
+---
+
+### **2. Assessment**
+This configuration is **Critically Vulnerable** due to the following issues:
+
+#### **A. Over-Permissive Delegation**
+- **`NORTH\samwell.tarly`** and **`NORTH\vagrant`** (non-admin accounts) have **full control** over this GPO.
+  - These accounts could **modify GPO settings**, including **security policies, scripts, and preferences**, which could lead to **persistent backdoors, privilege escalation, or lateral movement**.
+  - If compromised, an attacker could **enable dangerous settings** (e.g., disable security auditing, enable weak authentication, or deploy malware via GPO).
+
+#### **B. Security Filtering Misconfiguration**
+- The GPO applies to **`Authenticated Users`**, meaning **every user in the domain** could be affected if malicious changes are made.
+- Even though `Authenticated Users` only has **read permissions**, an attacker with **write access** (e.g., `samwell.tarly` or `vagrant`) could **modify the security filtering** to include malicious groups.
+
+#### **C. Lack of Enforcement**
+- The GPO is **not enforced**, meaning child OUs could **override** it, leading to **inconsistent security policies**.
+
+---
+
+### **3. Attack Path**
+#### **Potential Attack Vectors:**
+1. **GPO Abuse (Golden Ticket / Persistence)**
+   - An attacker compromising `samwell.tarly` or `vagrant` could:
+     - **Modify GPO scripts** to deploy malware (e.g., via `Startup` scripts).
+     - **Disable security controls** (e.g., turn off LSA Protection, disable auditing).
+     - **Create a backdoor account** via GPO preferences.
+   - **Impact:** **Domain-wide compromise**, **lateral movement**, and **persistence**.
+
+2. **Privilege Escalation via GPO Modification**
+   - If an attacker gains access to a **non-admin account with GPO edit rights**, they could:
+     - **Escalate privileges** by modifying **Group Managed Service Accounts (gMSA)** or **Service Principal Names (SPN)**.
+     - **Bypass security controls** (e.g., disable BitLocker, modify firewall rules).
+   - **Impact:** **Full domain dominance** if combined with other misconfigurations.
+
+3. **Pass-the-Hash / Ticket Attacks**
+   - If the GPO controls **Kerberos settings**, an attacker could **modify SPN configurations** to enable **Silver Ticket attacks**.
+   - **Impact:** **Undetectable lateral movement** as a domain admin.
+
+---
+
+### **4. Remediation (Step-by-Step Fix)**
+#### **Immediate Actions:**
+1. **Revoke Unnecessary GPO Permissions**
+   - Open **Group Policy Management** → Right-click **StarkWallpaper** → **Delegation**.
+   - Remove **`NORTH\samwell.tarly`** and **`NORTH\vagrant`** from **full control**.
+   - Ensure only **`Domain Admins`**, **`Enterprise Admins`**, and **`SYSTEM`** retain necessary permissions.
+
+2. **Restrict Security Filtering**
+   - Go to **Scope** → **Security Filtering**.
+   - Remove **`Authenticated Users`** and replace with **least-privilege groups** (e.g., only the OU requiring this policy).
+
+3. **Enable GPO Enforcement (If Applicable)**
+   - If this GPO should **override child OUs**, enable **enforced mode** in the **Links** tab.
+
+4. **Audit GPO Changes**
+   - Enable **Advanced Audit Policy** for **Group Policy** changes:
+     - **Event ID 4732** (GPO modification) should be monitored.
+     - Use **Windows Event Forwarding (WEF)** to centralize logs in **SIEM/Splunk**.
+
+5. **Review All GPOs for Similar Misconfigurations**
+   - Run a **PowerShell script** to check all GPOs for **over-permissive delegation**:
+     ```powershell
+     Get-GPO -All | ForEach-Object {
+         $acl = Get-GPPermission -Guid $_.Id -Domain "north.sevenkingdoms.local" -All
+         $acl | Where-Object { $_.Permission -like "*Full Control*" } | Select-Object Trustee, Permission
+     }
+     ```
+   - **Automate remediation** using **Microsoft’s GPO Permissions Analyzer** or **PowerShell**.
+
+6. **Implement Least Privilege for Service Accounts**
+   - Ensure **managed service accounts (gMSA)** are **not over-permissive**.
+   - Use **Just-In-Time (JIT) admin access** for `vagrant`/`samwell.tarly`.
+
+7. **Monitor for GPO-Based Attacks**
+   - Set up **alerts for unusual GPO changes** (e.g., sudden script modifications).
+   - Use **Microsoft Defender for Identity** or **CrowdStrike** to detect **GPO tampering**.
+
+---
+
+### **Final Verdict**
+| **Risk Level** | **Severity** | **Likelihood of Exploitation** |
+|----------------|-------------|--------------------------------|
+| **Over-Permissive GPO Delegation** | Critical | High |
+| **Authenticated Users Security Filtering** | High | Medium |
+| **Lack of GPO Enforcement** | Medium | Low (unless combined with other attacks) |
+
+**Recommendation:**
+- **Immediately revoke unnecessary permissions** and **audit all GPOs**.
+- **Enable logging and monitoring** for GPO changes.
+- **Enforce least privilege** across all AD objects.
+
+Would you like additional details on detecting GPO-based attacks in SIEM tools?
+==================================================

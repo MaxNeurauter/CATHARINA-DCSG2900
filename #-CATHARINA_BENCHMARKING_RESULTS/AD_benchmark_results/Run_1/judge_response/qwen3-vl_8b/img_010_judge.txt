@@ -1,0 +1,7 @@
+CATHARINA correctly identified the core issue: a normal user account (`jon.snow`) has an SPN set, which enables **Kerberoasting**. It also explained the attack path with enough specificity, including ticket extraction and offline cracking. Remediation is largely correct: remove the SPN or ensure it belongs only on an appropriate service account.
+
+Minor issue: it overstates that SPNs are “exclusively intended for service accounts” and says a normal user account should “never” have one; while this is generally bad practice and dangerous here, user accounts can technically be used as service accounts. It also slightly downplays severity by saying it is “not inherently critical,” whereas the ground truth frames this directly as kerberoastable exposure.
+
+Overall, this is a strong and accurate assessment with only minor wording imprecision.
+
+SCORE: 5

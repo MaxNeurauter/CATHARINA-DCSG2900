@@ -1,0 +1,7 @@
+CATHARINA correctly identified the two secure settings: anonymous SID/Name translation is disabled, and LM hash storage is disabled. It also noticed that “Force logoff when logon hours expire” is disabled.
+
+However, it significantly understated the importance of the actual gap. The Ground Truth says this is the remaining security oversight and should be enabled to prevent unauthorized after-hours session persistence. CATHARINA minimized it as mostly an operational concern and concluded the configuration is generally secure, which misses the intended finding and weakens the remediation.
+
+So this is not a total miss, because it read the settings accurately and flagged the disabled logoff control, but its risk assessment and recommendation lacked the necessary security emphasis.
+
+SCORE: 3

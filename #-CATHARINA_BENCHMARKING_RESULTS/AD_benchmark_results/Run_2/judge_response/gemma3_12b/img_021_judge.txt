@@ -1,0 +1,3 @@
+The model failed to identify the actual critical issue shown in the screenshot: the **cleartext password “Heartsbane” exposed in the Description field for samwell.tarly**. Instead, it hallucinated a completely different view (user property checkboxes such as “Password never expires,” “User must change password at next logon,” etc.) that is not present in the image. That directly contradicts the screenshot and misses the core AD risk that any authenticated user may be able to read the credential. It also missed the secondary observation about poor object organization in the default Users container.
+
+SCORE: 1

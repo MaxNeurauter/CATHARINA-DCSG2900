@@ -1,0 +1,7 @@
+CATHARINA correctly recognized that the password policy is generally secure, which aligns with the ground truth. It also accurately noted strong elements like complexity enabled and password history set to 10.
+
+However, it downgraded the **Minimum password age = 1 day** as a vulnerability and claimed it could let users revert immediately to old passwords, which is technically incorrect in this context. A 1-day minimum age is not the core issue shown in the ground truth. It also treated **Maximum password age = 90 days** as clearly secure, whereas the ground truth specifically notes that forced periodic rotation is now considered legacy guidance. It further missed the more relevant improvement point: **minimum password length of 10 is acceptable but below newer preferred standards like 14**.
+
+So overall, the model got the broad posture right but missed the actual nuanced findings and introduced an incorrect attack path.
+
+SCORE: 3

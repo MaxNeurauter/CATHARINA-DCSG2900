@@ -1,0 +1,10 @@
+CATHARINA correctly identified the core issue: a non-admin user (`NORTH\samwell.tarly`) has full control over the `StarkWallpaper` GPO, which is highly dangerous because the GPO is linked at the domain root and affects broadly scoped targets. It also correctly explains the likely impact: GPO hijacking to push malicious scripts/settings across the domain.
+
+However, it adds extra findings that are not the primary issue and are weak or misleading in this context:
+- `Authenticated Users` in Security Filtering is normal for GPO read/apply behavior and not itself the vulnerability here.
+- “Not Enforced” is not a meaningful vulnerability based on the ground truth.
+- Some detection/remediation details are inaccurate or noisy (e.g. event IDs, suggesting replacing `Authenticated Users` with an OU in Security Filtering).
+
+Overall, it got the main flaw and attack path right, but diluted it with questionable secondary claims instead of staying tightly aligned to the screenshot and ground truth.
+
+SCORE: 4

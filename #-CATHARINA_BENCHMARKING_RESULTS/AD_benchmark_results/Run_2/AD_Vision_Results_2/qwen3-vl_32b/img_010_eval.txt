@@ -1,0 +1,45 @@
+Image Analyzed: img_010.png
+Model Used: qwen3-vl:32b
+Time Taken: 290.66 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### 1. Observation  
+- The user account `jon.snow` has a **`servicePrincipalName`** attribute set to `CIFS/thewall.north.sevenkingdoms.local; HT`.  
+- The account type is `805306368 = (NORMAL_USER_ACCOUNT)`, confirming this is a *standard user account* (not a service account).  
+- All other attributes (e.g., `roomNumber`, `scriptPath`, `shadow*` fields) are `<not set>`.  
+
+### 2. Assessment  
+**Misconfigured**. A standard user account should *never* have a `servicePrincipalName` (SPN) set. SPNs are reserved for **service accounts** (e.g., computer accounts or dedicated service accounts) to enable Kerberos authentication for services. This misconfiguration exposes the account to a specific attack vector.  
+
+### 3. Attack Path  
+- **Attack Vector**: **Kerberoasting**.  
+- **Technical Impact**:  
+  - An attacker can request a Kerberos TGS (Ticket-Granting Service) ticket for the SPN (e.g., `CIFS/thewall.north.sevenkingdoms.local`).  
+  - The TGS ticket is encrypted with the *user account’s password hash* (not the service account’s, since this is a user account). If the password is weak or reused, the attacker can crack the ticket to obtain the user’s password.  
+  - This compromises the `jon.snow` account, potentially enabling lateral movement, data exfiltration, or privilege escalation.  
+
+### 4. Remediation  
+**Step-by-Step Fix**:  
+1. **Identify all user accounts with SPNs**:  
+   Run in PowerShell:  
+   ```powershell
+   Get-ADUser -Filter "servicePrincipalName -like '*' -and objectClass -eq 'user'" -Properties servicePrincipalName | Select-Object Name, servicePrincipalName
+   ```  
+2. **Remove the SPN from the user account**:  
+   Use PowerShell to delete the SPN:  
+   ```powershell
+   Set-ADUser -Identity "jon.snow" -Remove @{servicePrincipalName="CIFS/thewall.north.sevenkingdoms.local; HT"}
+   ```  
+   *Note: Adjust the SPN value to match the exact string (e.g., fix any potential typos like `; HT` in the original image).*  
+3. **Verify the SPN is removed**:  
+   Reopen the **Attribute Editor** for `jon.snow` and confirm `servicePrincipalName` is now empty.  
+4. **Enforce policy**:  
+   - Ensure **only service accounts** (e.g., computer accounts, dedicated service accounts) have SPNs.  
+   - Use Group Policy to prevent SPNs from being set on user accounts (e.g., via `Active Directory Users and Computers` > **Default Domain Policy** > **User Rights Assignment** > restrict SPN management).  
+
+This resolves the misconfiguration and eliminates the Kerberoasting risk.  
+
+---  
+**Note**: The image is clear and provides sufficient context for a definitive assessment. No speculation was required.
+==================================================

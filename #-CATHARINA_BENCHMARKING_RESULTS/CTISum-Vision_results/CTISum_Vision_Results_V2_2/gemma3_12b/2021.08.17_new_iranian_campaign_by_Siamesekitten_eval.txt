@@ -1,0 +1,94 @@
+Report name: 2021.08.17_new_iranian_campaign_by_Siamesekitten
+time used: 113.67 seconds
+Bert score: 0.8040
+RougeL score: 0.1050
+Rouge1 score: 0.2075
+Rouge2 score: 0.0326
+summary generated:
+Okay, here's a CTIS (Cyber Threat Intelligence Summary) based on the provided images, structured to be clear and concise.  I'll break it down into sections: Executive Summary, Threat Actor, Malware, Infrastructure, Indicators, and Mitigation.  Due to the length and complexity, this is a detailed summary.
+
+**CTIS: DanBot/Milan RAT Campaign**
+
+**1. Executive Summary:**
+
+This report details a campaign involving the DanBot/Milan RAT (Remote Access Trojan), attributed to a threat actor believed to be associated with Iranian APT39 or a similar group.  The malware establishes communication via DNS tunneling and HTTP requests, employing layered obfuscation, file encoding (XOR), and a complex system of folders and functions to avoid detection. The attackers use a sophisticated infrastructure involving dynamically generated domains, server connections, and potentially fake websites to facilitate the intrusion and maintain persistence.  The campaign has been observed targeting organizations, possibly for espionage or data exfiltration.
+
+**2. Threat Actor:**
+
+*   **Name:**  Likely associated with Iranian APT39, though attribution is not definitive.  The group's operational style, techniques, and infrastructure resemble those previously attributed to APT39.
+*   **Motivation:**  Likely espionage, data exfiltration, and potentially other malicious activities.
+*   **Capabilities:** Sophisticated malware development, evasion techniques, infrastructure management, and domain generation.
+*   **Attribution Confidence:** Moderate.  Similarities in tactics, techniques, and procedures (TTPs) suggest a connection to APT39, but conclusive evidence is lacking.
+
+**3. Malware:**
+
+*   **Name:**  DanBot / Milan RAT
+*   **Type:** Remote Access Trojan (RAT)
+*   **Versions:**
+    *   First Version: "UltraVNC.exe"
+    *   Second Version: "WinVNC.exe" (compressed using WinVNC File Compression Utility)
+*   **Functionality:**
+    *   Remote Desktop Access (via VNC - Virtual Network Computing)
+    *   File Manipulation (downloading, uploading)
+    *   Command and Control Communication (via HTTP and DNS)
+    *   Keylogging (implied by RAT capabilities)
+    *   File Exfiltration
+    *   Data gathering
+*   **Obfuscation Techniques:**
+    *   XOR Encryption for configuration files
+    *   Layered HTTP and DNS communication to mask C2 traffic.
+    *   Dynamic domain generation.
+*   **File Names (Examples):**  UltraVNC.exe, WinVNC.exe, Chip[].exe, MsPng[].exe, Aud[].exe, Vmware[].exe.
+
+**4. Infrastructure:**
+
+*   **Command and Control (C2) Servers:**
+    *   Dynamically generated domains.  The report highlights the use of several domains, including those registered with similar email addresses suggesting a concerted effort to mask the attacker's identity.
+    *   Example Domains: `softwareagios[.].com`, `jobschippi[.].com`, `defenderstatus[.].com`, `dnsstatus[.].org`, `technoet[.].com`, `ms1.defenderlive[.].com`, `ms2.defenderlive[.].com`, `wusukinl[.].com`, `23.95.218[/]`, `23.94.22[].145`
+    *   ASN (Autonomous System Numbers): AS36352 (AS-COLORCROSSING), AS6276 (OVH SAS), AS36352 (AS-COLORCROSSING)
+*   **DNS Servers:**
+    *   `ns1.dnsstatus.org` , `ns2.dnsstatus.org`
+*   **Fake Websites:** The attackers employ fake websites to create a lure to infect systems.
+*   **Name Servers:**  `shannon.crawford[protonmail].com`, `scottescobedo[protonmail].com`, `josephpritchett50[outlook].com`, `jackbezos[protonmail].com`
+
+**5. Indicators:**
+
+*   **File Hashes (Examples - incomplete list, many more listed in the images):**
+    *   `a90e374764127de5ea0a785def95f`
+    *   `254e134490a0b74b3a66026f39572cfc1a2`
+    *   `8a2e8c67c8608f0c8e1746713005773956c`
+    *  (Many more detailed in the document)
+*   **File Names (Examples):**
+    *   Capabilities[].xls (Decoy Document)
+    *   Solutions[].zip
+    *   CompanyCatalog[].exe
+    *   Driver[].rar
+    *   Current[].jtx (Javascript)
+    *   Aud[].exe
+    *   Vmware[].exe
+    *   DanBot.exe
+    *   WinVNC.exe
+    *   UltraVNC.exe
+*   **IP Addresses:**
+    *   23.95.218[].240
+    *   23.94.22[].145
+    *   185.243.112[].120
+    *   185.243.21[].132
+    *   193.239.84[].207
+    *   208.91.197[].91
+*   **Domains (See Infrastructure section above for a list)**
+
+**6. Mitigation:**
+
+*   **Network Monitoring:** Implement network monitoring to detect unusual DNS queries and HTTP traffic associated with the identified domains and IP addresses.
+*   **Endpoint Detection and Response (EDR):** Utilize EDR solutions to identify and block malicious processes and file modifications.
+*   **Firewall Rules:** Create firewall rules to block communication with known C2 servers.
+*   **Antivirus Signatures:**  Update antivirus signatures with the identified file hashes.
+*   **User Awareness:**  Educate users about phishing emails and suspicious attachments/links.
+*   **Regular Security Audits:**  Conduct regular security audits and vulnerability assessments to identify and address potential weaknesses.
+*   **DNS Monitoring:** Monitor DNS requests and block suspicious domain resolutions.
+*   **Threat Intelligence Sharing:**  Share threat intelligence information with other organizations to improve collective defense.
+
+
+
+**Disclaimer:**  This is a summary based solely on the provided images.  A full investigation would require access to the original reports, logs, and additional data. The attribution to APT39 is based on observed similarities and is not definitive.

@@ -1,0 +1,5 @@
+CATHARINA identified that **“Account is sensitive and cannot be delegated” is unchecked**, which is the actual ground-truth issue visible in the screenshot. However, it incorrectly dismisses that setting as **low risk** and instead claims the **primary vulnerability** is **“Account expires: Never.”** That is a major miss, because the ground truth explicitly concerns **delegation exposure for a high-value account**, enabling theft/reuse of Kerberos tickets if the user logs onto a compromised host.
+
+The remediation is also fundamentally wrong for this case: it focuses on setting an account expiration date rather than enabling **“Account is sensitive and cannot be delegated.”** So while it noticed the correct checkbox state, it failed to recognize its importance and gave the wrong attack path and fix.
+
+SCORE: 2

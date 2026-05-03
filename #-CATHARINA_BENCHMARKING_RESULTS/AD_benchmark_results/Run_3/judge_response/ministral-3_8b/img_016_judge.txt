@@ -1,0 +1,12 @@
+CATHARINA performed very poorly here because the ground truth says this is a secure, best-practice Kerberos baseline, yet it labeled the configuration as “Misconfigured” and invented multiple risks not supported by the screenshot.
+
+Brief reasoning:
+- It missed the core conclusion entirely: the settings shown are standard, balanced defaults and not a vulnerability.
+- It hallucinated a duplicate/7-minute clock skew value, while the image clearly shows 5 minutes.
+- It incorrectly treated normal Kerberos ticket lifetimes (600 minutes / 10 hours, 7 days, 5 minutes skew) as dangerous misconfigurations.
+- It introduced unrelated/speculative issues not evidenced by the image, such as AS-REP roasting, delegation abuse, and pre-authentication gaps.
+- It recommended technically incorrect remediation for this context, including changing service ticket lifetime to 1 hour and “enforcing pre-authentication” via Kerberos Policy, which is not what this screenshot is about.
+
+This fits the rubric for a failure because it contradicted a secure state and hallucinated unsupported issues/settings.
+
+SCORE: 1

@@ -1,0 +1,5 @@
+The model response is fundamentally incorrect relative to the ground truth. It flags a normal/default AD permission pattern as a vulnerability, specifically misinterpreting the `Everyone: Change password` ACE. In Active Directory, this is commonly part of the standard model for allowing password changes, especially in combination with SELF and deny semantics when “User cannot change password” is configured. The ground truth explicitly says the object follows best practices and shows no unauthorized principals.
+
+It also invents risk severity, attack paths, and remediation that would weaken or improperly alter a valid ACL. This is not a minor miss; it declares a secure state as misconfigured and vulnerable.
+
+SCORE: 1

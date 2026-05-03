@@ -1,0 +1,5 @@
+CATHARINA failed to identify the actual core flaw shown in the screenshot. The ground truth is explicit: **stannis.baratheon** and **AcrossTheNarrowSea** have **Full control** over the **KINGSLANDING** computer object, which is the dangerous misconfiguration because compromise of either principal yields full control/admin-equivalent access over that object.
+
+Instead, the model focused on **Authenticated Users = Special** and speculated about **Create Child Objects**, which is not supported by the visible evidence and is not the primary issue. It also built an attack path around object creation, Kerberoasting, and Silver Tickets that does not match the screenshot or ground truth. This is a major miss of the main vulnerability, though it did not call the system secure.
+
+SCORE: 2

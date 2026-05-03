@@ -1,0 +1,8 @@
+The model response is completely misaligned with the screenshot and ground truth. The image shows Local Policies/Security Options with:
+- Anonymous SID/Name translation = Disabled
+- Do not store LAN Manager hash value = Enabled
+- Force logoff when logon hours expire = Disabled
+
+Ground truth says this is mostly hardened, with the only gap being Force logoff disabled. CATHARINA instead hallucinated an unrelated AD user-account setting (“Account is sensitive”), claimed Kerberoasting/DES risk, and described UI/settings not present in the image. That squarely matches the failure condition.
+
+SCORE: 1

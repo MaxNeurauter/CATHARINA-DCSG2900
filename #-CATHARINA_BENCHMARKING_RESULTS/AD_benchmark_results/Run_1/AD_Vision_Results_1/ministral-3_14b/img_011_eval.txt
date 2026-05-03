@@ -1,0 +1,142 @@
+Image Analyzed: img_011.png
+Model Used: ministral-3:14b
+Time Taken: 92.45 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **1. Observation**
+The image shows a **Group Policy Object (GPO)** named **"StarkWallpaper"** in **Active Directory (AD)** for the domain **north.sevenkingdoms.local**. Below are the key details extracted:
+
+#### **General Details:**
+- **Domain:** `north.sevenkingdoms.local`
+- **Owner:** `NORTH\vagrant`
+- **Created/Modified:** `4/11/2026`
+- **GPO Status:** **Enabled**
+- **Security Filtering:** Applies to **`NT AUTHORITY\Authenticated Users`** (i.e., **every authenticated user in the domain**).
+- **Delegation:**
+  - **`NORTH\Domain Admins`** – Full control (Edit, delete, modify security)
+  - **`NORTH\samwell.tarly`** – Full control (Edit, delete, modify security)
+  - **`NORTH\vagrant`** – Full control (Edit, delete, modify security)
+  - **`NT AUTHORITY\SYSTEM`** – Full control
+  - **`SEVENKINGDOMS\Enterprise Admins`** – Full control
+  - **`NT AUTHORITY\ENTERPRISE DOMAIN CONTROLLERS`** – Read (from Security Filtering)
+
+#### **Links:**
+- **Location:** `north` (OU or domain-level)
+- **Enforced:** **No**
+- **Link Status:** **Enabled**
+
+---
+
+### **2. Assessment**
+This GPO configuration is **Critically Vulnerable** due to the following issues:
+
+#### **A. Overly Permissive Security Filtering**
+- The GPO is applied to **`Authenticated Users`**, meaning **every user in the domain** can influence its application (if linked to an OU containing user accounts).
+- While the **Delegation** tab restricts who can **modify** the GPO, the **Security Filtering** still allows **all users** to **read** and **potentially trigger** settings if the GPO is linked to a sensitive OU.
+
+#### **B. Excessive Delegation Permissions**
+- **Non-admin accounts (`samwell.tarly`, `vagrant`)** have **full control** over this GPO.
+  - If compromised, an attacker could **modify GPOs** to deploy malware, disable security controls, or escalate privileges.
+- **Enterprise Admins** having full control is expected, but **regular domain users should not** have such permissions.
+
+#### **C. Potential for GPO Abuse (Golden Ticket / Persistence)**
+- If an attacker gains a **Kerberos ticket-granting ticket (TGT)** for a delegated user (e.g., `vagrant` or `samwell.tarly`), they could:
+  - **Modify GPOs** to deploy malicious scripts (e.g., via **Group Policy Preferences**).
+  - **Disable security controls** (e.g., LSA Protection, BitLocker, or audit policies).
+  - **Create backdoors** (e.g., persistent scheduled tasks via GPO).
+
+---
+
+### **3. Attack Path (If Exploited)**
+#### **Likely Attack Vectors:**
+1. **Privilege Escalation via GPO Modification**
+   - An attacker compromises a **non-privileged account** (e.g., via phishing).
+   - If the account is in a **Security Filtering-applicable OU**, they may **trigger GPO changes** (if they have write access to certain GPO-linked objects).
+   - If they **steal a TGT** for `vagrant` or `samwell.tarly`, they can **fully modify the GPO**.
+
+2. **Golden Ticket / Persistence via GPO**
+   - An attacker **forges a Kerberos ticket** for a delegated user (e.g., `vagrant`) and **modifies the GPO** to:
+     - **Deploy a malicious `scripts` or `policies`** (e.g., adding a user to **Domain Admins** via GPP).
+     - **Disable security logs** (e.g., clearing Event Logs).
+     - **Enable RDP/PSRemote for all users**.
+
+3. **Lateral Movement via GPO Execution**
+   - If the GPO is **enforced** (even though it’s not here), changes would **override child OUs**, allowing an attacker to **push malicious policies domain-wide**.
+
+#### **Technical Impact:**
+- **Domain-wide compromise** (if GPO is linked to a critical OU).
+- **Persistence** (malicious GPOs survive reboots and new logins).
+- **Privilege escalation** (attacker gains **Domain Admin** or **SYSTEM** access).
+- **Data exfiltration** (if GPO deploys keyloggers or backdoors).
+
+---
+
+### **4. Remediation (Step-by-Step Fix)**
+#### **Immediate Actions:**
+1. **Disable the GPO Temporarily**
+   - Right-click **StarkWallpaper** → **All Tasks** → **Disable GPO**.
+   - Verify it does not break critical systems.
+
+2. **Remove Unnecessary Delegation**
+   - Open **Delegation** tab → Remove:
+     - `NORTH\samwell.tarly`
+     - `NORTH\vagrant`
+   - Only **Domain Admins**, **Enterprise Admins**, and **SYSTEM** should retain full control.
+
+3. **Restrict Security Filtering**
+   - Go to **Scope** → **Security Filtering**.
+   - Remove **`Authenticated Users`** and replace with **only necessary groups** (e.g., a specific **OU or security group** that truly needs this policy).
+
+4. **Audit GPO Links**
+   - Check where this GPO is **linked** (even if "Enforced: No").
+   - If linked to a **sensitive OU (e.g., Domain Controllers, Execs)**, **move the link to a non-sensitive OU** or **disable it**.
+
+5. **Enable GPO Auditing (Advanced)**
+   - Use **PowerShell** or **Group Policy Management** to log GPO changes:
+     ```powershell
+     AuditPol /set /subcategory:"Group Policy" /success:enable /failure:enable
+     ```
+   - Monitor **Event ID 5136** (GPO modification) in **Security Logs**.
+
+#### **Long-Term Hardening:**
+1. **Follow Least Privilege for GPOs**
+   - Only **Domain Admins** and **specific admin groups** should manage GPOs.
+
+2. **Disable Group Policy Preferences (If Unused)**
+   - GPP (Group Policy Preferences) is **dangerous** (stores passwords in SYSVOL).
+   - Replace with **PowerShell scripts + constrained delegation**.
+
+3. **Implement GPO Change Control**
+   - Require **multi-factor approval** for GPO modifications.
+   - Use **SCCM/Intune** to enforce **GPO versioning**.
+
+4. **Enable LSA Protection & Other Mitigations**
+   - Ensure **LSA Protection** is enabled (prevents credential dumping).
+   - Enable **Windows Defender Attack Surface Reduction (ASR)** rules.
+
+5. **Regular GPO Audits**
+   - Use **PowerShell** to detect suspicious GPOs:
+     ```powershell
+     Get-GPO -All | Where-Object { $_.DisplayName -like "*suspicious*" } | Select Name, ID, ModificationTime
+     ```
+
+---
+
+### **Final Verdict**
+| **Finding**               | **Severity**       | **Risk Level** |
+|---------------------------|--------------------|----------------|
+| GPO applies to `Authenticated Users` | **Critical** | High |
+| Non-admin accounts have GPO full control | **Critical** | High |
+| Potential for Golden Ticket via GPO abuse | **Critical** | High |
+| No GPO change auditing enabled | **High** | Medium |
+
+**Recommendation:**
+✅ **Disable the GPO immediately** if not critical.
+✅ **Remove unnecessary delegation** (`samwell.tarly`, `vagrant`).
+✅ **Restrict Security Filtering** to only required groups.
+✅ **Enable GPO auditing** and monitor for changes.
+✅ **Follow least privilege** for all GPO management.
+
+This configuration, if exploited, could lead to **full domain compromise**. **Act now to mitigate.**
+==================================================

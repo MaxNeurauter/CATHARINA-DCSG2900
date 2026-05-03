@@ -1,0 +1,10 @@
+CATHARINA performed very poorly here because the ground truth says this is a secure, balanced baseline using standard Kerberos defaults, but the model labeled multiple default settings as “critically vulnerable” and recommended changing them.
+
+Brief reasoning:
+- It correctly observed that **Enforce user logon restrictions = Enabled**, which is indeed good.
+- However, it fundamentally **missed the primary reality**: the screenshot reflects **best-practice/default Kerberos policy values**, not a vulnerability.
+- It **hallucinated risk severity** by calling **10-hour ticket lifetimes** and **7-day renewal** critically vulnerable, even though these are standard Microsoft defaults and explicitly aligned with the ground truth.
+- It also referenced a setting not actually shown in the image (“Maximum lifetime for computer clock synchronization/renegotiation = 7 minutes”), which is a serious accuracy problem.
+- Because it turned a secure configuration into a “high-priority fix,” this matches the rubric’s failure condition.
+
+SCORE: 1

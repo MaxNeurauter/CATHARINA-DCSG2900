@@ -1,0 +1,7 @@
+CATHARINA correctly identified the core issue: **Authenticated Users have dangerous write permissions** such as **Enable per-user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**. That aligns well with the ground truth.
+
+However, it loses points because it adds speculative or unsupported attack paths, such as **SPN modification**, **Kerberoasting**, **AS-REP roasting**, and overemphasis on **Pre-Windows 2000 Compatible Access** as a major finding, which is not the core vulnerability described in the ground truth. It also incorrectly frames some benign entries as “secure findings” in a way that distracts from the main issue. The remediation is mostly correct, but the best-practice point from the ground truth is more specific: **Authenticated Users should generally only have read permissions**.
+
+Overall, it identified the right flaw and gave mostly appropriate remediation, but with extra noise and some unsupported conclusions.
+
+SCORE: 4

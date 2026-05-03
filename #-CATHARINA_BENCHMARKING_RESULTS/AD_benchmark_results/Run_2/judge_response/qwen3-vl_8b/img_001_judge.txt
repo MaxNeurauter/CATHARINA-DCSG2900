@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary flaw: **Domain controller: LDAP server signing requirements = None**. It also correctly noted that the SMB/signing-related settings shown are not the issue.
+
+However, its attack-path explanation is materially off from the ground truth. The key risk here is **NTLM relay to LDAP**, not that an attacker can simply send arbitrary unauthenticated LDAP requests and bypass AD authentication/authorization outright. The response mentions spoofing/MITM in generic terms, but it misses the specific and important relay scenario the ground truth calls out. Remediation is mostly correct in that it says to set LDAP signing to **Require signing**, though the ending is truncated and a bit messy.
+
+This is better than generic “misconfigured,” but not precise enough on the actual exploitation path to earn top marks.
+
+SCORE: 4

@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary flaw: **LDAP server signing requirements = None** on the domain controller. It also correctly noted that the SMB signing-related settings shown are enabled and not the issue.
+
+However, its explanation of the risk is partially off from the ground truth. The key secondary risk is **NTLM relay to LDAP**, enabling unauthorized actions against AD without needing the password. Instead, the response focused on **“unencrypted LDAP traffic”**, credential interception, and plaintext exposure, which is less precise and somewhat misleading here. Also, saying signing “encrypts communication” is technically incorrect; signing provides integrity/authentication, not encryption.
+
+Remediation is mostly right because it recommends **Require signing**, but the justification is not technically perfect.
+
+SCORE: 4

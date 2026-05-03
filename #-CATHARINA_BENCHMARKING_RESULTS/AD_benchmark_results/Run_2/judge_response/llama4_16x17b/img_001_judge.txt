@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary flaw: **Domain controller: LDAP server signing requirements = None**. It also correctly noted that the SMB/signing-related settings shown are enabled and not the issue.
+
+However, compared to the ground truth, it missed the **specific secondary risk**: this setting enables **NTLM relay to LDAP on the Domain Controller**, allowing unauthorized administrative actions without knowing the user’s password. Instead, it gave a more generic “man-in-the-middle / eavesdropping / tampering” explanation, which is directionally true but lacks the AD-specific attack path.
+
+Remediation was also mostly correct: setting LDAP signing to **Require signing** is appropriate, though it did not explicitly tie this to preventing NTLM relay.
+
+SCORE: 4

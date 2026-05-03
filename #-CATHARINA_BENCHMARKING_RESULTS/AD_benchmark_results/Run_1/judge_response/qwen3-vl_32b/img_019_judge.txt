@@ -1,0 +1,3 @@
+The model response is a clear mismatch with the ground truth. The ground truth says this image reflects a secure standard user account due to the SPN being unset, reducing Kerberoasting risk. Instead, the model invents a critical password-change vulnerability from the ACL view and treats the standard `Everyone: Change password` ACE as dangerous, which is incorrect in this context. It also references the wrong account (`arya.stark` in ground truth vs `jaime.lannister` in image/model context), but more importantly, it misses the actual security conclusion entirely and hallucinates a critical issue contradicted by normal AD defaults.
+
+SCORE: 1

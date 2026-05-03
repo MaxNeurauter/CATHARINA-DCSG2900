@@ -1,0 +1,64 @@
+Report name: 062521_SideCopy_1
+time used: 75.39 seconds
+Bert score: 0.7983
+RougeL score: 0.1398
+Rouge1 score: 0.3627
+Rouge2 score: 0.0568
+summary generated:
+Okay, here's a CTIS (Cyber Threat Intelligence Summary) based on the provided images, formatted to be clear and concise.
+
+**CTIS Summary: SideCopy APT & Evolving Arsenal**
+
+**1. Threat Actor:** SideCopy (Attributed to targeting Indian military personnel and related entities)
+
+**2. Campaign Name:** (Implied) APT Campaign targeting Indian military & government.
+
+**3. Target Industries:** Government, Military, Academic/Research (Think Tanks), Diplomatic.
+
+**4. Geographic Regions:** Primarily India, Afghanistan (cloned websites for deception)
+
+**5. TTPs (Tactics, Techniques, and Procedures):**
+
+*   **Initial Access:**
+    *   **Social Engineering:** Spear phishing campaigns using malicious documents (Word, PDF) disguised as legitimate content (e.g., training materials, job postings, articles from reputable think tanks like ORF).
+    *   **Website Compromise:** Cloning legitimate websites (e.g., Afghan News Network) to distribute malware.
+    *   **LNK Files:** Embedding malicious LNK files within documents leading to RAT execution.
+*   **Lateral Movement/Persistence:**
+    *   **RAT Deployment (CetraRAT):** Initial infection using customized RAT (CetraRAT) to establish persistence and perform reconnaissance.
+    *   **File Dropper:** Utilizing file droppers and executables for malware distribution.
+*   **Command and Control (C2):**
+    *   **Delivery Infrastructure:** A mix of compromised websites, legitimate websites used as relays, and custom infrastructure.
+    *   **Staged Downloads:**  Downloading additional payloads and modules from C2 servers.
+*   **Data Collection/Exfiltration:**
+    *   **Keylogging:** Recording keystrokes using custom keyloggers (Lavav, Nodachi).
+    *   **Credential Harvesting:** Extracting browser credentials (from Chrome, Firefox, etc.).
+    *   **Data Exfiltration:** Using platforms like Google Drive, Dropbox, and custom servers for data exfiltration.
+
+**6. Malware Used:**
+
+*   **CetraRAT:** Custom RAT –  Initial infection vector, persistence, reconnaissance.
+*   **Lavav:** Custom Keylogger
+*   **Nodachi:**  Go-based Keylogger
+*   **Allakore:** (Remote Access Trojan)
+*   **Various RATs:** (Implied; the group is actively evolving its malware).
+
+**7. Indicators of Compromise (IOCs) - *Partial - full list would require more detailed analysis of the provided information***
+
+*   **File Names:** (Varying, disguised as legitimate documents)
+*   **URLs:** (Compromised/cloned websites - requires further investigation)
+*   **Network Traffic:** (Specific C2 servers and domain names – require further analysis).
+*   **Hashes:** (File hashes of malicious executables – require further analysis)
+*   **Keyloggers:** .log files stored in temporary locations and exfiltrated via dropboxes
+
+**8. Mitigating Factors:**
+
+*   Strong email filtering and analysis.
+*   Endpoint detection and response (EDR) solutions.
+*   Network segmentation.
+*   User awareness training.
+*   Web filtering/content inspection.
+*   Multi-factor authentication (MFA).
+
+
+
+Let me know if you would like me to refine any part of this summary. I can attempt to extract more specific IOCs, or delve deeper into a particular TTP.

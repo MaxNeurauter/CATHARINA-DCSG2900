@@ -1,0 +1,5 @@
+CATHARINA observed the key fact: a normal user account (`jon.snow`) has an SPN set. It even hints at “Kerberos-based attacks.” However, it fails to explicitly identify the actual vulnerability as **Kerberoasting**, and its conclusion incorrectly downplays the issue by saying it does not inherently suggest a critical vulnerability. The attack explanation is generic and partially off-target (“manipulate or impersonate the SPN”) instead of the correct risk: a standard user can request a service ticket for that SPN and attempt **offline password cracking**.
+
+This is worse than merely vague because it misses the core flaw and gives a misleading conclusion, though it does at least notice the suspicious SPN on a user account.
+
+SCORE: 2

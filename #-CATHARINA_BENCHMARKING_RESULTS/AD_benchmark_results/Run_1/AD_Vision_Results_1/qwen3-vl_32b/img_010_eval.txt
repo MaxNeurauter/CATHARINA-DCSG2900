@@ -1,0 +1,58 @@
+Image Analyzed: img_010.png
+Model Used: qwen3-vl:32b
+Time Taken: 382.32 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### 1. Observation  
+- **sAMAccountName**: `jon.snow` (user account).  
+- **sAMAccountType**: `805306368 = NORMAL_USER_ACCOUNT` (confirms this is a *user account*, not a computer or group).  
+- **servicePrincipalName**: `CIFS/thewall.north.sevenkingdoms.local; HT...` (SPN is set on the user account).  
+- **All "shadow" attributes** (e.g., `shadowExpire`, `shadowMax`) are `<>not set<>`.  
+- No other critical security attributes (e.g., `userAccountControl` for "sensitive" or "password never expires") are visible in the provided snippet.  
+
+### 2. Assessment  
+**Misconfigured**. The presence of a `servicePrincipalName` (SPN) on a **normal user account** (not a dedicated service account) is a critical misconfiguration. SPNs are designed for service accounts (e.g., computer accounts or dedicated service users), not for regular user accounts. This exposes the account to Kerberoasting.  
+
+### 3. Attack Path  
+- **Attack Vector**: **Kerberoasting**.  
+- **Technical Impact**:  
+  An attacker can request a **Ticket-Granting Service (TGS) ticket** for the `CIFS/thewall.north.sevenkingdoms.local` SPN. The TGS ticket is encrypted with the user account’s **NTLM hash** (which is the same as the password hash for the account). If the user’s password is weak (e.g., short, common, or reused), the attacker can **offline crack the hash** to obtain the plaintext password. Once cracked, the attacker can:  
+  - Impersonate the account to access resources (e.g., CIFS file shares).  
+  - Pivoting to other systems if the account has excessive permissions.  
+  - Escalate privileges if the account has access to critical services (e.g., domain controllers, file servers).  
+
+### 4. Remediation  
+Follow these steps to fix the misconfiguration:  
+
+1. **Determine if the SPN is needed**:  
+   - If the SPN is **unintentionally set** (e.g., a mistake during configuration), remove it:  
+     ```powershell
+     setspn -d CIFS/thewall.north.sevenkingdoms.local jon.snow
+     ```  
+   - If the SPN is required for a service (e.g., a custom application), proceed to Step 2.  
+
+2. **Create a dedicated service account**:  
+   - If the service requires an SPN, **do not use a regular user account**. Create a new, dedicated service account (e.g., `svc_cifs_service`) with:  
+     - A **strong, unique password** (15+ characters, mixed case, symbols).  
+     - **Minimal permissions** (e.g., only the necessary file share access).  
+   - Assign the SPN to the *new service account*:  
+     ```powershell
+     setspn -S CIFS/thewall.north.sevenkingdoms.local svc_cifs_service
+     ```  
+
+3. **Enforce strong password policies**:  
+   - Apply a Group Policy Object (GPO) to enforce:  
+     - Minimum password length: `15 characters`.  
+     - Password complexity: `Enabled`.  
+     - Password history: `24` (to prevent reuse).  
+     - Password expiration: `90 days` (or use a password manager for rotation).  
+
+4. **Monitor for SPN changes**:  
+   - Enable **Active Directory auditing** for "SPN changes" in GPO:  
+     - `Computer Configuration > Policies > Windows Settings > Security Settings > Advanced Audit Policy Configuration > Audit Policies > DS Access > Audit SPN changes`.  
+   - Use tools like **BloodHound** or **SIEM logs** to detect suspicious SPN-related activity.  
+
+### Key Note  
+This misconfiguration is **not "Critically Vulnerable"** (e.g., no immediate RCE), but it **enables Kerberoasting**—a common attack vector in AD environments. The risk depends on the password strength of the user account, but the SPN on a user account is always a **red flag** and should be corrected.
+==================================================

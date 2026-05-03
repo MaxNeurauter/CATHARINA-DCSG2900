@@ -1,0 +1,81 @@
+Report name: 360Netlab-EwDoor
+time used: 78.49 seconds
+Bert score: 0.7683
+RougeL score: 0.1210
+Rouge1 score: 0.2863
+Rouge2 score: 0.0405
+summary generated:
+### CTIS Summary
+
+**Threat Actor: Ewdoor**
+
+#### Overview
+Ewdoor is a malware family that appears to be used for distributed denial-of-service (DDoS) attacks. The malware is capable of executing various commands and has been observed using multiple domains and IP addresses for its command and control (C2) infrastructure.
+
+#### Key Indicators of Compromise (IOCs)
+
+**IP Addresses:**
+- 185[.]10.68.20
+- 212[.]193.30.209
+
+**Domains:**
+- rtmxvd.iunno.se
+- ekgmua.zapto.org
+- hhqnyy.zapto.org
+- besthatsite.mooo.com
+- a.rtmxvdio.net
+- b.rtmxvdio.net
+- a.hatbowlu3hf.ru
+- b.hatbowlu3hf.ru
+- a.hatbowlrtx.su
+- b.hatbowlrtx.su
+
+**Ports:**
+- 53
+- 443
+- 13433
+
+**Downloader URLs:**
+- http://185[.]10.68.20:1234/ew-new.sh
+- http://185[.]10.68.20:1234/ew.sh
+- http://185[.]10.68.20:1234/prod/mips
+- http://185[.]10.68.20:1234/prod/x86_64
+- http://185[.]10.68.20:1234/ramdisk.img.gz
+- http://212[.]193.30.209/61501e55/mips
+- http://212[.]193.30.209/859b6cfa.sh
+
+**Sample MD5 Hashes:**
+- 007c28d9a0ccfb10c478689fd63e0de0
+- 128331f1c808ee385375dd54d0609ebc
+- 46c18a8e93a863053952985a39bd7d63
+- 4f0841ac08a27d8b3d56cbd03fb68ad8
+- 5c4390e1668856cc77f2499a72f935d6
+- 62bc8899a353921ac685cabb63de97b3
+- 67ccb3cf1f4f57f5a0ded4d20bc91d73
+- 7d4937e27d0fd75dd6159ffe53ebb505
+- 84b3df62ed45bea57d0dd85e80f0dc07
+- 8794d23cad330de803294a2a1adb128b
+- abaed830fe09e92ee434236d3db01e08
+- b81ade4f18c2df58adef301f401e8a02
+- ca6eb890853434ab9a0f8cdbab0965ea
+- ddf96434bdb7b449ddcc925e6a5b3095
+- eef0035f971622cc5f48e164ca28a95f
+- fbbacfb20e487265c7fdb3081771f26
+
+#### Technical Details
+- **Command Execution:** Ewdoor can execute various commands received from its C2 server.
+- **DDoS Capabilities:** The malware is capable of performing DDoS attacks.
+- **Persistence:** It uses multiple domains and IPs for redundancy and persistence.
+
+#### Observations
+- The malware uses a combination of hardcoded and dynamically resolved domains and IPs for its C2 infrastructure.
+- The sample MD5 hashes provided can be used to identify infected systems.
+
+#### Recommendations
+- Monitor network traffic for connections to the listed IP addresses and domains.
+- Use the provided MD5 hashes to detect and remove any infected systems.
+- Ensure that all systems are updated with the latest security patches.
+- Implement network segmentation to limit lateral movement of threats within the network.
+- Regularly back up critical data to ensure business continuity in case of an attack.
+
+This summary provides a comprehensive overview of the Ewdoor malware, its indicators of compromise, and recommended actions for mitigation.

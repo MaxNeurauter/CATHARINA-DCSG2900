@@ -1,0 +1,5 @@
+The model response is a complete miss. The screenshot clearly shows **Local Policies / User Rights Assignment** and specifically **“Add workstations to domain” = “NT AUTHORITY\Authenticated Users”**, which matches the ground truth vulnerability. Instead, the model hallucinated an entirely different screen about user account properties, “account is sensitive,” and “password never expires,” none of which are present in the image.
+
+This is exactly the kind of failure condition in your rubric: it describes UI elements/settings not present in the screenshot and misses the real issue. It also fails to identify the actual attack path: allowing authenticated users to add workstations enables creation of computer objects that can support **RBCD abuse**.
+
+SCORE: 1

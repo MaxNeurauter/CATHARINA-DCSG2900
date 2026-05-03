@@ -1,0 +1,5 @@
+CATHARINA correctly read the UI state, but its security conclusion is wrong relative to the Ground Truth. The key issue is not whether the empty KCD target list makes exploitation immediately practical; it is that a standard human user account is still configured with delegation enabled at all. Ground Truth says this is hardened compared to unconstrained delegation, but still not best practice and still vulnerable from a least-privilege perspective.  
+
+The model called it **Secure**, said **no attack path exists**, and recommended **no remediation**, which directly contradicts the expected finding. It missed the core flaw: a human user should have **“Do not trust this user for delegation”** selected. Because it misclassified a vulnerable state as secure, this fits the lowest category.  
+
+SCORE: 1

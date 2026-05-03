@@ -1,0 +1,7 @@
+CATHARINA missed the actual core issue shown in the screenshot: **SELF has "Create/delete all child objects" on the computer object**, which is the relevant finding tied to **RBCD-style abuse / privilege escalation paths**.  
+
+Instead, it focused on **ANONYMOUS LOGON Read** and claimed **Kerberoasting**, which is not the ground-truth vulnerability and is a poor fit here. Worse, the remediation advises setting **Deny Read** for ANONYMOUS LOGON, which is not the correct fix for the identified screenshot issue.  
+
+This is not just vague; it identifies the wrong vulnerability and wrong attack path despite the screenshot clearly showing the SELF ACE. That aligns with a near-total miss.  
+
+SCORE: 1

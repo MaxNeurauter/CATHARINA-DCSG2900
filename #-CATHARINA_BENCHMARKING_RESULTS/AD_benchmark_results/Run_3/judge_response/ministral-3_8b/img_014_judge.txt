@@ -1,0 +1,7 @@
+CATHARINA missed the core issue. The ground truth is about a forest security boundary violation: external admin groups from NORTH and SEVENKINGDOMS have delegated/custom permissions on the Essos Default Domain Policy, making Essos dependent on external forests’ security.  
+
+Instead, the model focused primarily on **Authenticated Users having Read access**, which is normal/common for GPO application and not the main finding here. It also proposed incorrect remediation by suggesting removal/restriction of Authenticated Users and even treating the external admin groups as acceptable. That directly misses the cross-forest administrative dependency risk shown in the screenshot.
+
+It did at least notice the presence of cross-forest groups and called the setup “misconfigured,” but the technical explanation and remediation were centered on the wrong problem.
+
+SCORE: 2

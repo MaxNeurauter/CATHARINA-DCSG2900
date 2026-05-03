@@ -1,0 +1,3 @@
+The model response is a clear failure. It hallucinated an entirely different screen about user account properties and lockout settings, while the actual image shows **Advanced Security Settings for the domain root** with dangerous ACEs assigned to **Authenticated Users**. It completely missed the core issue: Authenticated Users can **Enable per user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**, which allows users to weaken password security on accounts. This is directly contradicted by the screenshot and the ground truth.
+
+SCORE: 1

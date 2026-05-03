@@ -1,0 +1,5 @@
+The response correctly identifies the core issue: a standard user account (`NORMAL_USER_ACCOUNT`) has an SPN set, which enables Kerberoasting. It also explains the attack path accurately, including TGS request and offline cracking risk, matching the ground truth well.
+
+Minor issue: the statement that a standard user account should *never* have an SPN is a bit too absolute, and the remediation about using GPO/User Rights Assignment to prevent SPNs on user accounts is not technically precise. Still, the main finding, risk explanation, and primary fix (remove the SPN / use proper service accounts) are solid.
+
+SCORE: 5

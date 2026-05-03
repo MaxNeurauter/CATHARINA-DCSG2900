@@ -1,0 +1,5 @@
+The model response fundamentally misread the screenshot. The image shows **Advanced Security Settings** on an AD object, specifically that **Authenticated Users** have dangerous **write permissions** such as **Enable per user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**. That is the core vulnerability in the ground truth.
+
+Instead, the model hallucinated an entirely different screen about user account/password policy settings like **“Password never expires,” “Minimum password age,” “Logon Hours,”** etc., which are not what this image shows. Because it described UI elements/settings not present and missed the actual AD ACL issue, this is a clear failure by the rubric.
+
+SCORE: 1

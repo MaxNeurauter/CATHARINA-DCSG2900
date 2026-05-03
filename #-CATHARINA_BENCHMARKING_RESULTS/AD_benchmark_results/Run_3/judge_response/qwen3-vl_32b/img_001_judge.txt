@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary flaw shown in the screenshot: **“Domain controller: LDAP server signing requirements” = None**. It also correctly noted that the SMB signing-related settings are enabled and therefore not the issue.
+
+However, compared to the Ground Truth, the attack explanation is somewhat off-target. The key risk is specifically **NTLM relay to LDAP on the Domain Controller**, not just generic MITM, credential theft, Kerberoasting, or DRS abuse. Some of those added claims are overstated or not directly supported by this configuration alone. Remediation is correct: setting LDAP signing to **Require signing** in the DC policy.
+
+So this is better than generic, but not quite perfect because it misses the precise **NTLM relay** emphasis and introduces extra speculative attack paths.
+
+SCORE: 4

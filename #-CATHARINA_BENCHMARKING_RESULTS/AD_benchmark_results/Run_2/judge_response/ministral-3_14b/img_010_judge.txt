@@ -1,0 +1,10 @@
+CATHARINA correctly identified the key issue: a **standard user account (`jon.snow`) has an SPN set**, which maps to **Kerberoasting exposure**. That aligns with the ground truth.
+
+However, it weakens the assessment by adding speculative conditions not supported by the screenshot, especially around **delegation**, **Golden/Silver Tickets**, and other side paths. It also includes an incorrect remediation step: it says to **disable pre-authentication** to prevent AS-REP roasting, but the command shown (`-DoesNotRequirePreAuth:$true`) would actually **enable** AS-REP roastability. That is a significant technical error.
+
+So overall:
+- **Primary flaw identified correctly**: yes
+- **Specific attack path (Kerberoasting/offline cracking)**: yes
+- **Remediation**: partly right (remove SPN / use gMSA), but contains a serious mistake and unnecessary speculation
+
+SCORE: 4

@@ -1,0 +1,5 @@
+CATHARINA does identify the key ACL entry: **SELF → Create/delete all child objects**, which is the core issue in the ground truth. However, it fails to explain the **specific security consequence** correctly: the expected finding is **RBCD exposure / privilege escalation via machine-account style abuse**, but the response instead focuses on several unrelated or weakly related issues such as Kerberoasting, anonymous read access, Everyone change password, and inherited admin permissions.
+
+Worse, some of its remediation is questionable or incorrect for this context, especially suggesting disabling inheritance for admin groups and overemphasizing removal of standard/default permissions rather than addressing the dangerous **Create/Delete child objects** right on the computer object. So it sees there is misconfiguration, and it notices the right ACE, but the technical explanation is mostly off-target.
+
+SCORE: 3

@@ -1,0 +1,5 @@
+CATHARINA identified the visible entries correctly, but it missed the core issue from the ground truth: the dangerous part is not “Authenticated Users = Read,” but that admin groups from external forests/domains (`NORTH\Domain Admins` and `SEVENKINGDOMS\Enterprise Admins`) have custom permissions on the Default Domain Policy in `essos.local`, breaking the forest security boundary and making Essos dependent on external administrative security.
+
+Its explanation is therefore centered on the wrong finding, and the remediation is also aimed at removing Authenticated Users rather than removing/reviewing the cross-forest delegated admin permissions. It does at least notice the external admin groups are present, but it does not recognize why that is the primary vulnerability.
+
+SCORE: 2

@@ -1,0 +1,101 @@
+Report name: 062521_SideCopy_1
+time used: 73.40 seconds
+Bert score: 0.8209
+RougeL score: 0.1588
+Rouge1 score: 0.3365
+Rouge2 score: 0.0729
+summary generated:
+### CTIS (Cisco Threat Intelligence Summary) for SideCopy APT
+
+#### Overview
+SideCopy is an advanced persistent threat (APT) group that has evolved its tactics, techniques, and procedures (TTPs) to target government entities, particularly in the Indian subcontinent. The group is known for its use of multiple infection vectors and custom Remote Access Trojans (RATs).
+
+---
+
+#### Key Findings
+
+**Evolution of Tactics:**
+- **Initial Infection Vector:** Started with a custom RAT named CetaRAT.
+- **Current Infection Vectors:** Utilizes a variety of infection techniques, including LNK files, self-extracting RAR executables (EXEs), and MSI-based installers.
+- **Malware Set:** Combines custom and commodity RATs and plugins, indicating a focus on espionage.
+
+**Targeting Tactics:**
+- **Themes:** Military, diplomatic, and honeytrap themes.
+- **Targeted Entities:** Government entities within the Indian subcontinent.
+
+**Credential Theft and Espionage:**
+- **Credential Access:** Focuses on harvesting credentials and sensitive information.
+- **Post-Infection Plugins:** Uses a variety of plugins post-infection to maintain access and gather intelligence.
+
+---
+
+#### Technical Details
+
+**Credential Access:**
+- **Kits Used:** Custom and commodity RATs, including plugins for credential theft and espionage.
+
+**Persistence:**
+- **Techniques:** Uses multiple infection chains to ensure persistence and evade detection.
+
+**Discovery:**
+- **Techniques:** Employs various discovery techniques to map the network environment post-infection.
+
+**Lateral Movement:**
+- **Techniques:** Utilizes compromised credentials to move laterally within the network.
+
+**Collection:**
+- **Techniques:** Focuses on data exfiltration and espionage, collecting sensitive information.
+
+---
+
+#### Indicators of Compromise (IOCs)
+
+**Malware Samples:**
+- Custom RATs (e.g., CetaRAT, njRAT variants)
+- LNK files, self-extracting RAR EXEs, MSI-based installers
+
+**Network Indicators:**
+- Domains, IPs, and URLs associated with SideCopy’s command and control (C2) infrastructure.
+
+---
+
+#### Protection and Detection
+
+**Cisco Secure Products:**
+- **Cisco Secure Endpoint (formerly AMP for Endpoints):** Detects and prevents malware execution.
+- **Cisco Secure Web Appliance:** Blocks access to malicious websites and detects malware.
+- **Cisco Secure Email:** Blocks malicious emails.
+- **Cisco Secure Firewall/Secure IPS:** Detects malicious activity.
+- **Cisco Secure Network/Cloud Analytics:** Analyzes network traffic for suspicious activity.
+- **Cisco Secure Malware Analytics:** Identifies malicious binaries.
+- **Umbrella:** Blocks connections to malicious domains, IPs, and URLs.
+- **Cisco Duo:** Provides multi-factor authentication.
+
+**Additional Protections:**
+- **Orbital Advanced Search:** Allows Cisco Secure Endpoint users to run complex OSqueries to detect infections.
+- **Snort Subscriber Rule Set:** Provides up-to-date rules for Snort users to detect threats.
+
+---
+
+#### Recommendations
+
+**For Organizations:**
+- Deploy Cisco Secure Endpoint to prevent malware execution.
+- Use Cisco Secure Web Appliance to block malicious websites.
+- Implement Cisco Secure Email to block malicious emails.
+- Utilize Cisco Secure Firewall/Secure IPS to detect malicious activities.
+- Deploy Umbrella for blocking malicious domains, IPs, and URLs.
+- Use Cisco Duo for multi-factor authentication.
+- Regularly update Snort rules to detect the latest threats.
+- Use Orbital Advanced Search to detect and investigate potential infections.
+
+**For Individuals:**
+- Be cautious of suspicious emails and attachments.
+- Keep software and systems updated.
+- Use multi-factor authentication where available.
+
+---
+
+#### Conclusion
+
+SideCopy continues to evolve its tactics, leveraging a variety of infection vectors and custom malware to target government entities. Organizations should employ a multi-layered security approach, including endpoint protection, network security, email security, and web security, to mitigate the risks posed by this APT group. Regular monitoring and updating of security measures are crucial to stay ahead of evolving threats.

@@ -1,0 +1,5 @@
+CATHARINA’s answer correctly recognizes the key point from the screenshot: the account is configured with **“Do not trust this user for delegation”**, which matches the ground truth and is the secure/best-practice setting for a normal user account. It also appropriately concludes that no remediation is needed.
+
+However, it introduces a technical inaccuracy by tying this to **Kerberoasting**. Kerberoasting is not prevented specifically because delegation is disabled; that attack concerns service accounts with SPNs, not simply delegation settings. This weakens the precision of the explanation, though the overall security assessment remains correct.
+
+SCORE: 4

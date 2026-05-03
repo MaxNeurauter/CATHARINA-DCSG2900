@@ -1,0 +1,11 @@
+CATHARINA correctly spotted the most important issue: **Authenticated Users have dangerous special permissions at the domain root**, including **Enable per-user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**. That matches the ground truth’s core flaw.
+
+However, the explanation is technically muddled in key places:
+- It incorrectly maps these rights to **Kerberoasting/AS-REP roasting** mechanics.
+- The real impact is simpler and more direct: **any authenticated user can weaken other accounts’ password security settings**, enabling downgrade of account protections.
+- It also adds several distracting or speculative findings not central to the screenshot/ground truth, such as cloneable DC concerns and overemphasis on Enterprise Admins.
+- Remediation is partially right in that it recommends removing those rights from **Authenticated Users**, but much of the rest is off-target.
+
+So this is better than generic recognition because it did identify the exact dangerous ACEs, but it failed to explain the primary abuse path cleanly and introduced inaccurate attack chains.
+
+SCORE: 4

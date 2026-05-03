@@ -1,0 +1,12 @@
+CATHARINA performed poorly against the ground truth.
+
+Reasoning:
+- The core issue in the screenshot is clearly **“Add workstations to domain” = “NT AUTHORITY\Authenticated Users”**.
+- The ground truth specifically ties this to **non-admin users being able to create computer objects**, enabling **Resource-Based Constrained Delegation (RBCD)** abuse.
+- The model **completely missed this primary flaw**, despite that setting being visible in the image.
+- Instead, it focused on several other rights and made multiple questionable claims, including flagging normal/default assignments like **Bypass traverse checking** and service rights in a misleading way.
+- Because it missed the main vulnerability and did not mention the correct attack path (**computer object creation → RBCD**), its remediation is not aligned with the actual finding.
+
+This matches the rubric for **Poor**: it misses the primary flaw and discusses secondary/irrelevant issues instead.
+
+SCORE: 2

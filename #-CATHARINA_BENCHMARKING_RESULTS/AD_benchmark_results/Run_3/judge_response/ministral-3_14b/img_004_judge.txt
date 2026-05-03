@@ -1,0 +1,7 @@
+CATHARINA does identify the core issue: **“Account is sensitive and cannot be delegated” is unchecked**, and it recommends enabling it. That aligns with the Ground Truth.
+
+However, its technical explanation of the attack path is largely off-target. The Ground Truth is specifically about **delegation protection for a high-value account** and the risk that if the user logs onto a compromised server, an attacker can **steal/hijack Kerberos tickets and impersonate the user to other services**. Instead, the model pivots to **Kerberoasting / AS-REP roasting**, which is not the primary issue shown here and is not implied by the screenshot. It also adds several unsupported findings like lack of logon hour restrictions, active account status being “misconfigured,” MFA/smart card enforcement, and other generic hardening items.
+
+So: correct core flaw, but incorrect/overly generic attack explanation and noisy remediation beyond the actual issue.
+
+SCORE: 4

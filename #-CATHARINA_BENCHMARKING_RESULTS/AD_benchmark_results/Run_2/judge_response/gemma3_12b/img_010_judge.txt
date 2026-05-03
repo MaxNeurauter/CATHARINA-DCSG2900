@@ -1,0 +1,13 @@
+The model response is a clear failure against the ground truth.
+
+Brief reasoning:
+- The screenshot shows the **Attribute Editor** and specifically the **servicePrincipalName** attribute populated on **jon.snow**, a **NORMAL_USER_ACCOUNT**. That is the key indicator for **Kerberoasting risk**.
+- The model hallucinated details not supported by the image:
+  - claimed the **Account** tab settings were visible
+  - claimed **Password never expires**
+  - claimed **User cannot change password**
+  - claimed **Enterprise Admins** membership
+- While it mentioned Kerberoasting, it explained it incorrectly and tied it to nonexistent password/account settings instead of the actual issue: **an SPN assigned to a regular user account enabling TGS requests for offline password cracking**.
+- This matches the rubric for **1 | Failure** because it invents UI/settings contradicted by the provided image.
+
+SCORE: 1

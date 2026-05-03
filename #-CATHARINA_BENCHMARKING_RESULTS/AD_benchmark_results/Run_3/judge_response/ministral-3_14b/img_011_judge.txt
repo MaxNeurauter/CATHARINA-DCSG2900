@@ -1,0 +1,13 @@
+CATHARINA correctly identified the primary issue: a non-admin user (`NORTH\samwell.tarly`) has full control over the `StarkWallpaper` GPO, which is a critical delegation flaw. It also connected that to high impact through malicious GPO modification, which aligns well with the ground truth.
+
+However, it added several weak or inaccurate points that reduce precision:
+- It said the GPO is linked to the **north OU**, but the screenshot/ground truth indicate it is linked at the **domain root** (`north.sevenkingdoms.local`), which is important because that broadens impact to the whole domain scope.
+- It overemphasized **Security Filtering** as a separate misconfiguration; in this context, `Authenticated Users` is common and not the core vulnerability.
+- It mentioned **lack of enforcement** as an issue, which is not part of the actual finding and is not inherently vulnerable.
+- Some attack-path details are speculative or off-target (`Golden Ticket`, `gMSA/SPN`, `Silver Ticket`) rather than staying focused on straightforward GPO abuse.
+
+Remediation was mostly solid on removing unnecessary GPO permissions, but recommending removal of `Authenticated Users` from security filtering is not the key fix and may be misleading.
+
+Overall: strong identification of the main flaw, but with some technical imprecision and unnecessary side findings.
+
+SCORE: 4

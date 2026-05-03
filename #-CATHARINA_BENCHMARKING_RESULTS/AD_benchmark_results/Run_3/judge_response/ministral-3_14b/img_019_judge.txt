@@ -1,0 +1,11 @@
+CATHARINA’s response is a clear mismatch with the Ground Truth.
+
+Brief reasoning:
+- The Ground Truth is about the **Attribute Editor / servicePrincipalName (SPN)** being correctly unset for a standard user, meaning **no Kerberoasting exposure via SPN**.
+- The model instead analyzes a **different UI/context**: **Advanced Security Settings / ACLs** for `jaime.lannister`, not the SPN attribute for `arya.stark`.
+- It hallucinates a critical finding around **“Everyone: Change password”** and treats standard/default AD permissions as dangerous. In AD, **“Everyone/SELF: Change password”** is commonly normal and does **not** mean arbitrary users can reset another user’s password in the way described.
+- It therefore both **misses the actual security conclusion** (“follows best practices”) and **inventories a vulnerability contradicted by the intended image assessment**.
+
+This fits the rubric for a failure: wrong object, wrong setting, hallucinated vulnerability, and opposite conclusion from Ground Truth.
+
+SCORE: 1

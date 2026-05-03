@@ -1,0 +1,9 @@
+The model correctly counted the visible endpoints (Computers A–H), but it made a major topology error by interpreting the shared horizontal backbone as a **central switch/hub** and calling it a **flat star topology**. Ground truth is clearly a **bus topology** with a single shared communication line.
+
+Risk analysis was only partially accurate. It did identify a single point of failure and lack of security boundaries, which aligns somewhat with the ground truth. However, it missed the key bus-specific issue of a **shared collision domain on the backbone** and instead framed the design like a switched LAN with broadcast-domain concerns. That weakens the technical accuracy.
+
+Recommendations were broadly modern-best-practice, and adding a firewall/router is consistent with the ground truth. But the advice focused too much on VLANs, redundancy, and Cisco 3-tier architecture, which is not the most direct modernization path for this simple legacy bus network. The core recommendation should have been to migrate to a **star topology with an Ethernet switch** and structured cabling.
+
+Overall: decent recognition of a simple flat LAN and some risks, but the topology misclassification is a major miss.
+
+SCORE: 2

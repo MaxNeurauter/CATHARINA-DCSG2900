@@ -1,0 +1,5 @@
+CATHARINA correctly identified the core issue: **“Trust this user for delegation to any service (Kerberos only)” = Unconstrained Delegation**. It also correctly classified the state as insecure/misconfigured and mentioned realistic impacts like **lateral movement** and **privilege escalation**.
+
+However, it did not explicitly explain the key technical risk from the ground truth: with unconstrained delegation, **users authenticating to services under this account can have their TGT cached/stored, which an attacker with access could steal and reuse**. Its wording about “impersonate any service” is a bit imprecise compared to the expected Kerberos/TGT abuse path. Remediation was generally solid, though not as precise as “disable unconstrained delegation unless absolutely required.”
+
+SCORE: 4

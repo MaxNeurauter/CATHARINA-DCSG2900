@@ -1,0 +1,7 @@
+CATHARINA missed the primary issue shown in the screenshot: **“Add workstations to domain” is assigned to `NT AUTHORITY\Authenticated Users`**. That is the exact ground-truth finding and directly enables abuse such as creating computer objects that can support **RBCD attack paths**.
+
+Instead, it focused on other rights like **“Access this computer from the network”** and **“Bypass traverse checking”**, and much of that analysis is weak or incorrect for this context. In particular, the discussion of **bypass traverse checking** causing directory traversal to sensitive files is not an accurate interpretation of that user right in Windows. It also failed to mention the actual AD-specific risk and did not provide the correct remediation for **Add workstations to domain**.
+
+This is therefore a miss on the core flaw, even though it noticed some generally permissive assignments elsewhere.
+
+SCORE: 2

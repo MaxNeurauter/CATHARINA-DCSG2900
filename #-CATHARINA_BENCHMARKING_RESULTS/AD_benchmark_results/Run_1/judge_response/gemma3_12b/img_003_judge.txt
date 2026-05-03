@@ -1,0 +1,5 @@
+The model response is largely incorrect and hallucinates content not present in the screenshot. The image shows **Active Directory Users and Computers** with the default containers under the domain and the **Users** container selected; it does **not** show any “Trusted Domains” window or list of external domains.  
+
+Ground truth says this view is **overall not vulnerable**, though a good response should mention the **lack of OUs** and recommend implementing them for better delegation/GPO structure. Instead, the model invents a trust-relationship scenario, labels it “Potentially Misconfigured,” and gives irrelevant attack paths/remediation. That directly contradicts the image and misses the actual expected observation.
+
+SCORE: 1

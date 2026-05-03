@@ -1,0 +1,17 @@
+CATHARINA correctly read the visible password policy settings, but its security judgment is materially wrong compared to the Ground Truth.
+
+Why:
+- The Ground Truth says this configuration generally follows standard best practices.
+- It correctly has:
+  - complexity enabled,
+  - password history of 10,
+  - minimum length of 10, which is slightly outdated but not critically weak.
+- The model incorrectly labels the policy as “Misconfigured” and elevates 90-day password age into the main flaw, even though the Ground Truth explicitly notes periodic rotation is now considered legacy guidance and not necessarily a security weakness.
+- It also gives problematic remediation:
+  - recommending shorter forced rotation as a fix,
+  - suggesting minimum password age of 0 days, which is contradictory to its own explanation and not a sound recommendation in this context.
+- It does not align with the nuanced Ground Truth that the only mild concern is password length being a bit behind newer 14-character guidance.
+
+This is not a total hallucination because it identified real settings on screen, but it missed the core assessment and framed a broadly sound policy as vulnerable.
+
+SCORE: 2

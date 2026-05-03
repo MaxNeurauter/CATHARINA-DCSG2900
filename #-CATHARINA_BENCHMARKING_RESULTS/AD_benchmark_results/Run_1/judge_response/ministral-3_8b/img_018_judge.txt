@@ -1,0 +1,10 @@
+The model response is a clear failure against the ground truth.
+
+Reasoning:
+- The ground truth vulnerability is about **delegated password reset rights** for **tywin.lannister** over **jaime.lannister** and **excessive Full Control** granted to **Account Operators** on the user object.
+- The model completely **misses both core issues**.
+- It instead analyzes unrelated attribute-editor fields for **arya.stark**, invents concerns about unset attributes like `roomNumber`, `shadow*`, and `servicePrincipalName`, and concludes there is **no critical vulnerability**.
+- This directly contradicts the ground truth and focuses on settings not relevant to the actual finding.
+- It also speculates about UI/context not tied to the real AD ACL/delegation issue.
+
+SCORE: 1

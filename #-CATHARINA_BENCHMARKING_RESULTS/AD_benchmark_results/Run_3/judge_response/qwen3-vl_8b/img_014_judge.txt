@@ -1,0 +1,9 @@
+CATHARINA identified that the screenshot shows cross-forest admin groups with custom permissions on the Essos Default Domain Policy, which is the core issue in the ground truth. It correctly names **NORTH\Domain Admins** and **SEVENKINGDOMS\Enterprise Admins** as having elevated permissions.
+
+However, its assessment focuses on **Authenticated Users having Read access**, treating that as the main vulnerability. That is not the ground-truth finding, and in GPOs, Authenticated Users read access is often normal for policy application. It therefore misses the key security-boundary problem: **external forest administrators retaining privileged control in Essos**, making Essos dependent on external forests’ security.
+
+Its remediation is also off-target because it recommends removing Authenticated Users instead of removing/reviewing the **external forest admin principals** and restoring delegated control to trusted Essos-native admins only.
+
+So this is not a complete miss, but it misprioritizes the finding and gives fundamentally incorrect remediation for the actual issue.
+
+SCORE: 2

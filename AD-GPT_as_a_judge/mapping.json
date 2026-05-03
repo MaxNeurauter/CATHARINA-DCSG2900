@@ -1,0 +1,152 @@
+[
+    {
+        "Path": "shared_dataset/img_001.png",
+        "label": "vulnerable",
+        "Short_Description": "This is vulnerable due to LDAP server signing requirements being set to None.",
+        "Description": "While the SMB signing settings (Digitally sign communications) are correctly Enabled, leaving LDAP signing at None creates a significant security gap. This allows an attacker to perform a NTL Relay attack, where they intercept an authentication request from a network machine and relay it to the Domain Controller via LDAP to perform unauthorized administrative tasks without ever knowing a users password."
+    },
+    {
+        "Path": "shared_dataset/img_002.png",
+        "label": "vulnerable",
+        "Short_Description": "This is vulnerable due to SELF being granted the Create/Delete all child objects permissions on the computer object",
+        "Description": "While being a smaller vulnerability than many others in the dataset, it remains vulnerable to Resource-Based Constrained Delegation (RBCD). This means that if an attacker gets access can use this permission to create more users with privledges allowing for privilege escalation to SYSTEM or Domain Admin"
+    },
+    {
+        "Path": "shared_dataset/img_003.png",
+        "label": "non-vulnerable",
+        "Short_Description": "While the lack of OUs should may be mentioned, this is overall seen as not vulnerable ",
+        "Description": "There are no direct exploitable configurations in this view, however the llm should mention the lack of OUs and recommend the implementation of this"
+    },
+    {
+        "Path": "shared_dataset/img_004.png",
+        "label": "vulnerable",
+        "Short_Description": "Here the main problem is that the Account is sensitive and cannot be delegated box is not checked, this should be checked for all high value targets",
+        "Description": "The option Account is sensitive and cannot be delegated is unchecked. This means that if rickon.stark loggs into a comprimised server the attacker can hijack his Kerberos tickets and impersonate him to other services across the domain"
+    },
+    {
+        "Path": "shared_dataset/img_005.png",
+        "label": "non-vulnerable",
+        "Short_Description": "This is not vulnerable any user will be locked for 5 minutes when ever the password is failed 5 times in a row",
+        "Description": "While the models may conclude this is vulnerable to DDoS attacks, that is not the case, this configuraion should be forgiving for normal mistakes, while giving time for other tools to react if there is indeed a password spray on going"
+    },
+    {
+        "Path": "shared_dataset/img_006.png",
+        "label": "vulnerable",
+        "Short_Description": "This image should be seen as vulnerable due to the fact that authenticated users have the different write permissions",
+        "Description": "The authenticated users have premmisions like Enable per user reversibly encrypted password, Unexpire password and Update password not required bit. Giving every authenticated user permission to modify password attribues. Authentcated user should only have read permissions in a best practice environment"
+    },
+    {
+        "Path": "shared_dataset/img_007.png",
+        "label": "vulnerable",
+        "Short_Description": "This is to be seen as vulnerable as we can see dangerous administrative rights being given to non-admin users ",
+        "Description": "he configuration for Add workstations to domain is set to Authenticated Users. This enables any account to create the computer objects required for Resource-Based Constrained Delegation (RBCD) attack."
+    },
+    {
+        "Path": "shared_dataset/img_008.png",
+        "label": "vulnerable",
+        "Short_Description": "This is vulnerable due to a user and a non-admin group being granted the permission Full control",
+        "Description": "Both the user stannis.baratheon and the non-admin group AcrossTheNarrowSea have been granted Full control in the KINGSLANDING computer object. This means that if an attacker gets access to either of theese they will have full admin privledges."
+    },
+    {
+        "Path": "shared_dataset/img_009.png",
+        "label": "vulnerable",
+        "Short_Description": "The user is checked of as Trust this user for delegation to any service (Kerberos only) this is a legacy feauture and enables a vulnerability known as Unconstrained Delegation",
+        "Description": "Sansa.stark in the image is checked of for Trust this user for delegation to any service (Kerberos only), this is the most dangerus form of Kerberos delegation. When this is enabled any user authenticating for a service under sansa has their Ticket-Granting Ticket (TGT) stored in the system's memory. Menaing an attacker gaining access may get access to information used for privlege escalation"
+    },
+    {
+        "Path": "shared_dataset/img_010.png",
+        "label": "vulnerable",
+        "Short_Description": "This is kerbroasting, because a standard user has the Service Principal Names (SPNs) allowing for potential offline cracking of password by an attacker",
+        "Description": "We can see jon.snow having the attribute servicePrincipalName (SPN) checked. when a service principal name is assigned to a regular user account rather than a computer or a Managed Service Account (MSA), it becomes susceptible to Kerberoasting"
+    },
+    {
+        "Path": "shared_dataset/img_011.png",
+        "label": "vulnerable",
+        "Short_Description": "The image is a critical vulnerability where a non-administrative user is granted full control over a Group Policy Object (GPO)",
+        "Description": "The user NORTH samwell.tarly has been granted Edit settings, delete, modify security permissions in the GPO StarkWallpaper. Because this GPO is linked to the root of the north.sevenkingdoms.local domain, any changes Samwell makes will apply to all users and computers within that scope. an attacker gaining access can modify the GPO to do any malicius action on every machine in the domain"
+    },
+    {
+        "Path": "shared_dataset/img_012.png",
+        "label": "vulnerable",
+        "Short_Description": "What we see in the image is a severe privilege escalation vulnerability where a non-administrative user is granted Full control over the Domain Admins group",
+        "Description": "The security settings for the Domain Admins group in the SEVENKINGDOMS domain show that lord.varys has been granted Full control. This allows lord.varys to add or remove any users from the Domain Admin group instantly giving or taking the admin rights from them"
+    },
+    {
+        "Path": "shared_dataset/img_013.png",
+        "label": "vulnerable",
+        "Short_Description": "This is a critical vulnerability where Authenticated Users are granted dangerous Special permissions at the domain root level.",
+        "Description": "The permissions for the north domain root show that Authenticated Users have been granted the ability to Enable per user reversibly encrypted password, Unexpire password, and set the Update password not required bit. This allows any user to downgrade the security of other accounts"
+    },
+    {
+        "Path": "shared_dataset/img_014.png",
+        "label": "vulnerable",
+        "Short_Description": "In the image we can see that external administrators keep their administrator privledges in this forrest breking the forrest security boundery",
+        "Description": "the Default Domain Policy of essos.local shows that administrative groups from the NORTH and SEVENKINGDOMS forests have been granted Custom permissions. This makes the security of Essos dependent on the security of two sepparat external environments. "
+    },
+    {
+        "Path": "shared_dataset/img_015.png",
+        "label": "vulnerable",
+        "Short_Description": "This is a hardend but still vulnerable configuration. Granting any delegation rights to a standard human user account is generally unnecessary and violates the principle of least privilege.",
+        "Description": "The account is now configured for Kerberos Constrained Delegation (KCD), but the list of allowed services is currently empty. While this prevents the TGT theft risk associated with unconstrained delegation, the best practice for a human user like Sansa is to have Do not trust this user for delegation selected."
+    },
+    {
+        "Path": "shared_dataset/img_016.png",
+        "label": "non-vulnerable",
+        "Short_Description": "This image follows security best practices, It is a balanced and secure baseline for identity authentication",
+        "Description": "he Kerberos policy settings shown in the image align with industry-standard defaults. Having Enforce user logon restrictions enabled is critical, as it ensures the Key Distribution Center (KDC) validates that a user still has the right to log on every time they request a new service ticket. The 600 miniutes is a nice ballance between security and usability. "
+    },
+    {
+        "Path": "shared_dataset/img_017.png",
+        "label": "non-vulnerable",
+        "Short_Description": "The image generally follows standard security best practices",
+        "Description": "The password policy is structurally sound, with Complexity requirements enabled and an Enforce password history setting of 10. The Minimum password length of 10 characters is slightly outdated, new standars prefer 14. Password rotation is legacy best practice with newer guidlines such as those from NIST, suggest that mandatory periodic rotation can be counterproductive. "
+    },
+    {
+        "Path": "shared_dataset/img_018.png",
+        "label": "non-vulnerable",
+        "Short_Description": "This security settings are vulnerable due to delegated password reset rights and excessive administrative control granted to a non-domain-admin group",
+        "Description": "A critical vulnerability is present where the principal tywin.lannister has been granted the Reset password permission over jaime.lannister Additionally, the Account Operators group is granted Full control over this specific user object, this is not the least privlege guidlines."
+    },
+    {
+        "Path": "shared_dataset/img_019.png",
+        "label": "vulnerable",
+        "Short_Description": "the image follows security best practices for a standard user account.",
+        "Description": "The Attribute Editor for arya.stark shows that the servicePrincipalName (SPN) attribute is correctly. This elimintaes the primary attack vector for Kerbroasting. "
+    },
+    {
+        "Path": "shared_dataset/img_020.png",
+        "label": "non-vulnerable",
+        "Short_Description": "This account configuration follows a critical security best practice by disabling Kerberos delegation for a sensitive user, though it remains non-compliant with lifecycle and multi-factor authentication standards.",
+        "Description": "The account for renly.baratheon has the Account is sensitive and cannot be delegated flag enabled, which is best practice. The Smart card is required for interactive logon option is unchecked, meaning this high-value target is protected only by a password rather than Multi-Factor Authentication (MFA)."
+    },
+    {
+        "Path": "shared_dataset/img_021.png",
+        "label": "vulnerable",
+        "Short_Description": "his image reveals a critical security failure involving the disclosure of cleartext credentials within a public-facing attribute",
+        "Description": "The most significant vulnerability is the presence of a cleartext password (Heartsbane) written directly into the description field for samwell.tarly. Because Active Directory descriptions are often readable by any authenticated user in the domain, this effectively publishes the account's credentials to every user in the forest. It is also bad that all users and groups are stored in the default Users container rather than a structured Organizational Unit (OU) hierarchy"
+    },
+    {
+        "Path": "shared_dataset/img_022.png",
+        "label": "vulnerable",
+        "Short_Description": "The password policy shown here is critically vulnerable, as it sets a low bar for account security",
+        "Description": "The most dangerous setting in this configuration is the Minimum password length of only 5 characters, combined with Password must meet complexity requirements being Disabled. Compounding this risk is a Maximum password age of 37201 days, the longes possible at about 101 years."
+    },
+    {
+        "Path": "shared_dataset/img_023.png",
+        "label": "non-vulnerable",
+        "Short_Description": "This configuration follows several security best practices by mitigating legacy credential and enumeration risks, while leaving a gap in session management",
+        "Description": "The policy successfully hardens the environment against two major legacy vulnerabilities: it prevents the storage of LAN Manager (LM) hashes and it disables anonymous SID/Name translation to stop unauthenticated users from enumerating usernames during reconnaissance. having Force logoff when logon hours expire set to Disabled is a security oversight, this should be set to Enabled preventing unauthorized late-night activity"
+    },
+    {
+        "Path": "shared_dataset/img_024.png",
+        "label": "non-vulnerable",
+        "Short_Description": "What we see in the image follows security best practices by explicitly disabling Kerberos delegation for the user account.",
+        "Description": "The delegation properties for sansa.stark show that Do not trust this user for delegation is selected. This is the most secure configuration for a standard user account in Active Directory. "
+    },
+    {
+        "Path": "shared_dataset/img_025.png",
+        "label": "non-vulnerable",
+        "Short_Description": "This user object follows most security best practices regarding Access Control",
+        "Description": "The permissions for robb.stark are properly restricted to authorized principals such as SYSTEM and Domain Admins, with no evidence of unauthorized users. "
+    }
+]

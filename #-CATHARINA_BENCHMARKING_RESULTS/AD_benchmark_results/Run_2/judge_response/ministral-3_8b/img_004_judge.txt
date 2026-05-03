@@ -1,0 +1,9 @@
+CATHARINA does notice that **“Account is sensitive and cannot be delegated” is unchecked**, which is the actual issue from the ground truth. However, it **fails to identify this as the primary/core flaw** and instead incorrectly treats the **account expiry date** as the critical issue. That is a major miss.
+
+It also gives an imprecise attack explanation: the ground truth specifically says this exposes a **high-value account to Kerberos ticket theft/impersonation if it logs onto a compromised server**. CATHARINA instead talks about **Silver Ticket / Golden Ticket / pass-the-hash / AS-REP roasting**, which is mostly generic and not the specific delegation-related risk described in the ground truth.
+
+Remediation does include checking the sensitive account box, but only as an optional/conditional step, not as the main required fix.
+
+This fits **Poor**: it mentions the relevant setting, but misses the primary flaw and centers the assessment on an unrelated issue.
+
+SCORE: 2

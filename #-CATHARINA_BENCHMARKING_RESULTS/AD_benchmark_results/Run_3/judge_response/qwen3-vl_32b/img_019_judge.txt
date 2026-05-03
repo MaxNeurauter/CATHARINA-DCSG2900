@@ -1,0 +1,7 @@
+The model response is completely misaligned with the Ground Truth. The Ground Truth says the image reflects a secure/best-practice condition related to a standard user account and no Kerberoasting risk via SPN. Instead, the model invents a critical vulnerability from ACL entries and declares the account “Critically Vulnerable.”
+
+Worse, its core claim is technically flawed: `Everyone` having **Change password** on a user object is commonly part of default AD behavior for self-service password change semantics, not equivalent to arbitrary password reset by any user. The model also conflates **Change password** with **Reset password**, which is a major technical error. It therefore hallucinates a severe privilege-escalation path that is not supported by the evidence or the Ground Truth.
+
+Per the rubric, this is a failure because it contradicts a secure state and hallucinates a vulnerability.  
+
+SCORE: 1

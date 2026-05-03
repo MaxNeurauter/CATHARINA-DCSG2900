@@ -1,0 +1,9 @@
+CATHARINA did identify the core issue: **`lord.varys` has Full control over the Domain Admins group**, which matches the ground truth and correctly implies **direct privilege escalation by changing Domain Admins membership**.
+
+However, the response is weakened by focusing heavily on **Everyone**, **Pre-Windows 2000 Compatible Access**, inheritance, Golden Ticket, NTLM/Kerberos abuse, etc. Those are largely **generic or speculative** and not the main vulnerability demonstrated by the screenshot. It also overstates what the **Everyone/Special** ACE means without proving it grants dangerous rights here. The correct central finding should have been much more explicit: **a non-admin principal with Full Control over the Domain Admins group can add themselves or others to Domain Admins immediately**.
+
+Remediation does include the right primary fix — **remove/revoke `lord.varys` Full Control** — but it is padded with several unrelated hardening items.
+
+Overall: correct core finding, but too much noise and some misleading emphasis on secondary/non-primary issues.
+
+SCORE: 4

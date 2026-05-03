@@ -1,0 +1,129 @@
+Image Analyzed: img_016.png
+Model Used: ministral-3:14b
+Time Taken: 72.26 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **1. Observation**
+The image displays **Kerberos Policy settings** in Active Directory, specifically under **Account Policies**. The following configurations are visible:
+
+| **Policy**                                      | **Setting**          |
+|--------------------------------------------------|----------------------|
+| Enforce user logon restrictions                  | Enabled              |
+| Maximum lifetime for service ticket              | 600 minutes (10 hrs) |
+| Maximum lifetime for user ticket                  | 10 hours             |
+| Maximum lifetime for user ticket renewal          | 7 days               |
+| Maximum tolerance for computer clock synchronization | 5 minutes       |
+
+---
+
+### **2. Assessment**
+#### **A. Enforce user logon restrictions (Enabled)**
+- **Secure** ✅
+  - This setting ensures that logon restrictions (e.g., denied logon times, workstations, or user rights) are enforced. No immediate risk here.
+
+#### **B. Maximum lifetime for service ticket (600 minutes / 10 hours)**
+- **Misconfigured** ⚠️
+  - **Best Practice:** Microsoft and security hardening guides (e.g., CIS Benchmarks, NIST) recommend **shorter lifetimes** (e.g., **6–24 hours max** for service tickets) to reduce the window of opportunity for attacks like **Kerberoasting** or **Golden Ticket attacks**.
+  - **Risk:** A 10-hour lifetime increases exposure to credential abuse if a service account’s hash is compromised.
+
+#### **C. Maximum lifetime for user ticket (10 hours)**
+- **Misconfigured** ⚠️
+  - **Best Practice:** User ticket lifetimes should be **shorter** (e.g., **8–10 hours max**, but often **4–8 hours** in high-security environments).
+  - **Risk:** Longer lifetimes increase the risk of **pass-the-ticket attacks** (e.g., if an attacker captures a TGT via sniffing or memory dumping).
+
+#### **D. Maximum lifetime for user ticket renewal (7 days)**
+- **Critically Vulnerable** 🚨
+  - **Best Practice:** This should be **as short as possible** (e.g., **1–5 days max**, ideally **aligned with password policies**).
+  - **Risk:** A **7-day renewal window** enables **long-term persistence** for attackers. If an attacker obtains a valid TGT (e.g., via **AS-REP Roasting** or **Silver Ticket**), they can renew it for **7 days**, significantly extending their access.
+  - **Attack Vector:** **Golden Ticket** (if combined with a compromised KRBTGT hash) or **Skeleton Key** attacks.
+
+#### **E. Maximum tolerance for computer clock synchronization (5 minutes)**
+- **Secure** ✅
+  - **Best Practice:** Should be **≤ 5 minutes** to prevent Kerberos authentication failures due to time skew.
+  - No risk identified here.
+
+---
+
+### **3. Attack Paths & Technical Impact**
+| **Vulnerable Setting**               | **Attack Vector**               | **Technical Impact**                                                                 |
+|--------------------------------------|----------------------------------|--------------------------------------------------------------------------------------|
+| Long service ticket lifetime (10 hrs)| **Kerberoasting**                | Attackers can brute-force service account hashes with a larger attack window.       |
+| Long user ticket lifetime (10 hrs)   | **Pass-the-Ticket (PtT)**        | Captured TGTs remain valid longer, increasing lateral movement opportunities.       |
+| Long ticket renewal (7 days)        | **Golden Ticket / Silver Ticket**| Compromised KRBTGT hash enables **persistent, undetectable admin access** for weeks.|
+|                                      | **AS-REP Roasting**              | Unconstrained delegation + long renewal = prolonged access if an AS-REP is captured.|
+
+**Example Attack Chain:**
+1. **AS-REP Roasting** → Extract hashes from accounts with no pre-authentication.
+2. **Crack a service account hash** (due to long service ticket lifetime).
+3. **Request a TGT** (if user ticket lifetime is long).
+4. **Renew the TGT for 7 days** (due to long renewal window).
+5. **Impersonate the user/admin** undetected.
+
+---
+
+### **4. Remediation Steps**
+#### **A. Harden Kerberos Ticket Lifetimes**
+1. **Open Group Policy Management (GPMC.msc)**.
+2. Navigate to:
+   **Computer Configuration → Windows Settings → Security Settings → Account Policies → Kerberos Policy**.
+3. **Modify the following settings** (recommended values):
+   | **Policy**                                      | **Recommended Setting** | **Justification**                                  |
+   |--------------------------------------------------|-------------------------|----------------------------------------------------|
+   | Maximum lifetime for service ticket              | **6–8 hours**           | Reduces Kerberoasting attack window.               |
+   | Maximum lifetime for user ticket                  | **8 hours**             | Limits TGT validity for lateral movement.          |
+   | Maximum lifetime for user ticket renewal          | **5 days max**          | Aligns with password policies; reduces persistence.|
+   | **Add:** Maximum lifetime for user ticket renewal (if missing) | **5 days** | Critical for mitigating Golden Ticket attacks. |
+
+4. **Apply via GPO** to all domain controllers and **force update** with:
+   ```powershell
+   gpupdate /force
+   ```
+
+#### **B. Additional Mitigations**
+1. **Enable Pre-Authentication for All Accounts**
+   - Prevents **AS-REP Roasting** by requiring Kerberos pre-authentication.
+   - Set via:
+     ```powershell
+     Set-ADAccountControl -Identity "User/Computer" -DoesNotRequirePreAuth $false
+     ```
+   - **Default:** `$true` (enforced). Ensure no exceptions exist.
+
+2. **Constrain Delegation**
+   - Audit and remove **unconstrained delegation** where possible.
+   - Use **Kerberos delegation** only for trusted services.
+
+3. **Monitor for Kerberoasting**
+   - Deploy **Microsoft Defender for Identity** or **SIEM alerts** for excessive `TGS-REQ` requests.
+
+4. **Rotate KRBTGT Account Password**
+   - Change the **KRBTGT** hash **quarterly** (or more frequently in high-risk environments).
+
+5. **Enable Kerberos Event Logging**
+   - Log **Event ID 4769** (Kerberos authentication failures) and **4776** (NTLM used instead of Kerberos).
+
+---
+### **5. Verification**
+After applying changes, verify with:
+```powershell
+# Check current Kerberos policies
+klist purge
+klist tickets
+
+# Test ticket renewal behavior
+# (Use Process Monitor or Wireshark to confirm lifetimes)
+```
+
+---
+### **Final Security Posture Rating**
+| **Category**       | **Risk Level** |
+|--------------------|----------------|
+| Enforce logon restrictions | **Secure**     |
+| Service ticket lifetime      | **Misconfigured** |
+| User ticket lifetime          | **Misconfigured** |
+| Ticket renewal window         | **Critically Vulnerable** |
+| Clock synchronization          | **Secure**     |
+
+**Overall:** **High Risk** (due to long ticket renewal window).
+**Priority:** **Critical** – Remediate ticket renewal and service ticket lifetimes **immediately**.
+==================================================

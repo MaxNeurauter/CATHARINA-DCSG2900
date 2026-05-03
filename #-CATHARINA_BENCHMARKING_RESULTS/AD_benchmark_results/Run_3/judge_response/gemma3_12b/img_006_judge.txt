@@ -1,0 +1,5 @@
+CATHARINA failed this assessment. The screenshot is clearly showing **Advanced Security Settings** with ACL entries where **Authenticated Users** have dangerous write-related permissions such as **Enable per user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**. That is the core vulnerability in the ground truth.
+
+Instead, the model hallucinated a completely different finding about **“Account is sensitive”** being unchecked, which is not what this image shows. It also invented an unrelated Kerberoasting attack path and remediation. This directly contradicts the visible UI and misses the actual AD permission misconfiguration.
+
+SCORE: 1

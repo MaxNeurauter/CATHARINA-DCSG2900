@@ -1,0 +1,7 @@
+CATHARINA does identify the most important issue: the cleartext password `Heartsbane` exposed in `samwell.tarly`’s description field. That aligns with the ground truth and it correctly calls out that storing a password in an AD-readable attribute is a severe problem.
+
+However, it significantly weakens its answer by inventing a primary issue around `sql_svc` being a user account and claiming this is a “critical error” that should be converted to a computer account. That is technically wrong for this context: service accounts are often user accounts, gMSAs, or other managed identities, not necessarily computer accounts. It also pivots to Kerberoasting without evidence from the screenshot, while missing the ground-truth point that descriptions are often readable by authenticated users and that this effectively exposes credentials broadly. It also fails to mention the secondary issue of all users/groups being kept in the default `Users` container instead of a proper OU structure.
+
+So: correct on the main exposed-password finding, but with major incorrect remediation and a fabricated attack path that is not supported by the image.
+
+SCORE: 3

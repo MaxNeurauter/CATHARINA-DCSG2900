@@ -1,0 +1,7 @@
+CATHARINA failed badly here. The screenshot is clearly the **Advanced Security Settings** for the AD user **robb.stark**, showing ACL/permission entries. The ground truth says this object largely follows best practices, with permissions restricted to expected principals like **SYSTEM** and **Domain Admins**, and no clear unauthorized delegation.
+
+Instead, the model hallucinated an entirely different screen (“General” tab), invented settings that are not shown, and even fabricated a visible password value. That directly contradicts the image and the task. It also labeled the object “Misconfigured” when the correct assessment is essentially that the ACLs appear properly restricted.
+
+This matches the rubric for a complete failure: it describes UI elements/settings not present in the image and invents a critical vulnerability unsupported by the evidence.
+
+SCORE: 1

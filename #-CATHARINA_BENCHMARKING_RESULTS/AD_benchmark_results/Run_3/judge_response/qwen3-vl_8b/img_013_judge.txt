@@ -1,0 +1,7 @@
+CATHARINA failed to identify the actual core vulnerability shown in the screenshot. The Ground Truth is specifically about **Authenticated Users** having dangerous **special permissions at the domain root**: **Enable per user reversibly encrypted password**, **Unexpire password**, and **Update password not required bit**, which allow ordinary users to weaken password security for other accounts.
+
+Instead, it focused on **ANONYMOUS LOGON Read** access and built an attack path around **anonymous enumeration/Kerberoasting**, which is not the primary issue being evaluated. While that ACE is visible, centering the assessment on it misses the critical delegated password-related rights. The remediation is therefore aimed at the wrong problem.
+
+Because it misses the primary flaw and provides incorrect prioritization/remediation for this specific vulnerability, this is a poor result.
+
+SCORE: 2

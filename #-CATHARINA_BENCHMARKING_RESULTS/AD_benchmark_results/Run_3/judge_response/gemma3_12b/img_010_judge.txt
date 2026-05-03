@@ -1,0 +1,10 @@
+CATHARINA gets partial credit for recognizing **Kerberoasting**, but its reasoning is flawed.
+
+Brief reasoning:
+- **What it got right:** It identified the likely attack as **Kerberoasting**.
+- **What it missed:** The core issue in the screenshot is that **jon.snow is a normal user account with a populated `servicePrincipalName` attribute**. That is the actual Kerberoasting condition described in the ground truth.
+- **Why this matters:** A regular user account with an SPN allows attackers to request a Kerberos service ticket and perform **offline password cracking** of the service account credential.
+- **Incorrect statements:** It focused on **"Account is sensitive" unchecked**, which is not the primary flaw shown. It also incorrectly claimed Kerberoasting would obtain the password **in plaintext**, which is technically wrong.
+- **Remediation issue:** The correct remediation should emphasize **moving the service off a normal user account**, using a **gMSA/MSA or computer account where appropriate**, and ensuring a **strong password** if a user-based service account must remain. Simply checking “Account is sensitive” is not the key fix for this finding.
+
+SCORE: 2

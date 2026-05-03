@@ -1,0 +1,7 @@
+CATHARINA identified the visible principals correctly, including the key cross-forest groups: **NORTH\Domain Admins** and **SEVENKINGDOMS\Enterprise Admins**. However, it completely missed the **core security issue** from the ground truth: **external forest administrators retaining privileged/custom permissions on the Essos Default Domain Policy, breaking the forest security boundary and making Essos dependent on external forest security**.
+
+Instead, it focused on **Authenticated Users read access**, claimed that was unusual, and built most of the risk narrative around GPO enumeration, Kerberoasting, AS-REP roasting, and inheritance concerns. Those are largely irrelevant to the specific finding and dilute the assessment. Some remediation is also wrong for this finding, especially prioritizing removal of Authenticated Users read instead of removing/reviewing **external forest admin permissions**.
+
+This is not a total failure because it did notice the external admin groups and called the setup misconfigured, but it missed the primary flaw and attack/dependency model.
+
+SCORE: 2

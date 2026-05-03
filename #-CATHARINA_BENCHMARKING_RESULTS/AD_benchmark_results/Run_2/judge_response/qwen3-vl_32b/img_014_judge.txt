@@ -1,0 +1,5 @@
+CATHARINA missed the actual issue shown in the screenshot. The ground truth is about **cross-forest administrative groups** — specifically **NORTH\Domain Admins** and **SEVENKINGDOMS\Enterprise Admins** having **Custom** permissions on the **Essos** Default Domain Policy, which breaks the forest security boundary and makes Essos dependent on external forests.
+
+Instead, the model focused on **Authenticated Users = Read**, which is normal/expected in GPO processing and not the core vulnerability here. Its remediation is also incorrect because removing Authenticated Users from a GPO can break policy application. This is a clear misidentification of the security flaw.
+
+SCORE: 1

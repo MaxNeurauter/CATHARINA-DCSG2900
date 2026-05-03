@@ -1,0 +1,122 @@
+Image Analyzed: img_006.png
+Model Used: ministral-3:14b
+Time Taken: 82.61 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### **1. Observation**
+The image displays the **Advanced Security Settings** for an Active Directory object (likely an **OU, Group, or Computer object**) named **`sevenkingdoms`**. Below are the key **Permission Entries (ACLs)** observed:
+
+#### **Key Permissions:**
+| **Type** | **Principal**                     | **Access**                                      | **Applies To**                          |
+|----------|-----------------------------------|------------------------------------------------|------------------------------------------|
+| **Deny** | Everyone                          | Delete all child objects                       | This object only                        |
+| **Allow**| Pre-Windows 2000 Compatible Access| Special                                        | Descendant objects (multiple entries)   |
+| **Allow**| Authenticated Users               | Enable per user reversibly encrypted password  | This object only                        |
+| **Allow**| Authenticated Users               | Replicating Directory Changes in Filtered Set  | This object only                        |
+| **Allow**| Authenticated Users               | Unexpire password                              | This object only                        |
+| **Allow**| Authenticated Users               | Update password not required bit               | This object only                        |
+| **Allow**| SYSTEM                            | Full Control                                   | This object only                        |
+| **Allow**| SELF                              | Special                                        | All descendant objects                  |
+| **Allow**| Domain Admins                     | Full Control                                   | This object and all descendant objects  |
+| **Allow**| Enterprise Admins                 | Full Control                                   | This object and all descendant objects  |
+| **Allow**| Cloneable Domain Controllers      | Allow a DC to create a clone of itself        | This object only                        |
+| **Allow**| Enterprise Domain Controllers     | Replicating Directory Changes                  | This object only                        |
+| **Allow**| Key Admins                        | (No specific permission listed)                | This object and all descendant objects  |
+| **Allow**| Creator Owner                     | Validated write to computer attributes         | Descendant Computer objects             |
+| **Allow**| SELF                              | Validated write to computer attributes         | Descendant Computer objects             |
+
+---
+
+### **2. Assessment**
+This configuration is **Critically Vulnerable** due to the following **high-risk permissions**:
+
+#### **Critical Findings:**
+1. **`Everyone: Deny Delete all child objects`**
+   - This is **not inherently dangerous** but is unusual alongside other misconfigurations.
+
+2. **`Authenticated Users: Allow Enable per user reversibly encrypted password`**
+   - **Critically Vulnerable** – This allows **AS-REP Roasting** attacks.
+     - Attackers can request **pre-authenticated Kerberos tickets** (AS-REP) for users with this setting enabled, even without knowing their password.
+     - If the account has **SPN (Service Principal Name)**, it can lead to **Kerberoasting**.
+
+3. **`Authenticated Users: Allow Replicating Directory Changes in Filtered Set`**
+   - **Vulnerable** – This permission can be abused for **privilege escalation** if combined with other misconfigurations.
+
+4. **`Authenticated Users: Allow Unexpire password` & `Update password not required bit`**
+   - **Critically Vulnerable** – These settings allow **password never expires** and **no password required**, enabling **Golden Ticket attacks** if combined with **Domain Admin access** or **Krbtgt ticket theft**.
+
+5. **`Cloneable Domain Controllers: Allow a DC to create a clone of itself`**
+   - **Vulnerable** – If abused, this could facilitate **DC cloning attacks** (e.g., **DCShadow attacks**).
+
+6. **Overly Permissive Access for `SELF` and `Creator Owner`**
+   - **Vulnerable** – If an attacker gains a **foothold**, they could manipulate descendant objects.
+
+---
+
+### **3. Attack Path**
+| **Attack Vector**          | **Technical Impact**                                                                 |
+|----------------------------|--------------------------------------------------------------------------------------|
+| **AS-REP Roasting**        | Attackers extract **reversibly encrypted passwords** and crack them offline.       |
+| **Golden Ticket Attack**   | If combined with **Krbtgt hash theft**, attackers can forge **Domain Admin TGTs**. |
+| **Kerberoasting**          | If **SPN accounts** exist, attackers can request **TGS tickets** and crack them.   |
+| **DCShadow (DC Cloning)**  | Attackers could **modify AD objects** undetected if they clone a DC.               |
+| **Privilege Escalation**   | Misuse of `Replicating Directory Changes` could allow **unauthorized AD modifications**. |
+
+---
+
+### **4. Remediation (Step-by-Step Fix)**
+
+#### **Immediate Actions:**
+1. **Remove `Authenticated Users` Permissions:**
+   - Revoke:
+     - `Enable per user reversibly encrypted password`
+     - `Replicating Directory Changes in Filtered Set`
+     - `Unexpire password`
+     - `Update password not required bit`
+
+   **Steps:**
+   - Open **Active Directory Users and Computers (ADUC)**.
+   - Navigate to the **OU/Object** (`sevenkingdoms`).
+   - Right-click → **Properties** → **Security** → **Advanced**.
+   - Select the **Authenticated Users** entry → **Edit** → **Remove** the dangerous permissions.
+
+2. **Enforce Password Policies:**
+   - Ensure **no accounts have "Password never expires"** or **"No password required"**.
+   - Run PowerShell to audit:
+     ```powershell
+     Get-ADUser -Filter {PasswordNeverExpires -eq $true} -Properties PasswordNeverExpires | Select Name
+     ```
+   - Force password changes where needed:
+     ```powershell
+     Set-ADAccountPassword -Identity <User> -NewPassword (ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force) -Reset
+     ```
+
+3. **Restrict `Cloneable Domain Controllers` Permission:**
+   - Only allow **Domain Admins** and **Enterprise Admins** to modify DC cloning settings.
+   - Remove unnecessary groups (e.g., `Cloneable Domain Controllers` from non-admin accounts).
+
+4. **Audit & Remove Unnecessary Permissions:**
+   - Use **BloodHound** or **PowerView** to detect **overly permissive ACLs**.
+   - Remove **`SELF` and `Creator Owner`** permissions where unnecessary.
+
+5. **Enable Protective AD Auditing:**
+   - Ensure **Directory Service Changes** are logged in **Windows Event Logs** (Event ID **5136, 5137, 5138**).
+   - Configure **SIEM alerts** for suspicious AD modifications.
+
+6. **Mitigate AS-REP Roasting & Kerberoasting:**
+   - Disable **reversible encryption** (if not required):
+     ```powershell
+     Set-ADForest -EncryptPasswords $false
+     ```
+   - Remove **SPNs from non-service accounts** to prevent Kerberoasting.
+
+---
+
+### **Final Verdict:**
+✅ **Critical Vulnerabilities Detected** (AS-REP Roasting, Golden Ticket, DC Cloning).
+🔧 **Immediate remediation required** to prevent **domain compromise**.
+🛡️ **Follow least-privilege principles** for AD permissions.
+
+Would you like a **PowerShell script** to automate these fixes?
+==================================================

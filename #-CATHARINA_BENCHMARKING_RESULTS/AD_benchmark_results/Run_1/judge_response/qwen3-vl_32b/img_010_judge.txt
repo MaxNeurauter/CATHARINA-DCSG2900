@@ -1,0 +1,7 @@
+CATHARINA correctly identified the core issue: a normal user account (`jon.snow`) has an SPN set, which makes it susceptible to **Kerberoasting**. It also explained the attack path well, including requesting a TGS and offline cracking of the password/hash material, which aligns closely with the ground truth.
+
+Its remediation is strong and practical: remove the SPN if unnecessary or move it to a dedicated service account. That said, it slightly overstates that SPNs are “not for regular user accounts” in an absolute sense—service accounts are often user objects in AD—so the more precise issue is that this is a standard user account with an SPN, creating kerberoasting exposure. Still, this does not materially undermine the finding.
+
+Overall, this is a technically accurate and well-explained assessment with solid remediation.
+
+SCORE: 5

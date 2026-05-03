@@ -1,0 +1,10 @@
+CATHARINA partially identified the issue, but it missed the full core flaw from the ground truth.
+
+- **What it got right:** It correctly noticed that **Authenticated Users** have the **“Enable per user reversibly encrypted password”** permission and recognized that this is unsafe.
+- **What it missed:** The ground truth is broader: **Authenticated Users have multiple write-style permissions** including **Unexpire password** and **Update password not required bit**, meaning they can modify sensitive password attributes. The tool focused narrowly on reversible encryption and did not clearly explain the overall problem: **Authenticated Users should not have these modification rights and should generally be read-only**.
+- **Technical issue with its explanation:** It claims attackers could query plaintext passwords via LDAP after enabling reversible encryption, which is misleading/inaccurate. Reversible encryption is dangerous, but the stated attack path is not technically well-framed for this screenshot.
+- **Remediation:** Removing only the reversible encryption permission is incomplete; it should recommend removing the broader delegated rights for **Authenticated Users**.
+
+This is better than a generic “misconfiguration” call, but it does **not fully capture the primary vulnerability** shown in the image.
+
+SCORE: 3

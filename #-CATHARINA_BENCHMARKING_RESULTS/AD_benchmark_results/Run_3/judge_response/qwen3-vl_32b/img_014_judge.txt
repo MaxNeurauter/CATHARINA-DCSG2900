@@ -1,0 +1,5 @@
+CATHARINA should be scored **1**.
+
+Reasoning: The ground truth issue is the presence of **external forest administrative groups** on the **Essos Default Domain Policy** delegation: `NORTH\Domain Admins` and `SEVENKINGDOMS\Enterprise Admins`. This breaks the forest security boundary by making Essos dependent on the security of external forests. The model completely missed this core flaw, incorrectly declared the configuration **Secure**, and even misread/contextualized the domain as `north.sevenkingdoms.local` rather than recognizing the selected GPO is under **essos.local**. That is a direct contradiction of the image and the ground truth, which fits the **Failure** criteria.
+
+SCORE: 1

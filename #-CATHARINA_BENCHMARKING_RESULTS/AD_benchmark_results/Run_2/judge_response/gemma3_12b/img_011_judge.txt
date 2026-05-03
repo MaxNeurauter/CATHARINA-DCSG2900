@@ -1,0 +1,5 @@
+The model completely failed to analyze the actual screenshot. The image shows the **StarkWallpaper** GPO in Group Policy Management, with **NORTH\samwell.tarly** explicitly granted **“Edit settings, delete, modify security”** under Delegation, and the GPO is linked at **north.sevenkingdoms.local**, meaning compromise can affect the whole domain scope.  
+
+Instead, the model hallucinated a different GPO (“Do Not Cache Password on Workstations”), different settings, and concluded **Secure**, which directly contradicts the image and misses the critical privilege delegation issue entirely. This matches the rubric for a total failure.
+
+SCORE: 1

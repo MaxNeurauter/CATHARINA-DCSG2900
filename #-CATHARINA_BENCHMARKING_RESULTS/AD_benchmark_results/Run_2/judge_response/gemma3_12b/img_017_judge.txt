@@ -1,0 +1,5 @@
+The model response is a clear mismatch to the screenshot and Ground Truth. The image shows **AD Password Policy** settings, and the Ground Truth says this is **generally aligned with best practices**, with only minor notes: **10-character minimum is a bit outdated vs. modern 14-character guidance**, and **periodic rotation is now considered legacy guidance**.  
+
+Instead, the model hallucinated an entirely different screen about **“Account is sensitive”**, claimed a major misconfiguration, and invented a **Kerberoasting** attack path that is not supported by the image. It also included incorrect technical claims about SPNs and sensitivity protection. This directly fits the failure condition: it describes settings **not present in the image** and contradicts the actual security posture.
+
+SCORE: 1

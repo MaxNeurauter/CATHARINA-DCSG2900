@@ -1,0 +1,7 @@
+CATHARINA did identify the core issue: both **stannis.baratheon** and **AcrossTheNarrowSea** have **Full Control** on the **KINGSLANDING** computer object, which matches the ground truth. It also correctly frames this as overprivileged access that could lead to privilege escalation if either principal is compromised.
+
+However, the response is diluted by several unsupported or misleading findings. It misreads or overinterprets entries such as **Everyone** (the screenshot shows **Change password**, not validated write to DNS host name for Everyone), and it hallucinates attack paths like **DNS spoofing, Kerberoasting, Silver Ticket, and Golden Ticket** that are not the core issue shown in the image. That lowers confidence and technical accuracy. The remediation for removing unnecessary Full Control is directionally correct, but parts of the remediation are also based on those incorrect side findings.
+
+This is better than “acceptable” because it got the main flaw right, but not “exceptional” because it added substantial incorrect analysis beyond the ground truth.  
+
+SCORE: 4

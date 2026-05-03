@@ -1,0 +1,48 @@
+Image Analyzed: img_009.png
+Model Used: qwen3-vl:8b
+Time Taken: 62.01 seconds
+Status: SUCCESS
+==================================================
+LLM RESPONSE:
+### 1. Observation  
+The image shows the **Delegation tab** of a user’s Active Directory properties. The key configuration observed is:  
+- The radio button **"Trust this user for delegation to any service (Kerberos only)"** is selected.  
+- The "Services to which this account can present delegated credentials" list is empty (no specific services are configured).  
+- Other delegation options ("Do not trust this user for delegation," "Trust this user for delegation to specified services only") are unchecked.  
+
+
+### 2. Assessment  
+**Misconfigured**  
+Enabling **unconstrained Kerberos delegation** (allowing the user to delegate to *any* service) is a critical security misconfiguration. This grants the account the ability to impersonate other users for any service in the domain, creating a pathway for privilege escalation and credential theft.  
+
+
+### 3. Attack Path  
+**Kerberoasting**  
+- **Technical Impact**: Unconstrained delegation allows an attacker to request service tickets (TGS tickets) for any service the account can access. Attackers can then use these tickets to crack passwords (e.g., for service accounts with weak passwords) offline. If the target service accounts have default or predictable passwords (a common issue in misconfigured environments), the attacker gains unauthorized access to the target’s resources.  
+- **Why This Applies**: The user’s setting explicitly allows delegation to *any service* (Kerberos only), enabling an attacker to target any service account (e.g., SQL Server, IIS, or file servers) and attempt password cracking via Kerberoasting. This bypasses standard authentication and can lead to full compromise of the domain.  
+
+
+### 4. Remediation  
+Follow these steps to fix the misconfiguration:  
+
+1. **Deselect Unconstrained Delegation**:  
+   - In the Delegation tab, **uncheck** the radio button *"Trust this user for delegation to any service (Kerberos only)"*.  
+
+2. **Restrict to Constrained Delegation (If Necessary)**:  
+   - If the account *must* delegate (e.g., for a service account), **check** *"Trust this user for delegation to specified services only"*.  
+   - Click **Add...** to define specific services:  
+     - **Service Type**: Specify the type (e.g., "File Server," "Domain Controller").  
+     - **User or Computer**: Enter the target user/computer name (e.g., a service account like `svc-DBServer`).  
+     - **Port**: Optional (usually not required for Kerberos delegation).  
+     - **Service Name**: Specify the SPN (e.g., `host/DBServer.contoso.com`).  
+   - *Do not use "Kerberos only" unless absolutely necessary (e.g., for constrained delegation to a single service).*  
+
+3. **Disable Delegation (Recommended for Non-Service Accounts)**:  
+   - For **regular user accounts** (not service accounts), select *"Do not trust this user for delegation"* to eliminate the risk entirely.  
+   - *Note: Service accounts requiring delegation should use constrained delegation with explicit SPNs, not unconstrained delegation.*  
+
+4. **Validate and Apply**:  
+   - Click **Apply** (or **OK**) to save changes. Verify the delegation settings via Active Directory Users and Computers or PowerShell (`Get-ADUser -Identity <User> -Properties msDS-AllowedToDelegateTo`).  
+
+**Why This Works**: Constrained delegation limits delegation to only specific services, preventing attackers from abusing the account to request tickets for arbitrary services. Disabling delegation for non-service accounts eliminates the attack surface.
+==================================================

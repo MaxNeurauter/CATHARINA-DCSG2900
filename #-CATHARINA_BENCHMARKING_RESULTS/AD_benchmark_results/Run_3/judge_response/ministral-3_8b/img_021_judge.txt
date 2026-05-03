@@ -1,0 +1,7 @@
+CATHARINA missed the primary vulnerability. The screenshot clearly shows `samwell.tarly` with the description `Samwell Tarly (Password : Heartsbane)`, which is a critical issue because a cleartext password is stored in an AD attribute that is commonly readable by authenticated users. Instead of centering on that, the model downplayed the finding as merely “weak password handling” and even said “No critical vulnerabilities are immediately visible,” which directly contradicts the ground truth.
+
+It also hallucinated or overreached on several points not supported by the image, such as AS-REP roasting exposure from RODC password replication membership, Protected Users implications, Golden Ticket risk, MFA, and broader policy gaps. Those are not evidenced by the screenshot. It did not mention the secondary ground-truth issue that all users/groups are in the default `Users` container instead of a structured OU hierarchy.
+
+Because it failed to identify the core flaw and explicitly judged the state as not critically vulnerable, this is a poor evaluation.
+
+SCORE: 1

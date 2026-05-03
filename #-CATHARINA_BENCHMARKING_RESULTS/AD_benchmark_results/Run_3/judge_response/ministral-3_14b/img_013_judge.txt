@@ -1,0 +1,7 @@
+CATHARINA correctly identified the core issue: **Authenticated Users** have dangerous special permissions at the **domain root**, including **Enable per user reversibly encrypted password** and **Update password not required bit**. It also noticed **Unexpire password**, which matches the ground truth and explains the security downgrade risk reasonably well.
+
+However, it diluted the assessment by overemphasizing several side findings that are not the primary vulnerability here, and some attack-path claims are overstated or imprecise. In particular, saying this “allows any authenticated user to set passwords without complexity requirements” is directionally close but not technically as precise as the ground truth’s point that users can **downgrade the security properties of other accounts**. It also introduces unrelated or weakly related issues/remediations (Kerberoasting, Golden Tickets, LDAP signing, DC replication permissions), which reduces accuracy.
+
+Remediation for the main issue—removing those dangerous **Authenticated Users** ACEs—is correct, but the overall answer contains unnecessary and partially misleading extra hardening advice.
+
+SCORE: 4

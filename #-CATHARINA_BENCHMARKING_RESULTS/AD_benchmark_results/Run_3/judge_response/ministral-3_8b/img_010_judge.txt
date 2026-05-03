@@ -1,0 +1,5 @@
+CATHARINA performs well here. It correctly identifies the key issue: a normal user account (`jon.snow`) has an SPN set, which is the classic condition enabling **Kerberoasting**. It also explains the main attack path properly: an attacker can request a service ticket for that SPN and attempt **offline password cracking**.
+
+Why not a 5: while the core finding is correct, the response adds extra speculative risks like delegation abuse, Silver/Golden Ticket discussion, missing `userAccountControl` visibility, MFA, LAPS, etc., which are not grounded in the screenshot and dilute the precision. The ground truth is specifically about **Kerberoasting due to SPN on a standard user**. Remediation is mostly good, but “move it to a service account” is weaker than recommending a **gMSA/MSA or proper service account with strong managed credentials**.
+
+SCORE: 4

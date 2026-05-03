@@ -1,0 +1,7 @@
+CATHARINA does identify the core issue: **`stannis.baratheon`** and **`AcrossTheNarrowSea`** have **Full control** on the **KINGSLANDING** computer object, which matches the ground truth. It also correctly notes that this enables privilege escalation if either principal is compromised.
+
+However, the response is heavily diluted by **multiple unsupported or misleading findings**. It overemphasizes items like **Everyone = Change password**, **validated write/SPN abuse**, inheritance concerns, and printer-related permissions as if they are the main vulnerability. Some of these are normal or context-dependent for AD computer objects, and the tool invents attack paths not grounded in the screenshot or the stated issue. That keeps it from being “Exceptional.”
+
+Because it still clearly captures the primary flaw and gives broadly correct remediation to remove unnecessary **Full control** from the non-admin user/group, this is better than acceptable, but not perfect.
+
+SCORE: 4

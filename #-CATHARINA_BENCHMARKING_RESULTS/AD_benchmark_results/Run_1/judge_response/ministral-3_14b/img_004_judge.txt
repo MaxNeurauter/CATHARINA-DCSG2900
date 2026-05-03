@@ -1,0 +1,13 @@
+The model did identify the correct primary issue: **“Account is sensitive and cannot be delegated” is unchecked**. It also recommends the right core remediation: **check that box**.
+
+However, its explanation of the risk is not aligned with the ground truth. The ground truth specifically calls out **Kerberos ticket theft/hijacking when the user logs onto a compromised server**, enabling **impersonation to other services** via delegation abuse. Instead, the model drifts into several unrelated or incorrect issues:
+
+- treats **account not disabled** as a vulnerability
+- flags **no smart card** as critical from this screenshot alone
+- incorrectly discusses **Golden Ticket** in relation to the delegation flag
+- misreads the DES option and even recommends **AES-only** using a checkbox that actually says **DES**
+- adds speculative findings like logon hour restrictions and brute force exposure
+
+So while it catches the main flaw, the technical attack path is muddled and much of the remediation is noisy or partially incorrect for this specific finding.
+
+**SCORE: 4**

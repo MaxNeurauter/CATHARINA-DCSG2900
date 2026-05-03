@@ -1,0 +1,10 @@
+CATHARINA missed the core finding from the screenshot. The ground truth is specifically that **stannis.baratheon** and **AcrossTheNarrowSea** both have **Full control** over the **KINGSLANDING computer object**, which would allow full administrative control if either principal is compromised.
+
+Instead, the model:
+- incorrectly says **stannis.baratheon** only has **Create/Delete all child objects** when the screenshot shows **Full control**
+- invents the primary issue as **Everyone has validated write to DNS host name**, which is contradicted by the screenshot — the image shows **Everyone = Change password**, while **SELF** has validated write to DNS host name
+- hallucinates multiple unrelated attack paths and misreads several ACL entries
+
+Because it identifies UI/settings incorrectly and misses the actual primary flaw, this is a failure under the rubric.
+
+SCORE: 1

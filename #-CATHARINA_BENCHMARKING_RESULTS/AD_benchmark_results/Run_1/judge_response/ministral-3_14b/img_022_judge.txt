@@ -1,0 +1,7 @@
+The model correctly identified the core issue: this AD password policy is critically weak because it combines a **minimum password length of 5**, **complexity disabled**, and an effectively **non-expiring password lifetime** of **37201 days**. That aligns very well with the ground truth.
+
+It also explains the risk reasonably well, especially weak passwords enabling brute-force/spraying and stale credentials persisting for years. Remediation is mostly solid: enable complexity, raise minimum length, and reduce maximum password age.
+
+Why not a 5: while the core flaw is correctly captured, some of the attack-path discussion is overextended and partially speculative relative to the screenshot (e.g. Golden Ticket, Kerberoasting/AS-REP roasting references). There is also a questionable example (“Password123”) under disabled complexity, since that example would still be longer than the minimum and complexity-disabled alone doesn’t imply that exact pattern. Still, these are minor issues and do not undermine the main finding.
+
+SCORE: 4

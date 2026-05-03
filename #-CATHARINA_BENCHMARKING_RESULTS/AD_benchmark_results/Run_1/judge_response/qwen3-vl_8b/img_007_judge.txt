@@ -1,0 +1,7 @@
+CATHARINA missed the primary issue shown in the screenshot. The ground truth is specifically about **“Add workstations to domain” being assigned to “NT AUTHORITY\Authenticated Users”**, which allows non-admin users to create computer objects and can enable **RBCD abuse**.  
+
+Instead, the model focused on **“Access this computer from the network” includes Everyone**, and then escalated that into claims of **unauthenticated access** and **direct RCE**, which are not supported by the screenshot. That is both a miss of the real vulnerability and an inaccurate attack explanation.  
+
+Because it identified a different issue and hallucinated consequences not evidenced by the image, this is a severe failure relative to the ground truth.  
+
+SCORE: 1

@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary flaw: **Domain controller: LDAP server signing requirements = None**. It also correctly noted that the SMB signing-related settings shown are enabled and not the issue.
+
+However, it missed the **specific secondary risk in the ground truth**, which is **NTLM relay to LDAP on the DC**. Instead, it gave a more generic MITM/eavesdropping explanation and introduced questionable or irrelevant references like unrelated CVEs and pass-the-ticket/pass-the-hash. The remediation is mostly good because it says to set LDAP signing to **Require signing**, but it weakens this by suggesting **“at minimum, Sign or encrypt (not required)”**, which is not an appropriate fix for this exact finding.
+
+Overall: correct flaw, decent remediation, but not technically precise on the main attack path.
+
+SCORE: 4

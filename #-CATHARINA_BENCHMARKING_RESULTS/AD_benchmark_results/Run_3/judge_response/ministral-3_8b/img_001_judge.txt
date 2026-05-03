@@ -1,0 +1,7 @@
+CATHARINA correctly identified the primary flaw shown in the screenshot: **“Domain controller: LDAP server signing requirements = None.”** It also correctly noted that the SMB signing-related settings shown are enabled, matching the ground truth’s distinction that SMB signing is fine while LDAP signing is the gap.
+
+It earns a **4 instead of 5** because, although it mentions **LDAP relay/MITM**, it drifts into less accurate and overly broad claims such as LDAP traffic exposing “passwords,” “Kerberos tickets,” and generic plaintext credential capture. The ground truth is more specific: the key risk is **NTLM relay to LDAP on the Domain Controller enabling unauthorized administrative actions without knowing the password**. The remediation is mostly solid, but it includes a path mistake/confusion between **LDAP server signing requirements** and **LDAP client signing requirements**.
+
+Overall: strong identification, good attack-path awareness, but not precise enough on the exact relay scenario and with some technical overreach.
+
+SCORE: 4
