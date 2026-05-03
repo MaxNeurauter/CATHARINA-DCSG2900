@@ -5,7 +5,7 @@ A Python evaluation harness that uses an OpenAI GPT model as a judge to score mo
 ## Prerequisites
 
 - Python 3.7+
-- An OpenAI API key
+- An OpenAI API key with access to the configured model and neccecary funds added to account.
 - Model evaluation results placed in `AD_Vision_Results/`
 
 ## Installation

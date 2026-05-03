@@ -6,6 +6,7 @@ Uses an OpenAI model to grade LLM responses on network topology diagram analysis
 
 - Python 3.7+
 - An OpenAI API key with access to the configured model and neccecary funds added to account.
+- Model evaluation results placed in `Topology_Analysis_Results/`
 
 ## Setup
 
